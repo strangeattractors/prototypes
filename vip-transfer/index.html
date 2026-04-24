@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>VIP Transfer — YouSquared Prototype</title>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+  :root {
+    --accent: #FF8370;
+    --accent-dark: #E07A5F;
+    --accent-surface: #FF8370;
+    --primary-text: #2D2A26;
+    --secondary-text: #6B6560;
+    --tertiary-text: #9E9893;
+    --bg: #FFFFFF;
+    --bg-secondary: #F5F2EF;
+    --surface-dark: #F8F6F4;
+    --surface-darken: #F0EDEA;
+    --border: #E8E4E0;
+    --input-bg: #F5F2EF;
+    --input-stroke: #D8D4D0;
+    --error: #E53935;
+    --green: #43A047;
+    --gold: #FFB300;
+    --radius-sm: 8px;
+    --radius: 10px;
+    --radius-lg: 12px;
+    --radius-xl: 18px;
+    --radius-xxl: 30px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Inter', -apple-system, sans-serif; background: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+  .phone-frame {
+    width: 393px; height: 852px; background: var(--bg); border-radius: 44px;
+    overflow: hidden; position: relative; box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+    display: flex; flex-direction: column;
+  }
+
+  .status-bar {
+    height: 54px; padding: 14px 24px 0; display: flex; justify-content: space-between;
+    align-items: center; font-size: 15px; font-weight: 600; color: var(--primary-text);
+    flex-shrink: 0; background: var(--bg); z-index: 10;
+  }
+  .status-bar-icons { display: flex; gap: 5px; align-items: center; font-size: 12px; }
+
+  .screen-content { flex: 1; overflow-y: auto; overflow-x: hidden; }
+  .screen-content::-webkit-scrollbar { display: none; }
+
+  /* Navigation */
+  .nav-header {
+    padding: 8px 16px 12px; display: flex; justify-content: space-between;
+    align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 5;
+  }
+  .nav-title { font-size: 32px; font-weight: 600; color: var(--primary-text); }
+
+  /* Tab bar */
+  .tab-bar {
+    height: 83px; padding: 8px 32px 28px; display: flex; justify-content: space-around;
+    align-items: center; background: var(--bg); border-top: 0.5px solid var(--border);
+    flex-shrink: 0;
+  }
+  .tab-item {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    font-size: 10px; font-weight: 500; color: var(--tertiary-text); cursor: pointer;
+    transition: color 0.2s;
+  }
+  .tab-item.active { color: var(--accent); }
+  .tab-item svg { width: 24px; height: 24px; }
+
+  /* Filter pills */
+  .filter-row {
+    display: flex; gap: 8px; padding: 0 16px 12px; overflow-x: auto;
+    -ms-overflow-style: none; scrollbar-width: none;
+  }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .filter-pill {
+    padding: 6px 14px; border-radius: 30px; font-size: 13px; font-weight: 500;
+    white-space: nowrap; cursor: pointer; transition: all 0.2s;
+    border: 1px solid var(--border); color: var(--secondary-text); background: var(--bg);
+  }
+  .filter-pill.active {
+    background: var(--accent); color: white; border-color: var(--accent);
+  }
+  .filter-pill .badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.3); border-radius: 10px; padding: 0 5px;
+    font-size: 11px; margin-left: 4px; min-width: 18px; height: 18px;
+  }
+
+  /* Search bar */
+  .search-bar {
+    margin: 0 16px 10px; padding: 10px 14px; background: var(--input-bg);
+    border-radius: var(--radius); display: flex; align-items: center; gap: 8px;
+    color: var(--tertiary-text); font-size: 15px;
+  }
+
+  /* Section header */
+  .section-header {
+    padding: 8px 16px 4px; font-size: 13px; font-weight: 500;
+    color: var(--secondary-text); text-transform: uppercase; letter-spacing: 0.5px;
+    background: var(--bg); position: sticky; top: 0; z-index: 2;
+  }
+
+  /* Contact row */
+  .contact-group {
+    margin: 0 16px 12px; background: var(--surface-dark);
+    border-radius: 16px; border: 0.5px solid var(--border); overflow: hidden;
+  }
+  .contact-row {
+    display: flex; align-items: center; padding: 8px 16px; gap: 12px;
+    height: 56px; cursor: pointer; transition: background 0.15s; position: relative;
+  }
+  .contact-row:active { background: var(--surface-darken); }
+  .contact-row:not(:last-child)::after {
+    content: ''; position: absolute; bottom: 0; left: 68px; right: 16px;
+    height: 0.5px; background: var(--border);
+  }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 15px; font-weight: 600; color: white; flex-shrink: 0;
+  }
+  .contact-info { flex: 1; min-width: 0; }
+  .contact-name { font-size: 17px; font-weight: 400; color: var(--primary-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .contact-meta { font-size: 13px; color: var(--secondary-text); display: flex; align-items: center; gap: 6px; }
+
+  /* Tags */
+  .tag {
+    display: inline-flex; padding: 2px 8px; border-radius: 6px; font-size: 11px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  .tag-vip { background: #FFF3E0; color: #E65100; }
+  .tag-relationship { background: var(--surface-darken); color: var(--secondary-text); }
+
+  .vip-crown {
+    width: 16px; height: 16px; display: inline-flex; align-items: center;
+    justify-content: center; font-size: 12px; flex-shrink: 0;
+  }
+
+  .chevron { color: var(--tertiary-text); font-size: 14px; flex-shrink: 0; }
+
+  /* Contact detail */
+  .detail-header {
+    display: flex; flex-direction: column; align-items: center; padding: 20px 16px 16px;
+  }
+  .detail-avatar {
+    width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 28px; font-weight: 600; color: white; margin-bottom: 12px;
+  }
+  .detail-name { font-size: 22px; font-weight: 600; color: var(--primary-text); margin-bottom: 4px; }
+  .detail-subtitle { font-size: 15px; color: var(--secondary-text); }
+
+  .action-row { display: flex; gap: 12px; padding: 16px; }
+  .action-btn {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 12px 8px; background: var(--surface-dark); border-radius: var(--radius-lg);
+    border: 0.5px solid var(--border); cursor: pointer; transition: all 0.15s;
+    font-size: 13px; font-weight: 500; color: var(--secondary-text);
+  }
+  .action-btn:active { background: var(--surface-darken); }
+  .action-btn svg { width: 22px; height: 22px; color: var(--accent); }
+
+  /* VIP toggle card */
+  .vip-card {
+    margin: 0 16px 12px; padding: 16px; background: var(--surface-dark);
+    border-radius: 16px; border: 0.5px solid var(--border);
+  }
+  .vip-card-header { display: flex; align-items: center; justify-content: space-between; }
+  .vip-card-left { display: flex; align-items: center; gap: 10px; }
+  .vip-card-title { font-size: 17px; font-weight: 500; color: var(--primary-text); }
+  .vip-card-desc { font-size: 13px; color: var(--secondary-text); margin-top: 8px; line-height: 1.4; }
+
+  /* Toggle */
+  .toggle {
+    width: 51px; height: 31px; border-radius: 16px; padding: 2px; cursor: pointer;
+    transition: background 0.25s; flex-shrink: 0;
+  }
+  .toggle.on { background: var(--accent); }
+  .toggle.off { background: #D1CCC7; }
+  .toggle-knob {
+    width: 27px; height: 27px; border-radius: 50%; background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15); transition: transform 0.25s;
+  }
+  .toggle.on .toggle-knob { transform: translateX(20px); }
+
+  /* Info card */
+  .info-card {
+    margin: 0 16px 12px; padding: 14px 16px; background: var(--surface-dark);
+    border-radius: 16px; border: 0.5px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .info-card-left { display: flex; align-items: center; gap: 12px; }
+  .info-card-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .info-card-text { font-size: 15px; color: var(--primary-text); font-weight: 400; }
+  .info-card-sub { font-size: 13px; color: var(--secondary-text); }
+
+  /* Call overlay */
+  .call-overlay {
+    position: absolute; inset: 0; z-index: 100; display: flex; flex-direction: column;
+    animation: slideUp 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  @keyframes ripple {
+    0% { transform: scale(1); opacity: 0.4; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  .call-gradient {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+  }
+  .call-content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; padding: 54px 0 0; overflow: hidden; min-height: 0; }
+
+  .call-status { text-align: center; padding: 8px 16px 0; display: flex; align-items: center; gap: 12px; }
+  .call-vip-badge {
+    display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px;
+    background: rgba(255,179,0,0.2); border: 1px solid rgba(255,179,0,0.4);
+    border-radius: 20px; font-size: 10px; font-weight: 600; color: #FFD54F;
+    text-transform: uppercase; letter-spacing: 0.8px;
+  }
+  .call-avatar {
+    width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 600; color: white; position: relative;
+  }
+  .call-avatar-ring {
+    position: absolute; inset: -4px; border-radius: 50%;
+    border: 2px solid rgba(255,179,0,0.5); animation: pulse 2s infinite;
+  }
+  .call-status-info { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+  .call-name { font-size: 17px; font-weight: 600; color: white; }
+  .call-label { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+  .transfer-status {
+    text-align: center; padding: 8px 16px; display: flex; flex-direction: column;
+    align-items: center; gap: 4px;
+  }
+  .transfer-badge {
+    display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+    background: rgba(255,131,112,0.15); border: 1px solid rgba(255,131,112,0.3);
+    border-radius: 20px; font-size: 13px; font-weight: 500; color: var(--accent);
+  }
+  .transfer-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s infinite; }
+  .transfer-sub { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+  /* Live transcript */
+  .transcript-panel {
+    flex: 1; min-height: 0; margin: 12px 16px; background: rgba(255,255,255,0.06);
+    border-radius: 20px; border: 1px solid rgba(255,255,255,0.08);
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .transcript-header {
+    padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .transcript-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.5px; }
+  .transcript-live { font-size: 11px; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 4px; }
+  .transcript-live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1s infinite; }
+  .transcript-body { flex: 1; padding: 12px 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 0; }
+
+  .msg { display: flex; gap: 0; padding-bottom: 10px; }
+  .msg.ai { justify-content: flex-start; }
+  .msg.caller { justify-content: flex-end; }
+  .msg-inner { display: flex; flex-direction: column; gap: 2px; max-width: 80%; }
+  .msg-sender { font-size: 9px; font-weight: 500; letter-spacing: 0.3px; padding-bottom: 2px; }
+  .msg.ai .msg-sender { color: rgba(255,255,255,0.4); }
+  .msg.caller .msg-sender { color: rgba(255,255,255,0.4); text-align: right; }
+  .msg-text {
+    font-size: 13px; line-height: 1.4; color: rgba(255,255,255,0.7);
+  }
+  .msg.ai .msg-text { /* no bubble — just text, matching iOS TranscriptView */ }
+  .msg.caller .msg-text {
+    background: rgba(255,255,255,0.08); padding: 10px 12px;
+    border-radius: 12px; color: rgba(255,255,255,0.85);
+  }
+
+  /* Call action buttons */
+  .call-actions {
+    padding: 16px 24px 40px; display: flex; justify-content: center; gap: 20px;
+  }
+  .call-action-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer;
+  }
+  .call-action-circle {
+    width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 24px; transition: transform 0.15s;
+  }
+  .call-action-circle:active { transform: scale(0.92); }
+  .call-action-label { font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 500; }
+
+  .btn-join { background: var(--green); }
+  .btn-mute { background: rgba(255,255,255,0.12); }
+  .btn-end { background: var(--error); }
+
+  /* Lock screen */
+  .lock-screen {
+    position: absolute; inset: 0; z-index: 200;
+    background: linear-gradient(180deg, #0a0a1a 0%, #121228 50%, #1a1a3a 100%);
+    display: flex; flex-direction: column; animation: fadeIn 0.3s;
+  }
+  .lock-time { text-align: center; padding: 60px 0 8px; font-size: 72px; font-weight: 300; color: white; letter-spacing: -2px; }
+  .lock-date { text-align: center; font-size: 17px; color: rgba(255,255,255,0.7); font-weight: 500; margin-bottom: 24px; }
+
+  /* Live activity widget — Uber/Flighty-inspired compact layout */
+  .live-activity {
+    margin: 0 16px; border-radius: 16px; overflow: hidden;
+    background: rgba(30,30,46,0.97); backdrop-filter: blur(20px);
+    animation: fadeIn 0.4s;
+  }
+  .la-body {
+    padding: 14px 16px 12px; display: flex; align-items: center; gap: 14px;
+  }
+  .la-left { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .la-app { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.5px; }
+  .la-name { font-size: 17px; font-weight: 600; color: white; }
+  .la-detail { font-size: 13px; color: var(--accent); font-weight: 500; }
+  .la-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .la-avatar {
+    width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 18px; font-weight: 600; color: white;
+    flex-shrink: 0; position: relative;
+  }
+  .la-avatar-ring {
+    position: absolute; inset: -3px; border-radius: 50%;
+    border: 2px solid var(--gold); animation: pulse 2s infinite;
+  }
+  .la-actions {
+    display: flex; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .la-action {
+    flex: 1; padding: 12px; text-align: center; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: background 0.15s; display: flex; align-items: center;
+    justify-content: center; gap: 5px;
+  }
+  .la-action:active { background: rgba(255,255,255,0.05); }
+  .la-action:first-child { border-right: 1px solid rgba(255,255,255,0.08); }
+  .la-action.join { color: var(--green); }
+  .la-action.dismiss { color: rgba(255,255,255,0.5); }
+
+  /* Onboarding nudge */
+  .nudge-overlay {
+    position: absolute; inset: 0; z-index: 150; display: flex; align-items: flex-end;
+    background: rgba(0,0,0,0.5); animation: fadeIn 0.3s;
+  }
+  .nudge-sheet {
+    width: 100%; background: var(--bg); border-radius: 28px 28px 0 0;
+    padding: 12px 16px 40px; animation: slideUp 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .nudge-handle { width: 36px; height: 5px; border-radius: 3px; background: var(--border); margin: 0 auto 20px; }
+  .nudge-title { font-size: 22px; font-weight: 600; color: var(--primary-text); margin-bottom: 8px; }
+  .nudge-desc { font-size: 15px; color: var(--secondary-text); line-height: 1.5; margin-bottom: 20px; }
+
+  .nudge-contact {
+    display: flex; align-items: center; padding: 10px 0; gap: 12px;
+  }
+  .nudge-contact:not(:last-child) { border-bottom: 0.5px solid var(--border); }
+  .nudge-contact-info { flex: 1; }
+  .nudge-contact-name { font-size: 15px; font-weight: 500; color: var(--primary-text); }
+  .nudge-contact-sub { font-size: 12px; color: var(--secondary-text); }
+
+  .nudge-actions { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .btn-primary {
+    width: 100%; padding: 14px; background: var(--accent); color: white;
+    border: none; border-radius: 30px; font-size: 17px; font-weight: 600;
+    cursor: pointer; transition: opacity 0.15s; font-family: inherit;
+  }
+  .btn-primary:active { opacity: 0.85; }
+  .btn-secondary {
+    width: 100%; padding: 14px; background: var(--surface-darken); color: var(--primary-text);
+    border: none; border-radius: 30px; font-size: 17px; font-weight: 600;
+    cursor: pointer; transition: opacity 0.15s; font-family: inherit;
+  }
+
+  /* Screen selector */
+  .screen-nav {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; background: rgba(0,0,0,0.8); padding: 8px 12px;
+    border-radius: 16px; z-index: 1000; backdrop-filter: blur(10px);
+  }
+  .screen-nav button {
+    padding: 8px 14px; border: none; border-radius: 10px; font-size: 12px;
+    font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s;
+    color: rgba(255,255,255,0.6); background: transparent; white-space: nowrap;
+  }
+  .screen-nav button.active { background: var(--accent); color: white; }
+  .screen-nav button:hover:not(.active) { color: white; }
+
+  .back-btn {
+    display: flex; align-items: center; gap: 4px; font-size: 17px;
+    color: var(--accent); cursor: pointer; padding: 8px 0; font-weight: 400;
+  }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// --- Data ---
+const CONTACTS = [
+  { id: '1', first: 'Angela', last: 'Anderson', phone: '+1 (555) 901-2345', rel: 'Boss', vip: true, color: '#5C6BC0' },
+  { id: '9', first: 'David', last: 'Reyes', phone: '+1 (555) 012-3456', rel: 'Boss', vip: true, color: '#8D6E63' },
+  { id: '2', first: 'Maria', last: 'Chen', phone: '+1 (555) 234-5678', rel: 'Significant Other', vip: true, color: '#E07A5F' },
+  { id: '3', first: 'James', last: 'Morrison', phone: '+1 (555) 345-6789', rel: 'Client', vip: false, color: '#26A69A' },
+  { id: '10', first: 'Rachel', last: 'Kim', phone: '+1 (555) 111-2233', rel: 'Client', vip: false, color: '#AB47BC' },
+  { id: '4', first: 'Dr. Sarah', last: 'Williams', phone: '+1 (555) 456-7890', rel: 'Provider', vip: true, color: '#7E57C2' },
+  { id: '5', first: 'Tom', last: 'Barrett', phone: '+1 (555) 567-8901', rel: 'Friend', vip: false, color: '#42A5F5' },
+  { id: '6', first: 'Lisa', last: 'Park', phone: '+1 (555) 678-9012', rel: 'Colleague', vip: false, color: '#EF5350' },
+  { id: '7', first: 'Kevin', last: 'Zhang', phone: '+1 (555) 789-0123', rel: 'Client', vip: false, color: '#66BB6A' },
+  { id: '8', first: 'Anna', last: 'Petrov', phone: '+1 (555) 890-1234', rel: 'Patient', vip: false, color: '#FFA726' },
+];
+
+const TRANSCRIPT_MSGS = [
+  { sender: 'ai', text: "Good morning Mrs Anderson! Looks like Alex missed your call but let me see if I can still get him on the line for you." },
+  { sender: 'caller', text: "Thanks." },
+  { sender: 'ai', text: "Of course ma'am. I'm sending him an urgent notification right now to hopefully get his attention. Let's see if this helps..." },
+  { sender: 'caller', text: "Right." },
+  { sender: 'ai', text: "While we're waiting, I did see that he got an urgent call from a major client in the last hour so that might be why he hasn't noticed your call yet..." },
+  { sender: 'caller', text: "Ok." },
+  { sender: 'ai', text: "Ok, it looks like I'm not able to get his attention right now, but I know he will absolutely want to return your call as soon as he possibly can. His diary has him marked as free in 1 hour, would you like me to secure that time for a callback?" },
+  { sender: 'caller', text: "Yes." },
+  { sender: 'ai', text: "Alright, let me do that. Just before I do, is there a topic you'd like me to include on the invite?" },
+  { sender: 'caller', text: "Quarterly report." },
+  { sender: 'ai', text: "Noted. Hold on a just a second. There we go. You should have received a calendar invite to reconnect in 1 hour to discuss the quarterly report." },
+  { sender: 'caller', text: "Thanks." },
+  { sender: 'ai', text: "No problem at all Mrs Anderson. I'm sorry to have kept you waiting. Please know you're of utmost importance to Alex. I'm sure he'll be looking forward to speaking with you in 1 hour." },
+  { sender: 'caller', text: "Ok bye." },
+];
+
+// --- Helpers ---
+const initials = (c) => `${c.first[0]}${c.last[0]}`;
+const grouped = (contacts, filter) => {
+  const filtered = filter === 'All' ? contacts : filter === 'VIP' ? contacts.filter(c => c.vip) : contacts;
+  const groups = {};
+  filtered.forEach(c => {
+    const letter = c.last[0].toUpperCase();
+    if (!groups[letter]) groups[letter] = [];
+    groups[letter].push(c);
+  });
+  return Object.entries(groups).sort(([a],[b]) => a.localeCompare(b));
+};
+
+// --- Icons (inline SVG) ---
+const IconInbox = ({color}) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5"><path d="M3 12h5l2 3h4l2-3h5"/><path d="M5 7l-2 5v5a2 2 0 002 2h14a2 2 0 002-2v-5l-2-5a2 2 0 00-2-1.5H7A2 2 0 005 7z"/></svg>;
+const IconContacts = ({color}) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5"><circle cx="12" cy="8" r="4"/><path d="M5.5 21a6.5 6.5 0 0113 0"/></svg>;
+const IconProfile = ({color}) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.5a5.5 5.5 0 0111 0"/></svg>;
+const IconSearch = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>;
+const IconChevron = () => <span className="chevron">&rsaquo;</span>;
+const IconPhone = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.32 1.54.55 2.35.68a2 2 0 011.72 2z"/></svg>;
+const IconMsg = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>;
+const IconMail = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>;
+const IconCrown = () => <span style={{fontSize:'14px'}}>&#x1F451;</span>;
+const IconBack = () => <span style={{fontSize:'20px'}}>&lsaquo;</span>;
+const IconMic = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 1a4 4 0 00-4 4v6a4 4 0 008 0V5a4 4 0 00-4-4z"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 19v4M8 23h8"/></svg>;
+
+// --- Components ---
+function StatusBar({light}) {
+  return (
+    <div className="status-bar" style={light ? {} : {color:'white', background:'transparent'}}>
+      <span>9:41</span>
+      <div className="status-bar-icons">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill={light ? '#2D2A26' : 'white'}><rect x="0" y="6" width="3" height="6" rx="1"/><rect x="4.5" y="4" width="3" height="8" rx="1"/><rect x="9" y="2" width="3" height="10" rx="1"/><rect x="13.5" y="0" width="3" height="12" rx="1" opacity="0.3"/></svg>
+        <svg width="16" height="12" viewBox="0 0 24 12" fill={light ? '#2D2A26' : 'white'}><rect x="0" y="0" width="21" height="12" rx="3" stroke={light ? '#2D2A26' : 'white'} strokeWidth="1.5" fill="none"/><rect x="2" y="2" width="14" height="8" rx="1.5"/><rect x="22" y="4" width="2" height="4" rx="1"/></svg>
+      </div>
+    </div>
+  );
+}
+
+function TabBar({active, onTab}) {
+  return (
+    <div className="tab-bar">
+      {[['Inbox', IconInbox], ['Contacts', IconContacts], ['Profile', IconProfile]].map(([name, Icon]) => (
+        <div key={name} className={`tab-item ${active === name ? 'active' : ''}`} onClick={() => onTab(name)}>
+          <Icon color={active === name ? '#FF8370' : '#9E9893'} />
+          {name}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Avatar({contact, size = 40, fontSize = 15}) {
+  return (
+    <div className="avatar" style={{width:size, height:size, fontSize, background: contact.color}}>
+      {initials(contact)}
+    </div>
+  );
+}
+
+function ContactRow({contact, onClick}) {
+  return (
+    <div className="contact-row" onClick={onClick}>
+      <Avatar contact={contact} />
+      <div className="contact-info">
+        <div className="contact-name">{contact.first} {contact.last}</div>
+        <div className="contact-meta">
+          <span>{contact.phone}</span>
+          {contact.rel && <span className={`tag ${contact.vip ? 'tag-vip' : 'tag-relationship'}`}>{contact.rel}</span>}
+        </div>
+      </div>
+      {contact.vip && <div className="vip-crown"><IconCrown /></div>}
+      <IconChevron />
+    </div>
+  );
+}
+
+// --- Screens ---
+function ContactsScreen({contacts, onSelect, filter, setFilter}) {
+  const groups = grouped(contacts, filter);
+  return (
+    <>
+      <div className="nav-header"><div className="nav-title">Contacts</div></div>
+      <div className="search-bar"><IconSearch /><span>Search contacts...</span></div>
+      <div className="filter-row">
+        {['All', 'VIP', 'Personal', 'Work'].map(f => (
+          <div key={f} className={`filter-pill ${filter === f ? 'active' : ''}`} onClick={() => setFilter(f)}>
+            {f}
+            {f === 'VIP' && filter === 'VIP' && <span className="badge">{contacts.filter(c=>c.vip).length}</span>}
+          </div>
+        ))}
+      </div>
+      {groups.map(([letter, cs]) => (
+        <div key={letter}>
+          <div className="section-header">{letter}</div>
+          <div className="contact-group">
+            {cs.map(c => <ContactRow key={c.id} contact={c} onClick={() => onSelect(c)} />)}
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}
+
+function ContactDetailScreen({contact, onBack, onToggleVip, contacts}) {
+  return (
+    <>
+      <div style={{padding:'0 16px'}}><div className="back-btn" onClick={onBack}><IconBack /> Contacts</div></div>
+      <div className="detail-header">
+        <Avatar contact={contact} size={80} fontSize={28} />
+        <div className="detail-name">{contact.first} {contact.last}</div>
+        <div className="detail-subtitle" style={{display:'flex',alignItems:'center',gap:6}}>
+          {contact.rel}
+          {contact.vip && <span className="tag tag-vip" style={{marginLeft:4}}>VIP</span>}
+        </div>
+      </div>
+
+      <div className="action-row">
+        <div className="action-btn"><IconMsg /><span>Message</span></div>
+        <div className="action-btn"><IconPhone /><span>Call</span></div>
+        <div className="action-btn"><IconMail /><span>Email</span></div>
+      </div>
+
+      <div className="vip-card">
+        <div className="vip-card-header">
+          <div className="vip-card-left">
+            <span style={{fontSize:20}}>&#x1F451;</span>
+            <span className="vip-card-title">VIP Contact</span>
+          </div>
+          <div className={`toggle ${contact.vip ? 'on' : 'off'}`} onClick={() => onToggleVip(contact.id)}>
+            <div className="toggle-knob" />
+          </div>
+        </div>
+        <div className="vip-card-desc">
+          When {contact.first} calls, AI will greet her and immediately try to transfer to you with an urgent notification.
+        </div>
+      </div>
+
+      <div className="info-card">
+        <div className="info-card-left">
+          <div className="info-card-icon" style={{background:'var(--surface-darken)'}}>&#x1F4DE;</div>
+          <div>
+            <div className="info-card-text">{contact.phone}</div>
+            <div className="info-card-sub">Mobile</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="info-card">
+        <div className="info-card-left">
+          <div className="info-card-icon" style={{background:'var(--surface-darken)'}}>&#x1F4BC;</div>
+          <div>
+            <div className="info-card-text">{contact.rel}</div>
+            <div className="info-card-sub">Relationship</div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function VIPCallScreen({contact, onJoin, onDismiss}) {
+  const bodyRef = useRef(null);
+
+  useEffect(() => {
+    if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+  }, []);
+
+  return (
+    <div className="call-overlay">
+      <div className="call-gradient" />
+      <div className="call-content">
+        <div className="call-status">
+          <div className="call-avatar" style={{background: contact.color}}>
+            <div className="call-avatar-ring" />
+            {initials(contact)}
+          </div>
+          <div className="call-status-info">
+            <div style={{display:'flex',alignItems:'center',gap:8}}>
+              <div className="call-name">{contact.first} {contact.last}</div>
+              <div className="call-vip-badge">&#x1F451; VIP</div>
+            </div>
+            <div className="call-label">{contact.rel} &middot; 3:42</div>
+          </div>
+        </div>
+
+        <div className="transfer-status">
+          <div className="transfer-badge" style={{background:'rgba(67,160,71,0.15)',borderColor:'rgba(67,160,71,0.3)',color:'var(--green)'}}>&#x2705; Call ended &mdash; callback scheduled in 1h</div>
+          <div className="transfer-sub">Topic: quarterly report</div>
+        </div>
+
+        <div className="transcript-panel">
+          <div className="transcript-header">
+            <div className="transcript-title">Transcript</div>
+            <div className="transcript-live" style={{color:'var(--secondary-text)'}}>3:42</div>
+          </div>
+          <div className="transcript-body" ref={bodyRef}>
+            {TRANSCRIPT_MSGS.map((m, i) => (
+              <div key={i} className={`msg ${m.sender}`}>
+                <div className="msg-inner">
+                  {m.sender === 'caller' && <div className="msg-sender">{contact.first}</div>}
+                  <div className="msg-text">{m.text}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="call-actions">
+          <div className="call-action-btn" onClick={onJoin}>
+            <div className="call-action-circle btn-join">&#x1F4DE;</div>
+            <div className="call-action-label">Call Back Now</div>
+          </div>
+          <div className="call-action-btn" onClick={onDismiss}>
+            <div className="call-action-circle btn-mute">&#x2705;</div>
+            <div className="call-action-label">Dismiss</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LockScreen({contact, onJoin, onDismiss}) {
+  return (
+    <div className="lock-screen">
+      <StatusBar light={false} />
+      <div className="lock-time">9:41</div>
+      <div className="lock-date">Sunday, March 30</div>
+
+      <div className="live-activity">
+        <div className="la-body">
+          <div className="la-left">
+            <div className="la-app">YouSquared</div>
+            <div className="la-name">{contact.first} {contact.last}</div>
+            <div className="la-detail">&#x1F451; {contact.rel} &middot; VIP &middot; Transferring...</div>
+            <div className="la-sub">&ldquo;Thanks.&rdquo;</div>
+          </div>
+          <div className="la-avatar" style={{background: contact.color}}>
+            <div className="la-avatar-ring" />
+            {initials(contact)}
+          </div>
+        </div>
+        <div className="la-actions">
+          <div className="la-action join" onClick={onJoin}>Join Call</div>
+          <div className="la-action dismiss" onClick={onDismiss}>Re-schedule</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const VIP_RELS = [
+  { label: 'Boss', defaultOn: true },
+  { label: 'Significant Other', defaultOn: true },
+  { label: 'Major Client', defaultOn: false },
+  { label: 'Major Partner', defaultOn: true },
+];
+
+function OnboardingNudge({contacts, onConfirm, onSkip}) {
+  const [toggles, setToggles] = useState(() => {
+    const t = {};
+    VIP_RELS.forEach(r => t[r.label] = r.defaultOn);
+    return t;
+  });
+  const toggle = (label) => setToggles(prev => ({...prev, [label]: !prev[label]}));
+
+  return (
+    <div className="nudge-overlay">
+      <div className="nudge-sheet">
+        <div className="nudge-handle" />
+        <div className="nudge-title">&#x1F451; Set up VIP contacts</div>
+        <div className="nudge-desc">
+          AI will try to instantly transfer to you with urgent notification
+        </div>
+
+        {VIP_RELS.map(r => (
+          <div className="nudge-contact" key={r.label}>
+            <div className="nudge-contact-info">
+              <div className="nudge-contact-name">{r.label}</div>
+            </div>
+            <div className={`toggle ${toggles[r.label] ? 'on' : 'off'}`} onClick={() => toggle(r.label)}>
+              <div className="toggle-knob" />
+            </div>
+            <IconChevron />
+          </div>
+        ))}
+
+        <div className="nudge-actions">
+          <button className="btn-primary" onClick={onConfirm}>Confirm</button>
+          <button className="btn-secondary" onClick={onSkip}>Later</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --- App ---
+function App() {
+  const [screen, setScreen] = useState('contacts');
+  const [contacts, setContacts] = useState(CONTACTS);
+  const [selected, setSelected] = useState(null);
+  const [filter, setFilter] = useState('All');
+  const [showCall, setShowCall] = useState(false);
+  const [showLock, setShowLock] = useState(false);
+  const [showNudge, setShowNudge] = useState(false);
+
+  const vipContact = contacts[0]; // Robert Anderson (Boss)
+
+  const toggleVip = (id) => {
+    setContacts(prev => prev.map(c => c.id === id ? {...c, vip: !c.vip} : c));
+  };
+
+  const navTo = (s) => {
+    setScreen(s);
+    setSelected(null);
+    setShowCall(false);
+    setShowLock(false);
+    setShowNudge(false);
+  };
+
+  return (
+    <>
+      <div className="phone-frame">
+        <StatusBar light={!showCall && !showLock} />
+
+        <div className="screen-content">
+          {screen === 'contacts' && !selected && (
+            <ContactsScreen contacts={contacts} onSelect={setSelected} filter={filter} setFilter={setFilter} />
+          )}
+          {screen === 'contacts' && selected && (
+            <ContactDetailScreen contact={selected} onBack={() => setSelected(null)} onToggleVip={toggleVip} contacts={contacts} />
+          )}
+        </div>
+
+        {!showCall && !showLock && <TabBar active={screen === 'contacts' ? 'Contacts' : 'Inbox'} onTab={(t) => navTo(t.toLowerCase())} />}
+
+        {showCall && <VIPCallScreen contact={vipContact} onJoin={() => setShowCall(false)} onDismiss={() => setShowCall(false)} />}
+        {showLock && <LockScreen contact={vipContact} onJoin={() => { setShowLock(false); setShowCall(true); }} onDismiss={() => setShowLock(false)} />}
+        {showNudge && <OnboardingNudge contacts={contacts} onConfirm={() => setShowNudge(false)} onSkip={() => setShowNudge(false)} />}
+      </div>
+
+      <div className="screen-nav">
+        <button className={screen === 'contacts' && !selected && !showCall && !showLock && !showNudge ? 'active' : ''}
+          onClick={() => navTo('contacts')}>Contacts</button>
+        <button className={selected ? 'active' : ''}
+          onClick={() => { navTo('contacts'); setSelected(contacts[0]); }}>VIP Detail</button>
+        <button className={showNudge ? 'active' : ''}
+          onClick={() => { navTo('contacts'); setShowNudge(true); }}>Onboarding</button>
+        <button className={showLock ? 'active' : ''}
+          onClick={() => { navTo('contacts'); setShowLock(true); }}>Lock Screen</button>
+        <button className={showCall ? 'active' : ''}
+          onClick={() => { navTo('contacts'); setShowCall(true); }}>VIP Call</button>
+      </div>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

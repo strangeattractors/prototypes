@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "outbound-proto",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "/tmp/yousquared-outbound-prototype", "-l", "3847"],
+      "port": 3847
+    }
+  ]
+}

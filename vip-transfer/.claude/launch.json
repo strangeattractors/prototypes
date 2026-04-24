@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "vip-prototype",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "/Users/alexdalyac/git/vip-transfer-prototype", "-l", "3456"],
+      "port": 3456
+    }
+  ]
+}
