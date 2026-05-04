@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="../_gate.js"></script>
+<script src="../../_gate.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>YouSquared — Products & Services Sub-fields</title>
@@ -306,18 +306,14 @@ const INDUSTRIES={
       availability_source_subfield:"showing_calendar",
     },
     auto_config_scenarios:[
-      {id:"rs_iqf",direction:"outbound",condition:"Inquiry Follow-up",instructions:"Touch warm leads who inquired but haven't booked a showing or made an offer. First touch confirms receipt; follow-ups offer help with decision-blockers (financing, comps, timing).",cadence:["same day","+1 day","+2 days","+3 days","+7 days"],defaultAttempts:3,maxAttempts:3,auto:true,rel:"prospect",event:"inquiry",timing:"same day",action:"text"},
-      {id:"rs_prep",direction:"outbound",condition:"Pre-Closing Confirmation",instructions:"48h before closing: confirm certified funds wired or cashier's check ready, gov ID + secondary, walkthrough scheduled, utilities transferred.",auto:true,rel:"buyer",event:"closing",timing:"in 48h",action:"text"},
-      {id:"rs_adopt",direction:"outbound",condition:"Move-in Check",instructions:"1 week post-close: brief check on move-in. Offer contractor / utility referrals from your vetted list.",auto:true,rel:"buyer",event:"closing",timing:"in 1 week",action:"text"},
-      {id:"rs_fit",direction:"outbound",condition:"Homeowner Check-in",instructions:"6 months post-close: light relational check. Anything popping up with the home? Renovations going as planned?",auto:false,rel:"buyer",event:"closing",timing:"in 6 months",action:"text"},
-      {id:"rs_ren",direction:"outbound",condition:"Homeiversary Equity Update",instructions:"At 12 months post-close, text a homeiversary check-in offering a fresh comps / equity update. Soft ask for friend/family referrals.",auto:false,rel:"buyer",event:"purchase",timing:"in 12 months",action:"text"},
-      {id:"rs_ref",direction:"outbound",condition:"Lender / Inspector Connection",instructions:"After introducing the buyer to a lender or inspector, follow up in 7d to confirm the connection landed and the relationship is moving forward.",auto:false,rel:"prospect",event:"referral",timing:"in 1 week",action:"text"},
-      {id:"rs_mc",direction:"inbound",condition:"Missed Call Reply",instructions:"Text back instantly apologizing and asking how you can help.",auto:true,rel:"prospect",event:"missed call",timing:"instantly",action:"text"},
+      {id:"rs1",direction:"outbound",condition:"If buyer's purchase date is in 12 months",instructions:"Text a homeiversary check-in offering a fresh comps / equity update.",auto:false,rel:"buyer",event:"purchase",timing:"in 12 months",action:"text"},
+      {id:"rs2",direction:"outbound",condition:"If prospect's listing inquiry is next day",instructions:"Follow up on the listing inquiry with showing availability this week.",auto:true,rel:"prospect",event:"listing inquiry",timing:"next day",action:"text"},
+      {id:"rs3",direction:"inbound",condition:"If prospect's call is missed",instructions:"Text back instantly apologizing and asking how you can help.",auto:true,rel:"prospect",event:"missed call",timing:"instantly",action:"text"},
     ],
   },
-  primary_care:{
-    id:"primary_care",
-    label:"Primary Care",
+  medical:{
+    id:"medical",
+    label:"Medical / Dental",
     general:{company:"Lakeside Family Practice",job_title:"Family Physician",goes_by:"Dr. Kim"},
     items_label:"Service",
     items_label_plural:"Services Offered",
@@ -331,9 +327,8 @@ const INDUSTRIES={
       {key:"notes",label:"Notes",type:"multiline"},
     ],
     default_items:[
-      {name:"Annual physical",description:"Comprehensive wellness exam",price:"$200–$350 self-pay",provider:"Dr. Kim",clinic_location:"Lakeside Family Practice, 100 Main St",provider_hours:"Mon–Fri 8am–5pm",allow_ai_booking:true,event_duration:30},
-      {name:"Sick visit",description:"Same-day or next-day acute care visit",price:"$125–$175 self-pay",provider:"Dr. Kim",clinic_location:"Lakeside Family Practice, 100 Main St",provider_hours:"Mon–Fri 8am–5pm",allow_ai_booking:true,event_duration:20},
-      {name:"Chronic disease follow-up",description:"Diabetes / hypertension / asthma management",price:"$100–$150 self-pay",provider:"Dr. Kim",clinic_location:"Lakeside Family Practice, 100 Main St",provider_hours:"Mon–Fri 8am–5pm",allow_ai_booking:true,event_duration:20},
+      {name:"Teeth cleaning",description:"Routine cleaning and exam",price:"$120",provider:"Dr. Martinez",clinic_location:"Downtown Clinic, 200 Main St",provider_hours:"Mon–Fri 9am–5pm",allow_ai_booking:true,event_duration:30},
+      {name:"Initial consultation",description:"New patient assessment",price:"$80",provider:"Dr. Martinez",clinic_location:"Downtown Clinic, 200 Main St",provider_hours:"Mon–Fri 9am–5pm",allow_ai_booking:true,event_duration:45},
     ],
     itemTitle:it=>(it.name||"").trim()||"Untitled service",
     itemSummary:it=>{
@@ -349,201 +344,23 @@ const INDUSTRIES={
     business_defaults:{
       pricing:"Most insurance plans accepted. Self-pay pricing varies by service.",
       geography_served:"Austin Metro",
-      hours_of_operation:"Mon–Fri 8am–5pm",
+      hours_of_operation:"Mon–Fri 9am–5pm",
     },
     business_draft_keys:["pricing","hours_of_operation"],
     scheduling:{
       event_type_label:"Appointment",
       event_type_plural:"appointments",
       duration_unit:"min",
-      duration_presets:[15,20,30,45,60],
+      duration_presets:[15,30,45,60],
       duration_default:30,
       allow_ai_booking_default:true,
       location_source_subfield:"clinic_location",
       availability_source_subfield:"provider_hours",
     },
     auto_config_scenarios:[
-      {id:"pc_iqf",direction:"outbound",condition:"Inquiry Follow-up",instructions:"Touch new-patient inquiries who haven't booked the first appointment. First touch confirms receipt + insurance verification; follow-ups help with scheduling and answer questions.",cadence:["same day","+1 day","+2 days","+3 days","+7 days"],defaultAttempts:3,maxAttempts:3,auto:true,rel:"prospect",event:"inquiry",timing:"same day",action:"text"},
-      {id:"pc_prep",direction:"outbound",condition:"Fasting Labs Prep",instructions:"Night before fasting labs / annual physical: NPO confirmed (water OK), bring all current meds in their bottles, bring insurance card.",auto:true,rel:"patient",event:"appointment",timing:"in 24h",action:"text"},
-      {id:"pc_adopt",direction:"outbound",condition:"Post-Visit Recovery Check",instructions:"Call 48h post-visit to check on recovery, symptoms, and answer questions.",auto:true,rel:"patient",event:"appointment",timing:"in 48h",action:"call"},
-      {id:"pc_fit",direction:"outbound",condition:"Chronic Disease Check",instructions:"3-month check for chronic disease patients (BP, A1C, asthma) — meds working, side effects, ready for next labs?",auto:false,rel:"patient",event:"check-in",timing:"in 3 months",action:"text"},
-      {id:"pc_ren",direction:"outbound",condition:"Annual Wellness Recall",instructions:"At 90 days since last visit, text a preventive care check-in to book a routine follow-up. Folds in any overdue Rx renewal.",auto:false,rel:"patient",event:"appointment",timing:"in 90 days",action:"text"},
-      {id:"pc_ref",direction:"outbound",condition:"Specialist Referral",instructions:"After referring to cardiology / derm / GI etc., follow up in 14d to confirm the consult booked. Offer to call the specialist directly if not.",auto:false,rel:"patient",event:"referral",timing:"in 2 weeks",action:"text"},
-      {id:"pc_mc",direction:"inbound",condition:"Missed Call Reply",instructions:"Text back instantly apologizing and asking how you can help.",auto:true,rel:"patient",event:"missed call",timing:"instantly",action:"text"},
-    ],
-  },
-  dental:{
-    id:"dental",
-    label:"Dental",
-    general:{company:"Lakeside Dental",job_title:"Dentist",goes_by:"Dr. Martinez"},
-    items_label:"Service",
-    items_label_plural:"Services Offered",
-    subfields:[
-      {key:"name",label:"Service Name",type:"text"},
-      {key:"description",label:"Description",type:"multiline"},
-      {key:"price",label:"Price",type:"text"},
-      {key:"provider",label:"Provider",type:"text"},
-      {key:"clinic_location",label:"Clinic Location",type:"text"},
-      {key:"provider_hours",label:"Provider Hours",type:"text"},
-      {key:"notes",label:"Notes",type:"multiline"},
-    ],
-    default_items:[
-      {name:"New patient exam + X-rays + cleaning",description:"First-visit comprehensive exam, bitewings, and prophylaxis",price:"$200–$350",provider:"Dr. Martinez",clinic_location:"Lakeside Dental, 200 Main St",provider_hours:"Mon–Thu 8am–5pm, Fri 8am–1pm",allow_ai_booking:true,event_duration:60},
-      {name:"Routine cleaning",description:"Prophylaxis cleaning + exam",price:"$100–$150",provider:"Hygienist",clinic_location:"Lakeside Dental, 200 Main St",provider_hours:"Mon–Thu 8am–5pm, Fri 8am–1pm",allow_ai_booking:true,event_duration:45},
-      {name:"Crown (porcelain)",description:"Single-tooth porcelain crown — 2 visits",price:"$900–$1,400",provider:"Dr. Martinez",clinic_location:"Lakeside Dental, 200 Main St",provider_hours:"Mon–Thu 8am–5pm, Fri 8am–1pm",allow_ai_booking:false,event_duration:90},
-    ],
-    itemTitle:it=>(it.name||"").trim()||"Untitled service",
-    itemSummary:it=>{
-      const name=(it.name||"").trim();
-      if(!name)return"Tap to add details";
-      return[it.provider,it.price].filter(Boolean).join(" · ");
-    },
-    business_labels:{
-      pricing:"Pricing",
-      geography_served:"Service Areas",
-      hours_of_operation:"Office Hours",
-    },
-    business_defaults:{
-      pricing:"Most dental insurance accepted. See Insurance for plan list.",
-      geography_served:"Austin Metro",
-      hours_of_operation:"Mon–Thu 8am–5pm, Fri 8am–1pm",
-    },
-    business_draft_keys:["pricing"],
-    scheduling:{
-      event_type_label:"Appointment",
-      event_type_plural:"appointments",
-      duration_unit:"min",
-      duration_presets:[30,45,60,90,120],
-      duration_default:45,
-      allow_ai_booking_default:true,
-      location_source_subfield:"clinic_location",
-      availability_source_subfield:"provider_hours",
-    },
-    auto_config_scenarios:[
-      {id:"dn_iqf",direction:"outbound",condition:"Inquiry Follow-up",instructions:"Touch new-patient inquiries who haven't booked their first cleaning or exam. First touch confirms receipt + insurance; follow-ups offer financing options and answer questions.",cadence:["same day","+1 day","+2 days","+3 days","+7 days"],defaultAttempts:3,maxAttempts:3,auto:true,rel:"prospect",event:"inquiry",timing:"same day",action:"text"},
-      {id:"dn_prep",direction:"outbound",condition:"Pre-Sedation Confirmation",instructions:"Night before sedation / oral surgery: NPO confirmed, no aspirin/NSAIDs since 5 days prior, ride confirmed for tomorrow + tomorrow night, pre-meds picked up.",auto:true,rel:"patient",event:"procedure",timing:"in 24h",action:"text"},
-      {id:"dn_adopt",direction:"outbound",condition:"Post-Op Day-1 Check",instructions:"48h post-procedure: sensitivity, bite, comfort. Mild sensitivity is normal up to 2 weeks; flag severe pain or bite issues for adjustment.",auto:true,rel:"patient",event:"appointment",timing:"in 48h",action:"text"},
-      {id:"dn_fit",direction:"outbound",condition:"Perio Re-Eval",instructions:"3 months post-scaling and root planing: re-eval visit due to re-measure pocket depths and decide maintenance vs surgical referral.",auto:false,rel:"patient",event:"check-in",timing:"in 3 months",action:"text"},
-      {id:"dn_ren",direction:"outbound",condition:"6-Month Recall",instructions:"Text patients due for their 6-month cleaning. Offer next available slot.",auto:true,rel:"patient",event:"appointment",timing:"in 6 months",action:"text"},
-      {id:"dn_ref",direction:"outbound",condition:"Specialist Referral",instructions:"After referring to OS / endodontist / periodontist, follow up in 18d to confirm consult booked. Offer to call the specialist directly if not.",auto:false,rel:"patient",event:"referral",timing:"in 2 weeks",action:"text"},
-      {id:"dn_mc",direction:"inbound",condition:"Missed Call Reply",instructions:"Text back instantly apologizing and asking how you can help. Flag dental emergencies for same-day callback.",auto:true,rel:"patient",event:"missed call",timing:"instantly",action:"text"},
-    ],
-  },
-  mental_health:{
-    id:"mental_health",
-    label:"Mental Health",
-    general:{company:"Lakeside Counseling",job_title:"Licensed Therapist",goes_by:"Dr. Lee"},
-    items_label:"Service",
-    items_label_plural:"Services Offered",
-    subfields:[
-      {key:"name",label:"Service Name",type:"text"},
-      {key:"description",label:"Description",type:"multiline"},
-      {key:"modality",label:"Modality",type:"text",placeholder:"e.g. CBT, EMDR, DBT"},
-      {key:"session_length",label:"Session Length",type:"text"},
-      {key:"fee_self_pay",label:"Self-Pay Fee",type:"text"},
-      {key:"provider",label:"Provider",type:"text"},
-      {key:"clinic_location",label:"Office Location",type:"text"},
-      {key:"provider_hours",label:"Provider Hours",type:"text"},
-      {key:"notes",label:"Notes",type:"multiline"},
-    ],
-    default_items:[
-      {name:"Initial intake evaluation",description:"60-minute new client assessment + treatment plan",modality:"Intake",session_length:"60 min",fee_self_pay:"$200–$250",provider:"Dr. Lee",clinic_location:"Lakeside Counseling, 300 Oak Ave",provider_hours:"Mon–Fri 9am–7pm, select Sat",allow_ai_booking:true,event_duration:60},
-      {name:"Individual therapy session",description:"Weekly or bi-weekly individual therapy",modality:"CBT / DBT / EMDR",session_length:"50 min",fee_self_pay:"$150–$200",provider:"Dr. Lee",clinic_location:"Lakeside Counseling, 300 Oak Ave",provider_hours:"Mon–Fri 9am–7pm, select Sat",allow_ai_booking:true,event_duration:50},
-      {name:"Couples / family session",description:"Couples or family therapy",modality:"Family Systems",session_length:"50 min",fee_self_pay:"$175–$225",provider:"Dr. Lee",clinic_location:"Lakeside Counseling, 300 Oak Ave",provider_hours:"Mon–Fri 9am–7pm, select Sat",allow_ai_booking:false,event_duration:50},
-    ],
-    itemTitle:it=>(it.name||"").trim()||"Untitled service",
-    itemSummary:it=>{
-      const name=(it.name||"").trim();
-      if(!name)return"Tap to add details";
-      return[it.session_length,it.fee_self_pay].filter(Boolean).join(" · ");
-    },
-    business_labels:{
-      pricing:"Pricing",
-      geography_served:"Service Areas",
-      hours_of_operation:"Office Hours",
-    },
-    business_defaults:{
-      pricing:"In-network with most major insurance. Sliding scale for self-pay clients.",
-      geography_served:"Austin Metro · Telehealth statewide",
-      hours_of_operation:"Mon–Fri 9am–7pm, select Sat",
-    },
-    business_draft_keys:["pricing"],
-    scheduling:{
-      event_type_label:"Session",
-      event_type_plural:"sessions",
-      duration_unit:"min",
-      duration_presets:[30,45,50,60,90],
-      duration_default:50,
-      allow_ai_booking_default:true,
-      location_source_subfield:"clinic_location",
-      availability_source_subfield:"provider_hours",
-    },
-    auto_config_scenarios:[
-      {id:"mh_iqf",direction:"outbound",condition:"Inquiry Follow-up",instructions:"Touch new clients who inquired but haven't booked the first session. Gentle cadence — coming back to therapy is hard. First touch confirms receipt + therapist match; follow-ups address insurance / cost / fit questions.",cadence:["same day","+3 days","+7 days","+14 days","+21 days"],defaultAttempts:3,maxAttempts:3,auto:true,rel:"prospect",event:"inquiry",timing:"same day",action:"text"},
-      {id:"mh_prep",direction:"outbound",condition:"First-Session Prep",instructions:"24h before first session: confirm telehealth link tested, intake forms (PHQ-9, GAD-7, history) completed in the portal. Mention what to expect — first session is mostly the therapist getting to know you.",auto:true,rel:"client",event:"appointment",timing:"in 24h",action:"text"},
-      {id:"mh_adopt",direction:"outbound",condition:"First-Session Fit Check",instructions:"48h after first session: did the modality and therapist feel like a good fit? Offer alternative therapists if not. No pressure.",auto:true,rel:"client",event:"appointment",timing:"in 48h",action:"text"},
-      {id:"mh_fit",direction:"outbound",condition:"Between-Session Check-in",instructions:"Brief, supportive check-in mid-cycle. No clinical content. Reply triggers therapist callback.",auto:false,rel:"client",event:"check-in",timing:"in 2 weeks",action:"text"},
-      {id:"mh_ren",direction:"outbound",condition:"Next-Session Reminder",instructions:"Text a session reminder 24h before. Confirm telehealth link or in-person.",auto:true,rel:"client",event:"appointment",timing:"in 48h",action:"text"},
-      {id:"mh_ref",direction:"outbound",condition:"Psychiatry Referral",instructions:"After referring to psychiatrist for med eval, follow up in 14d to confirm the appt booked. Offer to schedule on the client's behalf if not.",auto:false,rel:"client",event:"referral",timing:"in 2 weeks",action:"text"},
-      {id:"mh_mc",direction:"inbound",condition:"Missed Call Reply",instructions:"Text back instantly with warmth. If language suggests crisis, route to 988 / 911 and flag for immediate clinician callback.",auto:true,rel:"client",event:"missed call",timing:"instantly",action:"text"},
-    ],
-  },
-  oncology:{
-    id:"oncology",
-    label:"Oncology",
-    general:{company:"Metro Oncology Associates",job_title:"Medical Oncologist",goes_by:"Dr. Ali"},
-    items_label:"Service",
-    items_label_plural:"Services Offered",
-    subfields:[
-      {key:"name",label:"Service Name",type:"text"},
-      {key:"description",label:"Description",type:"multiline"},
-      {key:"category",label:"Category",type:"text",placeholder:"e.g. Medical Onc, Hematology, Infusion"},
-      {key:"duration_min",label:"Duration (min)",type:"text"},
-      {key:"provider",label:"Provider",type:"text"},
-      {key:"location",label:"Location",type:"text"},
-      {key:"provider_hours",label:"Provider Hours",type:"text"},
-      {key:"notes",label:"Notes",type:"multiline"},
-    ],
-    default_items:[
-      {_sample:true,name:"New patient consultation",description:"Initial oncology consult — review records, exam, plan",category:"Medical Oncology",duration_min:"60",provider:"Dr. Ali",location:"Metro Oncology, Suite 300",provider_hours:"Mon–Fri 8am–5pm",referral_required:true,ai_intake_checklist:["Referral document number","Diagnosis + biopsy report","Imaging on disc / portal","Prior treatments + dates","Current meds","Insurance + preauth status","Preferred appointment slot(s) from available calendar"],allow_ai_booking:true,event_duration:60},
-      {_sample:true,name:"Surveillance follow-up",description:"Routine post-treatment surveillance visit",category:"Medical Oncology",duration_min:"30",provider:"Dr. Ali",location:"Metro Oncology, Suite 300",provider_hours:"Mon–Fri 8am–5pm",allow_ai_booking:true,event_duration:30},
-      {_sample:true,name:"Chemotherapy infusion",description:"Per regimen — see treatment plan",category:"Infusion",duration_min:"180",provider:"Infusion nurse",location:"Metro Oncology Infusion Suite",provider_hours:"Mon–Fri 7am–6pm",allow_ai_booking:false,event_duration:180},
-      {_sample:true,name:"Clinical trial enrollment",description:"Screening + consent visit for active trial",category:"Clinical Trial",duration_min:"90",provider:"Dr. Ali + research coordinator",location:"Metro Oncology, Suite 300",provider_hours:"Mon–Fri 8am–5pm",referral_required:true,allow_ai_booking:false,event_duration:90},
-    ],
-    itemTitle:it=>(it.name||"").trim()||"Untitled service",
-    itemSummary:it=>{
-      const name=(it.name||"").trim();
-      if(!name)return"Tap to add details";
-      return[it.category,it.duration_min&&`${it.duration_min}min`].filter(Boolean).join(" · ");
-    },
-    business_labels:{
-      geography_served:"Service Areas",
-      hours_of_operation:"Clinic Hours",
-    },
-    business_defaults:{
-      geography_served:"Greater metro area — referrals from regional hospitals and PCPs",
-      hours_of_operation:"Clinic Mon–Fri 8am–5pm · Infusion Mon–Fri 7am–6pm",
-    },
-    business_draft_keys:[],
-    booking_mode:"triage_gated",
-    scheduling:{
-      event_type_label:"Visit",
-      event_type_plural:"visits",
-      duration_unit:"min",
-      duration_presets:[15,30,45,60,90,180],
-      duration_default:30,
-      allow_ai_booking_default:true,
-      location_source_subfield:"location",
-      availability_source_subfield:"provider_hours",
-    },
-    auto_config_scenarios:[
-      {id:"on_iqf",direction:"outbound",condition:"Inquiry Follow-up",instructions:"Touch second-opinion or referred patients who haven't decided to start treatment with us. Gentle cadence — major decisions take time. First touch confirms receipt; follow-ups offer to discuss family / financial / clinical-trial questions.",cadence:["same day","+3 days","+7 days","+14 days","+21 days"],defaultAttempts:3,maxAttempts:3,auto:true,rel:"patient",event:"inquiry",timing:"same day",action:"text"},
-      {id:"on_prep",direction:"outbound",condition:"Pre-Infusion Confirmation",instructions:"24h before infusion: labs in window (CBC, CMP), port access plan with infusion nurse, transport, pre-meds (dexamethasone) taken. Cancel cycle if labs out of range.",auto:true,rel:"patient",event:"appointment",timing:"in 24h",action:"call"},
-      {id:"on_adopt",direction:"outbound",condition:"Post-Cycle CTCAE Check",instructions:"48h post-treatment check-in. Ask about CTCAE-grade side effects: nausea, fatigue, rash, diarrhea frequency, dyspnea, visual changes, liver symptoms. If concerning, page on-call oncologist and offer earlier visit.",auto:true,rel:"patient",event:"appointment",timing:"in 48h",action:"call"},
-      {id:"on_fit",direction:"outbound",condition:"Survivorship Support Check",instructions:"30 days into regimen: energy, support system, financial counseling needs. Offer to connect with patient navigator / social work.",auto:false,rel:"patient",event:"check-in",timing:"in 1 month",action:"call"},
-      {id:"on_ren",direction:"outbound",condition:"Surveillance Imaging Reminder",instructions:"Surveillance scan / labs due (3- or 6-month per pathology). Urgent text to rebook; escalate to oncologist if no response in 48h.",auto:true,rel:"patient",event:"appointment",timing:"overdue",action:"call"},
-      {id:"on_ref",direction:"outbound",condition:"Surgical / Radiation Referral",instructions:"After referring to surgical oncology / radiation oncology, follow up in 10d to confirm consult booked. Offer to call directly if not.",auto:false,rel:"patient",event:"referral",timing:"in 1 week",action:"text"},
-      {id:"on_mc",direction:"inbound",condition:"Missed Call Reply",instructions:"Text back instantly. If language suggests medical emergency (severe pain, fever in immunocompromised patient, neuro symptoms), route to 911 and page on-call oncologist.",auto:true,rel:"patient",event:"missed call",timing:"instantly",action:"text"},
+      {id:"ms1",direction:"outbound",condition:"If patient's appointment is in 90 days",instructions:"Text a preventive care check-in to book a routine follow-up visit.",auto:false,rel:"patient",event:"appointment",timing:"in 90 days",action:"text"},
+      {id:"ms2",direction:"outbound",condition:"If patient's appointment just completed in 48h",instructions:"Call 48h post-visit to check on recovery, symptoms, and answer questions.",auto:true,rel:"patient",event:"appointment",timing:"in 48h",action:"call"},
+      {id:"ms3",direction:"outbound",condition:"If patient's purchase is overdue",instructions:"Call to remind about overdue Rx renewal and offer to schedule a visit.",auto:false,rel:"patient",event:"purchase",timing:"overdue",action:"call"},
     ],
   },
   equipment_rental:{
@@ -585,12 +402,9 @@ const INDUSTRIES={
     business_draft_keys:["billing_policy"],
     scheduling:null, // Equipment rental doesn't expose per-item AI scheduling controls — duration is customer-driven, bookability is uniform across items.
     auto_config_scenarios:[
-      {id:"es_iqf",direction:"outbound",condition:"Inquiry Follow-up",instructions:"Touch quote recipients who haven't confirmed. First touch confirms quote; follow-ups offer time-limited holds, alternate equipment, or address timeline questions.",cadence:["same day","+1 day","+2 days","+3 days","+7 days"],defaultAttempts:3,maxAttempts:3,auto:true,rel:"prospect",event:"inquiry",timing:"same day",action:"text"},
-      {id:"es_prep",direction:"outbound",condition:"Pre-Delivery Site Confirmation",instructions:"24h before delivery: site access (gate code, on-site contact for crew), operator certification card on file, drop location confirmed.",auto:true,rel:"client",event:"delivery",timing:"in 24h",action:"text"},
-      {id:"es_adopt",direction:"outbound",condition:"Day-1 Setup Check",instructions:"Text next day to check setup went smoothly and operator has what they need.",auto:true,rel:"client",event:"delivery",timing:"next day",action:"text"},
-      {id:"es_fit",direction:"outbound",condition:"Mid-Rental Performance Check",instructions:"Mid-rental check: equipment running OK? Need fuel, parts, maintenance? On track for return or extending?",auto:false,rel:"client",event:"check-in",timing:"in 2 weeks",action:"text"},
-      {id:"es_ren",direction:"outbound",condition:"Pickup or Extend",instructions:"Text 2 days before rental ends to confirm extension or schedule pickup.",auto:false,rel:"client",event:"purchase",timing:"in 2 days",action:"text"},
-      {id:"es_mc",direction:"inbound",condition:"Missed Call Reply",instructions:"Text back instantly apologizing and asking how you can help.",auto:true,rel:"prospect",event:"missed call",timing:"instantly",action:"text"},
+      {id:"es1",direction:"outbound",condition:"If client's purchase is in 2 days",instructions:"Text 2 days before rental ends to confirm extension or schedule pickup.",auto:false,rel:"client",event:"purchase",timing:"in 2 days",action:"text"},
+      {id:"es2",direction:"outbound",condition:"If client's delivery completed next day",instructions:"Text next day to check setup went smoothly and operator has what they need.",auto:true,rel:"client",event:"delivery",timing:"next day",action:"text"},
+      {id:"es3",direction:"outbound",condition:"If prospect's lead is next day",instructions:"Follow up on the quote the next day to confirm or adjust.",auto:false,rel:"prospect",event:"lead",timing:"next day",action:"text"},
     ],
   },
   pharmacy:{
@@ -644,13 +458,9 @@ const INDUSTRIES={
       mock_columns_mapped:["product_name → Name","sku → ID","on_hand → Inventory","price → Price","ndc → NDC code","dosage_form → Dosage"],
     },
     auto_config_scenarios:[
-      {id:"ps_iqf",direction:"outbound",condition:"Inquiry Follow-up",instructions:"Touch new patients who started a Rx transfer or asked about a new med. First touch confirms transfer in motion; follow-ups offer status on prior auth, cost comparison vs. mail-order, and answer questions.",cadence:["same day","+1 day","+2 days","+3 days","+7 days"],defaultAttempts:3,maxAttempts:3,auto:true,rel:"prospect",event:"inquiry",timing:"same day",action:"text"},
-      {id:"ps_prep",direction:"outbound",condition:"Cold-Chain Delivery Prep",instructions:"Day of cold-chain delivery: confirm someone home for signature, fridge ready, NOT to leave on porch / hot mailbox. Insulin / GLP-1 / biologics ruined by heat.",auto:true,rel:"patient",event:"delivery",timing:"in 24h",action:"text"},
-      {id:"ps_adopt",direction:"outbound",condition:"First-Fill Follow-up",instructions:"Day after first fill: did delivery arrive safely? Any questions about the medication, storage, injection technique?",auto:true,rel:"patient",event:"delivery",timing:"next day",action:"text"},
-      {id:"ps_fit",direction:"outbound",condition:"Adherence + Tolerability (MTM)",instructions:"30-day check on a new med (statin, GLP-1, SSRI, biologic): adherence on schedule? Side effects manageable? Time to escalate dose or switch?",auto:false,rel:"patient",event:"check-in",timing:"in 1 month",action:"call"},
-      {id:"ps_ren",direction:"outbound",condition:"Refill Reminder",instructions:"Text a refill reminder 2 days before run-out and confirm delivery address.",auto:true,rel:"patient",event:"purchase",timing:"in 2 days",action:"text"},
-      {id:"ps_ref",direction:"outbound",condition:"Prescriber Outreach",instructions:"Outbound to prescriber re: patient's side effects, refill auth, or dose adjustment guidance. Relay back to patient with the prescriber's recommendation.",auto:false,rel:"partner",event:"referral",timing:"instantly",action:"text"},
-      {id:"ps_mc",direction:"inbound",condition:"Missed Call Reply",instructions:"Text back instantly apologizing and asking how you can help.",auto:true,rel:"patient",event:"missed call",timing:"instantly",action:"text"},
+      {id:"ps1",direction:"outbound",condition:"If patient's purchase is in 2 days",instructions:"Text a refill reminder and confirm delivery address.",auto:true,rel:"patient",event:"purchase",timing:"in 2 days",action:"text"},
+      {id:"ps2",direction:"outbound",condition:"If patient's delivery completed next day",instructions:"Text next day to check delivery arrived safely and answer any questions.",auto:true,rel:"patient",event:"delivery",timing:"next day",action:"text"},
+      {id:"ps3",direction:"outbound",condition:"If prospect's lead is next day",instructions:"Follow up on new inquiry the next day to help them get started.",auto:false,rel:"prospect",event:"lead",timing:"next day",action:"text"},
     ],
   },
   gastroenterology:{
@@ -712,13 +522,15 @@ const INDUSTRIES={
       "Advanced / Therapeutic":["ERCP with sphincterotomy","ESD","EMR","Capsule endoscopy","Motility study"],
     },
     auto_config_scenarios:[
-      {id:"gi_iqf",direction:"outbound",condition:"Inquiry Follow-up",instructions:"Touch consult patients who haven't scheduled their procedure. First touch confirms consult; follow-ups address bowel-prep / sedation / time-off concerns and offer scheduling help.",cadence:["same day","+1 day","+2 days","+3 days","+7 days"],defaultAttempts:3,maxAttempts:3,auto:true,rel:"prospect",event:"inquiry",timing:"same day",action:"text"},
-      {id:"gi_prep",direction:"outbound",condition:"Pre-Procedure Confirmation",instructions:"48h pre-scope: NPO after midnight, bowel prep started tonight, anticoagulant held per protocol (5–7d for warfarin, 1–2d for DOACs), transport escort confirmed.",auto:true,rel:"patient",event:"procedure",timing:"in 48h",action:"text"},
-      {id:"gi_adopt",direction:"outbound",condition:"Post-Scope Pathology Follow-up",instructions:"7d post-scope: pathology back, bowel function back to normal. Schedule results review with the GI if needed; set surveillance interval.",auto:true,rel:"patient",event:"procedure",timing:"in 1 week",action:"text"},
-      {id:"gi_fit",direction:"outbound",condition:"Treatment Response Check",instructions:"3-month check on IBD / GERD / functional GI patients: meds working, symptoms calmer, recent labs / endoscopy results ready to review.",auto:false,rel:"patient",event:"check-in",timing:"in 3 months",action:"call"},
-      {id:"gi_ren",direction:"outbound",condition:"Surveillance Reminder",instructions:"Surveillance overdue (3 / 5 / 10-year per pathology). Urgent text to rebook; escalate to physician if no response in 48h.",auto:true,rel:"patient",event:"surveillance",timing:"overdue",action:"text"},
-      {id:"gi_ref",direction:"outbound",condition:"Hepatology / Surgery Referral",instructions:"After referring to hepatology / surgery (e.g., F3 fibrosis, suspected malignancy), follow up in 7–14d to confirm consult booked.",auto:false,rel:"patient",event:"referral",timing:"in 1 week",action:"text"},
-      {id:"gi_mc",direction:"inbound",condition:"Missed Call Reply",instructions:"Text back instantly apologizing and asking how you can help.",auto:true,rel:"patient",event:"missed call",timing:"instantly",action:"text"},
+      {id:"gi0",direction:"inbound",condition:"If a referral is received or caller requests an endoscopy",instructions:"Run the AI intake checklist and offer currently-available slots so the caller can express preferred slot(s). Add intake + preferred slots to the clinician-review queue. Do NOT confirm any slot — clinician decides based on priority + patient preference.",auto:true,rel:"patient",event:"lead",timing:"instantly",action:"text"},
+      {id:"gi_approval",direction:"outbound",condition:"If clinician approves a slot for a queued patient",instructions:"Outbound text/call the patient with the approved slot. If the clinician's choice differs from the patient's preference, briefly explain and offer one alternative. Patient confirms or declines.",auto:true,rel:"patient",event:"booking",timing:"instantly",action:"text"},
+      {id:"gi_decline",direction:"inbound",condition:"If patient declines the approved slot",instructions:"Re-add to the clinician-review queue with a note (e.g. declined: timing, transport). No AI auto-rebooking — clinician picks the next slot.",auto:true,rel:"patient",event:"booking",timing:"instantly",action:"text"},
+      {id:"gi1",direction:"outbound",condition:"If endoscopy slot opens in next 48h",instructions:"(Cancellation backfill) Text waitlist patients in clinician-assigned priority order. First YES is handed off to staff for confirmation — no AI auto-booking.",auto:true,rel:"patient",event:"open slot",timing:"in 48h",action:"text"},
+      {id:"gi2",direction:"outbound",condition:"If patient's surveillance is overdue",instructions:"Urgent text to rebook; escalate to physician if no response in 48h.",auto:true,rel:"patient",event:"surveillance",timing:"overdue",action:"text"},
+      {id:"gi3",direction:"outbound",condition:"If patient's procedure is in 48h",instructions:"Pre-op confirmation: NPO started, bowel prep, anticoagulant hold, transport confirmed.",auto:true,rel:"patient",event:"procedure",timing:"in 48h",action:"text"},
+      {id:"gi4",direction:"outbound",condition:"If patient's procedure completed next day",instructions:"Post-op check; book pathology follow-up if indicated.",auto:true,rel:"patient",event:"procedure",timing:"next day",action:"text"},
+      {id:"gi5",direction:"outbound",condition:"If patient's screening is due in 6 months",instructions:"Text reminder to schedule screening endoscopy.",auto:false,rel:"patient",event:"screening",timing:"in 6 months",action:"text"},
+      {id:"gi6",direction:"outbound",condition:"If patient's pathology is abnormal",instructions:"Call to schedule surveillance at recommended interval.",auto:true,rel:"patient",event:"pathology",timing:"instantly",action:"call"},
     ],
   },
   surgery:{
@@ -781,12 +593,14 @@ const INDUSTRIES={
       "Orthopedic":["Total knee replacement","Rotator cuff repair","ACL reconstruction","Spine fusion","Carpal tunnel release"],
     },
     auto_config_scenarios:[
-      {id:"sx_iqf",direction:"outbound",condition:"Inquiry Follow-up",instructions:"Touch consult patients with surgery recommended but not scheduled. First touch confirms consult; follow-ups address fear / cost / 2nd-opinion concerns and offer scheduling.",cadence:["same day","+1 day","+2 days","+3 days","+7 days"],defaultAttempts:3,maxAttempts:3,auto:true,rel:"prospect",event:"inquiry",timing:"same day",action:"text"},
-      {id:"sx_prep",direction:"outbound",condition:"Pre-Op Confirmation",instructions:"72h pre-op: NPO after midnight, anticoagulant held, pre-op labs in window, cardiac clearance, transport escort confirmed for day-of + post-discharge.",auto:true,rel:"patient",event:"surgery",timing:"in 72h",action:"call"},
-      {id:"sx_adopt",direction:"outbound",condition:"Post-Op Day-1 Check",instructions:"Post-op day 1: pain control, drains, incision, voice (thyroidectomy), hypocalcemia symptoms, discharge plan adherence.",auto:true,rel:"patient",event:"surgery",timing:"next day",action:"call"},
-      {id:"sx_fit",direction:"outbound",condition:"6-Week Post-Op Recovery",instructions:"6 weeks post-op: scars healed, return to normal activity, GI changes (post-chole), incisional pain, return to work or exercise. Flag any new symptoms.",auto:false,rel:"patient",event:"check-in",timing:"in 6 weeks",action:"text"},
-      {id:"sx_ref",direction:"outbound",condition:"PT / Lymphedema / Onc Referral",instructions:"After referring post-op to PT, lymphedema PT, or oncology, follow up in 7–10d to confirm initial visit happened. Lymphedema prevention starts early.",auto:false,rel:"patient",event:"referral",timing:"in 1 week",action:"text"},
-      {id:"sx_mc",direction:"inbound",condition:"Missed Call Reply",instructions:"Text back instantly apologizing and asking how you can help.",auto:true,rel:"patient",event:"missed call",timing:"instantly",action:"text"},
+      {id:"sx6",direction:"outbound",condition:"If referral received",instructions:"Text referred patient within 24h. Run the AI intake checklist and offer currently-available slots so the patient can express preferred slot(s). Add intake + preferred slots to the surgeon-review queue. Do NOT confirm any slot — surgeon decides based on priority + patient preference.",auto:true,rel:"patient",event:"referral",timing:"next day",action:"text"},
+      {id:"sx_approval",direction:"outbound",condition:"If surgeon approves a slot for a queued patient",instructions:"Outbound text/call the patient with the approved slot. If the surgeon's choice differs from the patient's preference, briefly explain and offer one alternative. Patient confirms or declines.",auto:true,rel:"patient",event:"booking",timing:"instantly",action:"text"},
+      {id:"sx_decline",direction:"inbound",condition:"If patient declines the approved slot",instructions:"Re-add to the surgeon-review queue with a note (e.g. declined: timing, transport). No AI auto-rebooking — surgeon picks the next slot.",auto:true,rel:"patient",event:"booking",timing:"instantly",action:"text"},
+      {id:"sx1",direction:"outbound",condition:"If OR slot is cancelled same-week",instructions:"(Cancellation backfill) Reach pre-op-ready waitlist patients in surgeon-assigned priority order. First YES is handed off to staff for confirmation — no AI auto-booking.",auto:true,rel:"patient",event:"open slot",timing:"in 7 days",action:"text"},
+      {id:"sx2",direction:"outbound",condition:"If patient's follow-up is overdue",instructions:"Urgent recall; escalate to surgeon if no response in 48h.",auto:true,rel:"patient",event:"follow-up",timing:"overdue",action:"call"},
+      {id:"sx3",direction:"outbound",condition:"If patient's surgery is in 72h",instructions:"Pre-op confirmation: NPO, meds, clearance labs, arrival time, transport.",auto:true,rel:"patient",event:"surgery",timing:"in 72h",action:"text"},
+      {id:"sx4",direction:"outbound",condition:"If patient's surgery completed next day",instructions:"Post-op day 1: pain, complications, discharge plan.",auto:true,rel:"patient",event:"surgery",timing:"next day",action:"call"},
+      {id:"sx5",direction:"outbound",condition:"If patient's clearance is in 2 weeks",instructions:"Confirm all pre-op requirements (labs, clearance, imaging) are in.",auto:false,rel:"patient",event:"clearance",timing:"in 2 weeks",action:"text"},
     ],
   },
 };
@@ -848,7 +662,7 @@ const emptyItem=(industry)=>({
 // Leaves reference INDUSTRIES keys; unresolved ids are filtered out.
 const INDUSTRY_TREE=[
   {id:"real_estate",name:"Real Estate",children:["residential"]},
-  {id:"healthcare",name:"Healthcare",children:["dental","gastroenterology","mental_health","oncology","primary_care","pharmacy","surgery"]},
+  {id:"healthcare",name:"Healthcare",children:["medical","pharmacy","gastroenterology","surgery"]},
   {id:"construction",name:"Construction & Engineering",children:["equipment_rental"]},
 ];
 
@@ -1771,20 +1585,14 @@ function ChevPill({options,value,onChange,sheetTitle}){
 // Industry-aware "parsed" scenario — fakes what the AI would extract from a natural-language description.
 const VOICE_EXAMPLE_BY_INDUSTRY={
   residential:"When a buyer hits their 12-month purchase anniversary, text them a homeiversary equity check-in",
-  primary_care:"When a patient hasn't visited in 90 days, text a preventive care check-in",
-  dental:"When a patient is due for a 6-month cleaning, text them to schedule",
-  mental_health:"When a client misses their session, send a gentle re-engagement text two days later",
-  oncology:"Forty-eight hours after chemo, call the patient to check on side effects",
+  medical:"When a patient hasn't visited in 90 days, text a preventive care check-in",
   equipment_rental:"When a client's rental ends in 2 days, text them to confirm extension or pickup",
   pharmacy:"When a patient is about to run out of meds, text a refill reminder two days before",
 };
 
 const PARSED_SCENARIO_BY_INDUSTRY={
   residential:{rel:"buyer",event:"purchase",timing:"in 12 months",action:"text",auto:false},
-  primary_care:{rel:"patient",event:"appointment",timing:"in 90 days",action:"text",auto:false},
-  dental:{rel:"patient",event:"appointment",timing:"in 6 months",action:"text",auto:true},
-  mental_health:{rel:"client",event:"appointment",timing:"in 2 days",action:"text",auto:false},
-  oncology:{rel:"patient",event:"appointment",timing:"in 48h",action:"call",auto:true},
+  medical:{rel:"patient",event:"appointment",timing:"in 90 days",action:"text",auto:false},
   equipment_rental:{rel:"client",event:"purchase",timing:"in 2 days",action:"text",auto:false},
   pharmacy:{rel:"patient",event:"purchase",timing:"in 2 days",action:"text",auto:true},
 };
@@ -2068,36 +1876,16 @@ function SecretarySettingsScreen({scenarios,setScenarios,industry}){
           {scenarios.length===0?(
             <div className="empty-state">No scenarios yet. Tap "Add scenario" to get started.</div>
           ):(
-            scenarios.map(sc=>{
-              const hasCadence=Array.isArray(sc.cadence)&&sc.cadence.length>0;
-              const attempts=sc.maxAttempts||sc.defaultAttempts||3;
-              const visibleCadence=hasCadence?sc.cadence.slice(0,attempts).join(" → "):null;
-              const cycleAttempts=(e)=>{
-                e.stopPropagation();
-                setScenarios(prev=>prev.map(s=>s.id===sc.id?{...s,maxAttempts:(attempts%5)+1}:s));
-              };
-              return(
-                <div key={sc.id} className="scenario-row" onClick={()=>setEditMode({type:"edit",id:sc.id})}>
-                  <div className="scenario-row-body">
-                    <div className="scenario-condition">{sc.condition}</div>
-                    {hasCadence&&(
-                      <div style={{fontSize:13,color:"var(--primary-text)",marginTop:2,display:"flex",alignItems:"center",gap:6,flexWrap:"wrap"}}>
-                        <span>{visibleCadence}</span>
-                        <span style={{color:"var(--tertiary-text)"}}>·</span>
-                        <span onClick={cycleAttempts} style={{display:"inline-flex",alignItems:"center",gap:3,padding:"1px 4px 1px 6px",background:"var(--surface-darken)",borderRadius:10,border:".5px solid var(--border)",cursor:"pointer"}}>
-                          <span style={{fontSize:13,fontWeight:600,color:"var(--primary-text)"}}>max {attempts}</span>
-                          <span style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:14,height:14,borderRadius:7,border:".75px solid var(--primary-text)",fontSize:9}}>▾</span>
-                        </span>
-                        <span style={{fontSize:13,color:"var(--secondary-text)"}}>attempts</span>
-                      </div>
-                    )}
-                    <div className="scenario-instructions">{sc.instructions}</div>
-                    <span className={`scenario-badge ${sc.auto?"auto":"manual"}`}>{sc.auto?"Automatic":"Manual"}</span>
-                  </div>
-                  <span className="scenario-edit-icon">✎</span>
+            scenarios.map(sc=>(
+              <div key={sc.id} className="scenario-row" onClick={()=>setEditMode({type:"edit",id:sc.id})}>
+                <div className="scenario-row-body">
+                  <div className="scenario-condition">{sc.condition}</div>
+                  <div className="scenario-instructions">{sc.instructions}</div>
+                  <span className={`scenario-badge ${sc.auto?"auto":"manual"}`}>{sc.auto?"Automatic":"Manual"}</span>
                 </div>
-              );
-            })
+                <span className="scenario-edit-icon">✎</span>
+              </div>
+            ))
           )}
           <button className="add-btn" onClick={()=>setEditMode({type:"voice-input"})}>
             <span className="plus-icon">＋</span> Add scenario
@@ -2252,7 +2040,7 @@ const PAGES={
 
 function App(){
   const[page,setPage]=useState("companyInfo");
-  const[industryId,setIndustryId]=useState("primary_care");
+  const[industryId,setIndustryId]=useState("surgery");
   // Per-industry scenarios state: defaults come from the industry config, user edits persist per-industry.
   const[scenariosByIndustry,setScenariosByIndustry]=useState({});
   const industry=INDUSTRIES[industryId];
