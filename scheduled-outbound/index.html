@@ -207,6 +207,73 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .industry-row-label{font-size:17px;color:var(--primary-text);flex-shrink:0}
 .industry-row-value{font-size:17px;color:var(--accent);flex:1;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .industry-row-caret{color:var(--accent);flex-shrink:0;display:inline-flex;margin-left:6px}
+
+/* ── Device toggle (iOS / Web) ── */
+.device-toggle{display:flex;gap:0;border-radius:8px;overflow:hidden;border:1.5px solid #555;margin:0 auto;width:fit-content}
+.device-toggle-btn{padding:5px 18px;font-size:12px;font-weight:600;border:none;cursor:pointer;transition:all .15s;font-family:inherit;background:transparent;color:#aaa}
+.device-toggle-btn.active{background:var(--accent);color:#fff}
+
+/* ── Web layout ── */
+.web-frame{width:1100px;max-width:calc(100vw - 40px);min-height:720px;background:var(--bg);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);display:flex;flex-direction:column}
+.web-topbar{padding:10px 20px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.web-body{display:flex;flex:1;overflow:hidden}
+.web-sidebar{width:248px;background:var(--bg-primary);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding-bottom:20px}
+.web-sidebar::-webkit-scrollbar{display:none}
+.web-inbox-list{flex:1;overflow-y:auto}
+.web-inbox-list::-webkit-scrollbar{display:none}
+.web-thread-panel{width:420px;border-left:1px solid var(--border);overflow-y:auto;background:var(--bg);flex-shrink:0}
+.web-thread-panel::-webkit-scrollbar{display:none}
+
+/* ── Filter sidebar / sheet ── */
+.filter-section-title{font-size:11px;font-weight:600;text-transform:uppercase;color:var(--tertiary-text);padding:14px 16px 6px;letter-spacing:.5px}
+.filter-row{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;transition:background .15s}
+.filter-row:hover{background:var(--surface-dark)}
+.filter-row-check{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.filter-row-check.checked{background:var(--accent);border-color:var(--accent)}
+.filter-row-label{flex:1;font-size:15px;color:var(--primary-text)}
+.filter-row-count{font-size:11px;color:var(--tertiary-text);font-weight:500;background:var(--surface-darken);padding:2px 8px;border-radius:10px;min-width:22px;text-align:center}
+.filter-row-expand{color:var(--tertiary-text);transition:transform .2s;display:flex;padding:10px;margin:-6px;cursor:pointer}
+.filter-row-expand.open{transform:rotate(180deg)}
+
+/* Subtag chips */
+.subtag-list{padding:2px 16px 10px 46px;display:flex;flex-wrap:wrap;gap:5px}
+.subtag-chip{font-size:11px;padding:3px 9px;border-radius:10px;cursor:pointer;transition:all .15s;font-weight:500;border:1px solid var(--border);background:var(--bg);color:var(--secondary-text)}
+.subtag-chip:hover{border-color:var(--accent)}
+.subtag-chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* Contact rows in expanded filter */
+.filter-contact-row{display:flex;align-items:center;gap:8px;padding:5px 16px 5px 46px;font-size:13px;color:var(--primary-text);cursor:default;position:relative;transition:all .15s}
+.filter-contact-row:hover{background:var(--surface-dark)}
+.filter-contact-swipe{position:absolute;right:0;top:0;bottom:0;width:0;background:var(--error);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;overflow:hidden;transition:width .2s}
+.filter-contact-row:hover .filter-contact-swipe{width:56px}
+
+/* Filter button (Emote-style, top right of pill row) */
+.more-filters-btn{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:var(--r);border:1.5px solid var(--border);background:var(--bg);cursor:pointer;flex-shrink:0;transition:all .15s}
+.more-filters-btn:hover{border-color:var(--accent)}
+.more-filters-btn.has-active{border-color:var(--accent);background:var(--accent-12)}
+
+/* Filter sheet (iOS bottom sheet) */
+.filter-sheet-card{margin:8px 16px;background:var(--bg-primary);border-radius:var(--r-lg);overflow:hidden;border:.5px solid var(--border)}
+.filter-sheet-row{display:flex;align-items:center;padding:14px 16px;border-bottom:.5px solid var(--border);cursor:pointer;transition:background .15s}
+.filter-sheet-row:last-child{border-bottom:none}
+.filter-sheet-row:hover{background:var(--surface-dark)}
+
+/* Web filter pill (differs from iOS pill) */
+.web-filter-pill{padding:5px 14px;border-radius:var(--r-xxl);font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid var(--border);transition:all .15s;font-family:inherit;background:var(--bg);color:var(--secondary-text);white-space:nowrap}
+.web-filter-pill:hover{border-color:var(--accent)}
+.web-filter-pill.active{background:var(--primary-text);color:var(--on-label);border-color:var(--primary-text)}
+
+/* Web more filters button */
+.web-more-filters{display:flex;align-items:center;gap:6px;padding:5px 14px;border-radius:var(--r-xxl);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--bg);color:var(--secondary-text);font-family:inherit;transition:all .15s;white-space:nowrap}
+.web-more-filters:hover{border-color:var(--accent);color:var(--accent)}
+.web-more-filters.has-active{border-color:var(--accent);background:var(--accent-12);color:var(--accent)}
+
+/* Invite button */
+.invite-btn{padding:6px 14px;border-radius:var(--r-xxl);background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;flex-shrink:0;font-family:inherit}
+
+/* Add contact button in filter */
+.add-contact-btn{display:flex;align-items:center;gap:6px;padding:5px 16px 5px 46px;font-size:13px;color:var(--accent);font-weight:500;cursor:pointer;transition:background .15s}
+.add-contact-btn:hover{background:var(--surface-dark)}
 </style>
 </head>
 <body>
@@ -240,6 +307,10 @@ const I={
   lightbulb:({s=14,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A5.5 5.5 0 0012 3a5.5 5.5 0 00-4.5 8.5c.76.76 1.23 1.52 1.41 2.5"/></svg>,
   calendar:({s=20,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>,
   info:({s=14,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>,
+  sliders:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round"><path d="M4 6h16M4 12h16M4 18h16"/><circle cx="8" cy="6" r="2" fill={c}/><circle cx="16" cy="12" r="2" fill={c}/><circle cx="10" cy="18" r="2" fill={c}/></svg>,
+  addUser:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>,
+  globe:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>,
+  mobile:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>,
 };
 
 // ── Helpers ──
@@ -373,6 +444,119 @@ const SCENARIO_REL_OPTIONS=['patient','caregiver','client','prospect','lead','bu
 const SCENARIO_EVENT_OPTIONS=['lead','inquiry','quote','purchase','renewal','cancellation','delivery','booking','service','appointment','follow-up','check-in','listing inquiry','missed call'];
 const SCENARIO_TIMING_OPTIONS=['instantly','in 1h','in 3h','in 6h','in 12h','next day','in 48h','in 2 days','in 3 days','in 5 days','in 1 week','in 2 weeks','in 1 month','in 3 months','in 6 months','in 90 days','in 12 months','overdue'];
 const SCENARIO_ACTION_OPTIONS=['text','call'];
+
+// ── Filter system data ──
+const INDUSTRY_CATEGORY=id=>{
+  if(['primary_care','dental','mental_health','oncology','pharmacy','gastroenterology','surgery'].includes(id))return 'healthcare';
+  if(['residential'].includes(id))return 'real_estate';
+  return 'construction';
+};
+
+const FILTER_LABELS={
+  healthcare:[
+    {id:'patient',label:'Patients',hasSubtags:true},
+    {id:'doctor',label:'Doctors'},
+    {id:'nurse',label:'Nurses'},
+    {id:'medical_assistant',label:'Medical Assistants'},
+    {id:'admin_staff',label:'Administrative Staff'},
+    {id:'pharmacist',label:'Pharmacists'},
+    {id:'insurance',label:'Insurance Providers'},
+  ],
+  real_estate:[
+    {id:'client',label:'Clients',hasSubtags:true},
+    {id:'buyer',label:'Buyers'},
+    {id:'seller',label:'Sellers'},
+    {id:'agent',label:'Agents'},
+    {id:'lender',label:'Lenders'},
+    {id:'inspector',label:'Inspectors'},
+  ],
+  construction:[
+    {id:'client',label:'Clients',hasSubtags:true},
+    {id:'operator',label:'Operators'},
+    {id:'site_contact',label:'Site Contacts'},
+    {id:'vendor',label:'Vendors'},
+  ],
+};
+
+const CLIENT_SUBTAGS={
+  primary_care:['New Inquiry','Active Treatment','Follow-up Care','Wellness Recall','Chronic Care','Inactive'],
+  dental:['New Inquiry','Active Treatment','Hygiene Recall','Perio Maintenance','Inactive'],
+  mental_health:['New Inquiry','Active Therapy','Between Sessions','Graduated','Re-engagement'],
+  oncology:['New Consult','Active Treatment','Survivorship','Surveillance','Decision Pending'],
+  pharmacy:['New Rx Transfer','Active Fill','Adherence Monitoring','Refill Cycle','GLP-1 Win-back','Inactive'],
+  gastroenterology:['New Consult','Active Treatment','Surveillance','Maintenance','Inactive'],
+  surgery:['Pre-Op Consult','Scheduled','Post-Op Recovery','Follow-up','Inactive'],
+  residential:['New Lead','Showing','Under Contract','Post-Close','Anniversary'],
+  equipment_rental:['New Quote','Active Rental','Mid-Rental','Return/Extend','Repeat'],
+};
+
+// Mock contact counts per label (realistic numbers per industry category)
+const FILTER_COUNTS={
+  healthcare:{patient:47,doctor:8,nurse:12,medical_assistant:6,admin_staff:4,pharmacist:3,insurance:5},
+  real_estate:{client:23,buyer:14,seller:9,agent:6,lender:4,inspector:3},
+  construction:{client:18,operator:7,site_contact:12,vendor:5},
+};
+const SUBTAG_COUNTS={
+  primary_care:{['New Inquiry']:4,['Active Treatment']:8,['Follow-up Care']:12,['Wellness Recall']:15,['Chronic Care']:6,['Inactive']:2},
+  dental:{['New Inquiry']:3,['Active Treatment']:6,['Hygiene Recall']:18,['Perio Maintenance']:4,['Inactive']:2},
+  mental_health:{['New Inquiry']:5,['Active Therapy']:9,['Between Sessions']:7,['Graduated']:3,['Re-engagement']:2},
+  oncology:{['New Consult']:3,['Active Treatment']:7,['Survivorship']:4,['Surveillance']:6,['Decision Pending']:2},
+  pharmacy:{['New Rx Transfer']:6,['Active Fill']:14,['Adherence Monitoring']:8,['Refill Cycle']:12,['GLP-1 Win-back']:5,['Inactive']:2},
+  gastroenterology:{['New Consult']:4,['Active Treatment']:5,['Surveillance']:8,['Maintenance']:6,['Inactive']:2},
+  surgery:{['Pre-Op Consult']:3,['Scheduled']:4,['Post-Op Recovery']:6,['Follow-up']:5,['Inactive']:2},
+  residential:{['New Lead']:5,['Showing']:4,['Under Contract']:3,['Post-Close']:7,['Anniversary']:4},
+  equipment_rental:{['New Quote']:4,['Active Rental']:6,['Mid-Rental']:3,['Return/Extend']:3,['Repeat']:2},
+};
+
+// Mock expanded contacts for primary label (shown when tapping expand in filter)
+const FILTER_MOCK_CONTACTS={
+  pharmacy:[
+    {name:'Maria A.',subtag:'Active Fill'},{name:'Carlos R.',subtag:'Active Fill'},{name:'Linda H.',subtag:'Active Fill'},
+    {name:'Brian K.',subtag:'Adherence Monitoring'},{name:'Rita S.',subtag:'New Rx Transfer'},
+    {name:'Denise T.',subtag:'GLP-1 Win-back'},{name:'Harold F.',subtag:'GLP-1 Win-back'},
+    {name:'Keisha W.',subtag:'GLP-1 Win-back'},{name:'Tony M.',subtag:'GLP-1 Win-back'},{name:'Priya L.',subtag:'GLP-1 Win-back'},
+  ],
+  primary_care:[
+    {name:'David R.',subtag:'Wellness Recall'},{name:'Rachel K.',subtag:'Wellness Recall'},
+    {name:'James T.',subtag:'Chronic Care'},{name:'Sandra B.',subtag:'Wellness Recall'},
+    {name:'Henry M.',subtag:'Follow-up Care'},{name:'Elena M.',subtag:'New Inquiry'},
+  ],
+  dental:[
+    {name:'Emma R.',subtag:'Hygiene Recall'},{name:'Tom B.',subtag:'Active Treatment'},
+    {name:'Sophie L.',subtag:'Active Treatment'},{name:'Renee P.',subtag:'Perio Maintenance'},
+    {name:'Marcus J.',subtag:'Active Treatment'},{name:'Aaron M.',subtag:'New Inquiry'},
+  ],
+  oncology:[
+    {name:'Sarah K.',subtag:'Surveillance'},{name:'James W.',subtag:'Active Treatment'},
+    {name:'Aiden M.',subtag:'Active Treatment'},{name:'Carmen L.',subtag:'Active Treatment'},
+    {name:'Diego R.',subtag:'Active Treatment'},{name:'Nadia P.',subtag:'Decision Pending'},
+  ],
+  mental_health:[
+    {name:'Alex M.',subtag:'Between Sessions'},{name:'Jamie L.',subtag:'Re-engagement'},
+    {name:'Carla S.',subtag:'New Inquiry'},{name:'Felix N.',subtag:'Active Therapy'},
+    {name:'Lana W.',subtag:'Active Therapy'},{name:'Priya R.',subtag:'New Inquiry'},
+  ],
+  gastroenterology:[
+    {name:'Patricia M.',subtag:'Active Treatment'},{name:'Thomas G.',subtag:'Surveillance'},
+    {name:'Helen K.',subtag:'Surveillance'},{name:'Eli S.',subtag:'Active Treatment'},
+    {name:'Lila J.',subtag:'Active Treatment'},{name:'Marcus B.',subtag:'New Consult'},
+  ],
+  surgery:[
+    {name:'Mark R.',subtag:'Post-Op Recovery'},{name:'Tara H.',subtag:'Scheduled'},
+    {name:'Greg P.',subtag:'Post-Op Recovery'},{name:'Olivia D.',subtag:'Follow-up'},
+    {name:'Charles W.',subtag:'Pre-Op Consult'},
+  ],
+  residential:[
+    {name:'Jennifer L.',subtag:'Anniversary'},{name:'Owen T.',subtag:'Under Contract'},
+    {name:'Naomi W.',subtag:'Post-Close'},{name:'Daniel B.',subtag:'Post-Close'},
+    {name:'Sienna M.',subtag:'New Lead'},{name:'Priscilla J.',subtag:'Showing'},
+  ],
+  equipment_rental:[
+    {name:'Luis M.',subtag:'Active Rental'},{name:'Dave T.',subtag:'Active Rental'},
+    {name:'Jorge V.',subtag:'Active Rental'},{name:'Frank C.',subtag:'Mid-Rental'},
+    {name:'Hector V.',subtag:'New Quote'},
+  ],
+};
 
 const EVENTS=[
   {date:'Mar 28, 2:13p',type:'call-in',text:'Called about refill for Ozempic 1mg. Confirmed Tuesday delivery to Florida address.',source:'Call transcript'},
@@ -990,6 +1174,94 @@ function ScenariosScreen({onNavigate,industry,scenarios,setScenarios,onChangeInd
 }
 
 // ── Screen 4: To-Do / Outbox ──
+// ── FilterSheet (used by iOS bottom sheet + Web sidebar) ──
+function FilterSheet({industryId,activeLabels,setActiveLabels,activeSubtags,setActiveSubtags,onClose,showApply=true,compact=false}){
+  const cat=INDUSTRY_CATEGORY(industryId);
+  const labels=FILTER_LABELS[cat]||[];
+  const subtags=CLIENT_SUBTAGS[industryId]||[];
+  const counts=FILTER_COUNTS[cat]||{};
+  const stCounts=SUBTAG_COUNTS[industryId]||{};
+  const contacts=FILTER_MOCK_CONTACTS[industryId]||[];
+  const[expandedLabel,setExpandedLabel]=useState(null);
+  const[showContacts,setShowContacts]=useState(false);
+  const[removedContacts,setRemovedContacts]=useState([]);
+  const toggleLabel=id=>setActiveLabels(prev=>prev.includes(id)?prev.filter(l=>l!==id):[...prev,id]);
+  const toggleSubtag=st=>setActiveSubtags(prev=>prev.includes(st)?prev.filter(s=>s!==st):[...prev,st]);
+  const visibleContacts=contacts.filter(c=>!removedContacts.includes(c.name)&&(activeSubtags.length===0||activeSubtags.includes(c.subtag)));
+  const fs=compact?14:17;
+  return(
+    <div>
+      <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',padding:compact?'10px 16px 4px':'12px 16px 4px'}}>
+        <div>
+          <div style={{fontSize:compact?18:22,fontWeight:700,color:'var(--primary-text)'}}>Filter</div>
+          <div style={{fontSize:compact?12:14,color:'var(--secondary-text)',marginTop:1}}>Apply filters</div>
+        </div>
+        <button onClick={()=>{setActiveLabels([]);setActiveSubtags([])}} style={{background:'none',border:'none',color:'var(--accent)',fontSize:compact?14:16,fontWeight:600,cursor:'pointer',fontFamily:'inherit',padding:'4px 0'}}>Clear filter</button>
+      </div>
+      <div className="filter-sheet-card">
+        {labels.map(label=>{
+          const count=counts[label.id]||0;
+          const isActive=activeLabels.includes(label.id);
+          const isExpanded=expandedLabel===label.id;
+          return(
+            <React.Fragment key={label.id}>
+              <div className="filter-sheet-row" onClick={()=>toggleLabel(label.id)}>
+                <span style={{flex:1,fontSize:fs,color:'var(--primary-text)'}}>{label.label}</span>
+                {count>0&&<span style={{fontSize:compact?11:13,color:'var(--tertiary-text)',marginRight:8}}>{count}</span>}
+                {label.hasSubtags&&subtags.length>0&&(
+                  <span onClick={e=>{e.stopPropagation();setExpandedLabel(isExpanded?null:label.id);setShowContacts(false)}} className={`filter-row-expand ${isExpanded?'open':''}`} style={{marginRight:4}}>
+                    {I.chevronDown({s:compact?12:14,c:'var(--tertiary-text)'})}
+                  </span>
+                )}
+                {isActive&&<span style={{color:'var(--accent)',fontSize:compact?16:18,fontWeight:500}}>✓</span>}
+              </div>
+              {label.hasSubtags&&isExpanded&&(
+                <div>
+                  <div className="subtag-list">
+                    {subtags.map(st=>(
+                      <span key={st} className={`subtag-chip ${activeSubtags.includes(st)?'active':''}`} onClick={()=>toggleSubtag(st)}>
+                        {st} <span style={{opacity:.6,marginLeft:2}}>{stCounts[st]||0}</span>
+                      </span>
+                    ))}
+                  </div>
+                  {contacts.length>0&&(
+                    <div style={{padding:'0 16px 8px 46px'}}>
+                      <div onClick={()=>setShowContacts(!showContacts)} style={{fontSize:12,color:'var(--accent)',fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',gap:4}}>
+                        {showContacts?'Hide':'Show'} contacts ({visibleContacts.length})
+                        <span className={`filter-row-expand ${showContacts?'open':''}`}>{I.chevronDown({s:10,c:'var(--accent)'})}</span>
+                      </div>
+                    </div>
+                  )}
+                  {showContacts&&(
+                    <div style={{paddingBottom:8}}>
+                      {visibleContacts.map(c=>(
+                        <div key={c.name} className="filter-contact-row">
+                          <Avatar name={c.name} size={24}/>
+                          <span style={{flex:1}}>{c.name}</span>
+                          {c.subtag&&<span style={{fontSize:10,color:'var(--tertiary-text)',background:'var(--surface-darken)',padding:'1px 6px',borderRadius:6}}>{c.subtag}</span>}
+                          <div className="filter-contact-swipe" onClick={e=>{e.stopPropagation();setRemovedContacts(p=>[...p,c.name])}}>Remove</div>
+                        </div>
+                      ))}
+                      <div className="add-contact-btn" onClick={()=>{}}>
+                        {I.plus({s:14,c:'var(--accent)'})} Add contact
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </React.Fragment>
+          );
+        })}
+      </div>
+      {showApply&&(
+        <div style={{padding:'12px 16px 8px'}}>
+          <button className="btn-primary" onClick={onClose}>Apply</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function TodoScreen({onNavigate,industryId}){
   const[filter,setFilter]=useState('todo');
   const[openThread,setOpenThread]=useState(null);
@@ -1000,6 +1272,9 @@ function TodoScreen({onNavigate,industryId}){
   const[simState,setSimState]=useState(null); // null|'loading'|'playing'|'done'
   const[simLines,setSimLines]=useState([]);
   const[simIdx,setSimIdx]=useState(0);
+  const[showFilterSheet,setShowFilterSheet]=useState(false);
+  const[activeLabels,setActiveLabels]=useState([]);
+  const[activeSubtags,setActiveSubtags]=useState([]);
   // Filter TODOs to current industry — drives the inbox + the post-send simulation list.
   const industryTodos=TODOS.filter(t=>t.industryId===industryId);
   const simScrollRef=useRef(null);
@@ -1273,21 +1548,28 @@ function TodoScreen({onNavigate,industryId}){
     <div className="phone">
       <StatusBar/>
       <div className="screen-content">
-        {/* Search bar — right at top, no title */}
-        <div style={{padding:'8px 0 8px'}}>
-          <div className="search-bar">
+        {/* Search bar + Invite */}
+        <div style={{padding:'8px 16px 8px',display:'flex',gap:8,alignItems:'center'}}>
+          <div className="search-bar" style={{flex:1,margin:0}}>
             <span className="search-icon" style={{color:'var(--tertiary-text)',display:'flex'}}>{I.search({s:16,c:'var(--tertiary-text)'})}</span>
-            <input placeholder="Search in 'To-Do'..."/>
+            <input placeholder="Search"/>
+            <span style={{display:'flex'}}>{I.mic({s:16,c:'var(--tertiary-text)'})}</span>
           </div>
+          <button className="invite-btn">{I.addUser({s:14,c:'#fff'})} Invite</button>
         </div>
-        {/* Filter pills — horizontal scroll, single row */}
-        <div style={{display:'flex',gap:8,padding:'4px 16px 12px',overflowX:'auto',overflowY:'hidden',flexWrap:'nowrap',WebkitOverflowScrolling:'touch',scrollbarWidth:'none',msOverflowStyle:'none'}} className="pill-scroll">
-          {[{k:'inbox',l:'Inbox',badge:12},{k:'todo',l:'To-Do',badge:pending.length},{k:'unread',l:'Unread',badge:3},{k:'missed',l:'Missed',badge:1},{k:'urgent',l:'Urgent',badge:4}].map(f=>(
-            <button key={f.k} className={`pill ${filter===f.k?'active':'inactive'}`} onClick={()=>setFilter(f.k)} style={{position:'relative',whiteSpace:'nowrap',flexShrink:0}}>
-              {f.l}
-              {f.badge?<span style={{position:'absolute',top:-6,right:-4,fontSize:10,fontWeight:700,minWidth:16,height:16,lineHeight:'16px',textAlign:'center',background:'var(--accent)',color:'#fff',borderRadius:8,padding:'0 4px'}}>{f.badge}</span>:null}
-            </button>
-          ))}
+        {/* Filter pills + more filters button */}
+        <div style={{display:'flex',gap:8,padding:'4px 16px 12px',alignItems:'center'}}>
+          <div style={{display:'flex',gap:8,overflowX:'auto',overflowY:'hidden',flexWrap:'nowrap',WebkitOverflowScrolling:'touch',scrollbarWidth:'none',msOverflowStyle:'none',flex:1}} className="pill-scroll">
+            {[{k:'inbox',l:'Inbox',badge:12},{k:'todo',l:'To-Do',badge:pending.length},{k:'unread',l:'Unread',badge:3},{k:'missed',l:'Missed',badge:19},{k:'urgent',l:'Urgent',badge:4}].map(f=>(
+              <button key={f.k} className={`pill ${filter===f.k?'active':'inactive'}`} onClick={()=>setFilter(f.k)} style={{position:'relative',whiteSpace:'nowrap',flexShrink:0}}>
+                {f.l}
+                {f.badge?<span style={{position:'absolute',top:-6,right:-4,fontSize:10,fontWeight:700,minWidth:16,height:16,lineHeight:'16px',textAlign:'center',background:'var(--accent)',color:'#fff',borderRadius:8,padding:'0 4px'}}>{f.badge}</span>:null}
+              </button>
+            ))}
+          </div>
+          <button className={`more-filters-btn ${activeLabels.length?'has-active':''}`} onClick={()=>setShowFilterSheet(true)}>
+            {I.sliders({s:16,c:activeLabels.length?'var(--accent)':'var(--secondary-text)'})}
+          </button>
         </div>
 
         {filter==='todo'&&(
@@ -1339,8 +1621,246 @@ function TodoScreen({onNavigate,industryId}){
         )}
       </div>
 
-      {/* No bottom sheet — tapping a cell pushes a full-page thread view above */}
+      {/* Filter bottom sheet */}
+      {showFilterSheet&&(
+        <div className="sheet-overlay" onClick={()=>setShowFilterSheet(false)}>
+          <div className="sheet" onClick={e=>e.stopPropagation()} style={{maxHeight:'70%'}}>
+            <div className="sheet-handle"/>
+            <FilterSheet industryId={industryId} activeLabels={activeLabels} setActiveLabels={setActiveLabels} activeSubtags={activeSubtags} setActiveSubtags={setActiveSubtags} onClose={()=>setShowFilterSheet(false)} compact={true}/>
+          </div>
+        </div>
+      )}
       <FloatingTabBar active="inbox" onTabTap={id=>{if(id==='profile'&&onNavigate)onNavigate('scenarios')}}/>
+    </div>
+  );
+}
+
+// ── Web Inbox Screen (desktop CRM layout) ──
+function WebInboxScreen({industryId,onNavigate}){
+  const[filter,setFilter]=useState('todo');
+  const[openThread,setOpenThread]=useState(null);
+  const[activeLabels,setActiveLabels]=useState([]);
+  const[activeSubtags,setActiveSubtags]=useState([]);
+  const[expandedLabel,setExpandedLabel]=useState(null);
+  const[showContacts,setShowContacts]=useState(false);
+  const[removedContacts,setRemovedContacts]=useState([]);
+  const[sentIds,setSentIds]=useState([]);
+  const[showMoreFilters,setShowMoreFilters]=useState(false);
+
+  const industryTodos=TODOS.filter(t=>t.industryId===industryId);
+  const cat=INDUSTRY_CATEGORY(industryId);
+  const labels=FILTER_LABELS[cat]||[];
+  const subtags=CLIENT_SUBTAGS[industryId]||[];
+  const counts=FILTER_COUNTS[cat]||{};
+  const stCounts=SUBTAG_COUNTS[industryId]||{};
+  const contacts=FILTER_MOCK_CONTACTS[industryId]||[];
+  const pending=industryTodos.filter(t=>!sentIds.includes(t.id));
+  const visibleContacts=contacts.filter(c=>!removedContacts.includes(c.name)&&(activeSubtags.length===0||activeSubtags.includes(c.subtag)));
+  const toggleLabel=id=>setActiveLabels(p=>p.includes(id)?p.filter(l=>l!==id):[...p,id]);
+  const toggleSubtag=st=>setActiveSubtags(p=>p.includes(st)?p.filter(s=>s!==st):[...p,st]);
+
+  return(
+    <div className="web-frame">
+      {/* Top bar */}
+      <div className="web-topbar">
+        <span style={{fontSize:17,fontWeight:700,color:'var(--primary-text)',marginRight:4}}>Inbox</span>
+        <div className="search-bar" style={{flex:1,maxWidth:360,margin:0}}>
+          <span style={{display:'flex'}}>{I.search({s:15,c:'var(--tertiary-text)'})}</span>
+          <input placeholder="Search contacts..."/>
+        </div>
+        <div style={{flex:1}}/>
+        <button className="invite-btn">{I.addUser({s:14,c:'#fff'})} Invite</button>
+      </div>
+
+      {/* Filter pill row */}
+      <div style={{display:'flex',gap:8,padding:'10px 20px',borderBottom:'1px solid var(--border)',alignItems:'center'}}>
+        {[{k:'inbox',l:'Inbox',badge:12},{k:'todo',l:'To-Do',badge:pending.length},{k:'unread',l:'Unread',badge:3},{k:'missed',l:'Missed',badge:19},{k:'urgent',l:'Urgent',badge:4}].map(f=>(
+          <button key={f.k} className={`web-filter-pill ${filter===f.k?'active':''}`} onClick={()=>setFilter(f.k)} style={{position:'relative'}}>
+            {f.l}
+            {f.badge?<span style={{position:'absolute',top:-6,right:-4,fontSize:10,fontWeight:700,minWidth:16,height:16,lineHeight:'16px',textAlign:'center',background:'var(--accent)',color:'#fff',borderRadius:8,padding:'0 4px'}}>{f.badge}</span>:null}
+          </button>
+        ))}
+        <div style={{flex:1}}/>
+        <button className={`web-more-filters ${activeLabels.length?'has-active':''}`} onClick={()=>setShowMoreFilters(!showMoreFilters)}>
+          {I.sliders({s:14,c:activeLabels.length?'var(--accent)':'var(--secondary-text)'})}
+          <span>More Filters</span>
+          {activeLabels.length>0&&<span style={{background:'var(--accent)',color:'#fff',fontSize:10,fontWeight:700,padding:'1px 6px',borderRadius:8,marginLeft:2}}>{activeLabels.length}</span>}
+        </button>
+      </div>
+
+      {/* Body */}
+      <div className="web-body">
+        {/* Filter sidebar — always visible */}
+        <div className="web-sidebar">
+          <div className="filter-section-title">Contact Labels</div>
+          {labels.map(label=>{
+            const count=counts[label.id]||0;
+            const isActive=activeLabels.includes(label.id);
+            const isExpanded=expandedLabel===label.id;
+            return(
+              <React.Fragment key={label.id}>
+                <div className="filter-row" onClick={()=>toggleLabel(label.id)}>
+                  <div className={`filter-row-check ${isActive?'checked':''}`}>
+                    {isActive&&<span style={{color:'#fff',fontSize:11,fontWeight:700}}>✓</span>}
+                  </div>
+                  <span className="filter-row-label" style={{fontSize:14}}>{label.label}</span>
+                  <span className="filter-row-count">{count}</span>
+                  {label.hasSubtags&&subtags.length>0&&(
+                    <span onClick={e=>{e.stopPropagation();setExpandedLabel(isExpanded?null:label.id);setShowContacts(false)}} className={`filter-row-expand ${isExpanded?'open':''}`}>
+                      {I.chevronDown({s:12,c:'var(--tertiary-text)'})}
+                    </span>
+                  )}
+                </div>
+                {label.hasSubtags&&isExpanded&&(
+                  <div>
+                    <div className="subtag-list" style={{paddingLeft:42}}>
+                      {subtags.map(st=>(
+                        <span key={st} className={`subtag-chip ${activeSubtags.includes(st)?'active':''}`} onClick={()=>toggleSubtag(st)}>
+                          {st} <span style={{opacity:.6,marginLeft:1}}>{stCounts[st]||0}</span>
+                        </span>
+                      ))}
+                    </div>
+                    {contacts.length>0&&(
+                      <div style={{padding:'0 16px 6px 42px'}}>
+                        <div onClick={()=>setShowContacts(!showContacts)} style={{fontSize:11,color:'var(--accent)',fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',gap:3}}>
+                          {showContacts?'Hide':'Show'} contacts ({visibleContacts.length})
+                          <span className={`filter-row-expand ${showContacts?'open':''}`}>{I.chevronDown({s:10,c:'var(--accent)'})}</span>
+                        </div>
+                      </div>
+                    )}
+                    {showContacts&&(
+                      <div style={{paddingBottom:6}}>
+                        {visibleContacts.map(c=>(
+                          <div key={c.name} className="filter-contact-row" style={{paddingLeft:42}}>
+                            <Avatar name={c.name} size={22}/>
+                            <span style={{flex:1,fontSize:13}}>{c.name}</span>
+                            {c.subtag&&<span style={{fontSize:9,color:'var(--tertiary-text)',background:'var(--surface-darken)',padding:'1px 5px',borderRadius:5}}>{c.subtag}</span>}
+                            <div className="filter-contact-swipe" onClick={e=>{e.stopPropagation();setRemovedContacts(p=>[...p,c.name])}}>Remove</div>
+                          </div>
+                        ))}
+                        <div className="add-contact-btn" style={{paddingLeft:42}}>
+                          {I.plus({s:12,c:'var(--accent)'})} Add contact
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+
+          <div className="filter-section-title" style={{marginTop:8}}>Type</div>
+          {['Renewal','Check-in','Follow-up','Inquiry'].map(type=>{
+            const typeCount=industryTodos.filter(t=>t.type===type.toLowerCase()||t.type===type.toLowerCase().replace('-','_')||(type==='Check-in'&&t.type==='check-in')||(type==='Follow-up'&&t.type==='follow-up')||(type==='Inquiry'&&t.type==='inquiry')).length;
+            return(
+              <div key={type} className="filter-row">
+                <div className="filter-row-check"/>
+                <span className="filter-row-label" style={{fontSize:14}}>{type}</span>
+                <span className="filter-row-count">{typeCount||'—'}</span>
+              </div>
+            );
+          })}
+
+          {activeLabels.length>0&&(
+            <div style={{padding:'16px 16px 0'}}>
+              <button onClick={()=>{setActiveLabels([]);setActiveSubtags([])}} style={{background:'none',border:'none',color:'var(--accent)',fontSize:13,fontWeight:500,cursor:'pointer',fontFamily:'inherit'}}>Clear all filters</button>
+            </div>
+          )}
+        </div>
+
+        {/* Inbox list */}
+        <div className="web-inbox-list" style={{background:'var(--bg)'}}>
+          {filter==='todo'&&pending.map(todo=>{
+            const isUrgent=todo.due==='Today';
+            const isSelected=openThread&&openThread.id===todo.id;
+            return(
+              <div key={todo.id} onClick={()=>setOpenThread(todo)} style={{display:'flex',alignItems:'flex-start',padding:'12px 20px',cursor:'pointer',borderBottom:'.5px solid var(--border)',background:isSelected?'var(--accent-12)':'var(--bg)',transition:'background .15s'}}>
+                <div style={{width:40,height:40,borderRadius:20,background:'var(--surface-darken)',display:'flex',alignItems:'center',justifyContent:'center',marginRight:12,marginTop:2,flexShrink:0}}>
+                  {I.outbound({s:18,c:'var(--primary-text)'})}
+                </div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:3}}>
+                    <span style={{fontSize:15,fontWeight:700,color:'var(--primary-text)'}}>{todo.displayContact||todo.contact}</span>
+                    {isUrgent&&<span style={{display:'flex',color:'var(--error)'}}>{I.bell({s:12,c:'var(--error)'})}</span>}
+                    <span className="todo-badge" style={{fontSize:11}}>To-Do</span>
+                    <span style={{flex:1}}/>
+                    <span style={{fontSize:12,fontWeight:600,color:'var(--primary-text)'}}>{todo.due}</span>
+                  </div>
+                  <div style={{fontSize:13,color:'var(--secondary-text)',lineHeight:1.4,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{todo.summary}</div>
+                </div>
+              </div>
+            );
+          })}
+          {filter==='todo'&&pending.length===0&&(
+            <div style={{padding:'60px 24px',textAlign:'center',color:'var(--secondary-text)',fontSize:14}}>No To-Dos for this industry.</div>
+          )}
+        </div>
+
+        {/* Thread detail panel */}
+        {openThread&&(
+          <div className="web-thread-panel">
+            <div style={{display:'flex',alignItems:'center',padding:'12px 16px',gap:10,borderBottom:'.5px solid var(--border)',position:'sticky',top:0,background:'var(--bg)',zIndex:1}}>
+              <Avatar name={openThread.contact} size={36}/>
+              <div style={{flex:1}}>
+                <div style={{fontSize:16,fontWeight:600,color:'var(--primary-text)'}}>{openThread.displayContact||openThread.contact}</div>
+                <div style={{fontSize:12,color:'var(--secondary-text)'}}>{openThread.rel}</div>
+              </div>
+              <Tag text={openThread.rel}/>
+              <button onClick={()=>setOpenThread(null)} style={{background:'none',border:'none',fontSize:20,color:'var(--tertiary-text)',cursor:'pointer',padding:4}}>×</button>
+            </div>
+            <div style={{padding:'0 16px'}}>
+              <div style={{textAlign:'center',padding:'12px 0 10px'}}>
+                <span style={{fontSize:11,fontWeight:500,color:'var(--tertiary-text)',background:'var(--surface-darken)',padding:'3px 10px',borderRadius:10}}>Earlier</span>
+              </div>
+              {(openThread.earlierItems||[]).map((item,i)=>(
+                <div key={i} style={{marginBottom:10,...(item.direction==='out'?{marginLeft:24}:{marginRight:24})}}>
+                  <div style={{padding:'10px 12px',background:item.direction==='out'?'var(--surface-darken)':'var(--surface-dark)',borderRadius:'var(--r)',border:'.5px solid var(--border)'}}>
+                    <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:item.text?0:4}}>
+                      <span style={{display:'flex'}}>{item.type==='call'?I.callReceive({s:14,c:'var(--primary-text)'}):I.sms({s:14,c:'var(--primary-text)'})}</span>
+                      <span style={{fontSize:14,fontWeight:600,color:'var(--primary-text)'}}>{item.type==='call'?'Call':'Text'}</span>
+                      <span style={{fontSize:11,color:'var(--secondary-text)',marginLeft:'auto'}}>{item.time}</span>
+                    </div>
+                    {item.summary&&<div style={{fontSize:13,color:'var(--primary-text)',fontStyle:'italic',lineHeight:1.35}}>{item.summary}</div>}
+                    {item.text&&<div style={{fontSize:13,color:'var(--primary-text)',fontStyle:'italic',lineHeight:1.35,marginTop:3}}>{item.text}</div>}
+                  </div>
+                </div>
+              ))}
+              {openThread.serviceEvent&&(
+                <>
+                  <div style={{textAlign:'center',padding:'4px 0 10px'}}>
+                    <span style={{fontSize:11,fontWeight:500,color:'var(--tertiary-text)',background:'var(--surface-darken)',padding:'3px 10px',borderRadius:10}}>{openThread.serviceEvent.date}</span>
+                  </div>
+                  <div style={{marginBottom:10}}>
+                    <div style={{padding:'10px 12px',background:'var(--surface-dark)',borderRadius:'var(--r)',border:'.5px solid var(--border)'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:4}}>
+                        <span style={{display:'flex'}}>{I.calendar({s:14,c:'var(--primary-text)'})}</span>
+                        <span style={{fontSize:14,fontWeight:600,color:'var(--primary-text)'}}>Event</span>
+                      </div>
+                      <div style={{fontSize:13,fontWeight:600,color:'var(--primary-text)',lineHeight:1.35}}>{openThread.serviceEvent.title}</div>
+                      <div style={{fontSize:12,color:'var(--secondary-text)',lineHeight:1.35,marginTop:2}}>{openThread.serviceEvent.scheduled}</div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            {/* Draft bar */}
+            <div style={{padding:'10px 16px',borderTop:'.5px solid var(--border)',position:'sticky',bottom:0,background:'var(--bg)'}}>
+              <div style={{padding:'10px 12px',background:'var(--input-bg)',borderRadius:16,border:'.5px solid var(--input-stroke)'}}>
+                <div style={{display:'flex',alignItems:'center',gap:4,marginBottom:4}}>
+                  <span style={{display:'flex'}}>{openThread.sendAs==='call'?I.outbound({s:12,c:'var(--primary-text)'}):I.sms({s:12,c:'var(--primary-text)'})}</span>
+                  <span style={{fontSize:11,fontWeight:600,color:'var(--primary-text)'}}>{openThread.sendAs==='call'?'AI Call':'Text'}</span>
+                </div>
+                <div style={{fontSize:13,color:'var(--secondary-text)',lineHeight:1.5}}>{openThread.sendAs==='call'?openThread.callDraft:openThread.textDraft}</div>
+              </div>
+              <div style={{display:'flex',gap:8,marginTop:8}}>
+                <button className="btn-primary" style={{fontSize:14,height:40}} onClick={()=>{setSentIds(p=>[...p,openThread.id]);setOpenThread(null)}}>
+                  {openThread.sendAs==='call'?'Place AI Call':'Send Text'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -1384,6 +1904,7 @@ function NotifScreen({industryId}){
 // ── App ──
 function App(){
   const[screen,setScreen]=useState('todo');
+  const[viewMode,setViewMode]=useState('ios'); // 'ios' | 'web'
   // Industry is global so switching it from Settings instantly re-filters To-Do + Notifications.
   // Default 'pharmacy' matches the pre-existing prototype framing.
   const[industryId,setIndustryId]=useState('primary_care');
@@ -1404,13 +1925,35 @@ function App(){
       <div style={{textAlign:'center',padding:'8px 0 0'}}>
         <div style={{fontSize:20,fontWeight:700,color:'#fff',letterSpacing:'-.5px'}}>YouSquared</div>
         <div style={{fontSize:12,color:'#888',marginTop:2}}>Scheduled Outbound & Contact Events · <span style={{color:'#FF8370',fontWeight:600}}>{industry.label}</span></div>
+        {/* iOS / Web toggle */}
+        <div className="device-toggle" style={{marginTop:8}}>
+          <button className={`device-toggle-btn ${viewMode==='ios'?'active':''}`} onClick={()=>setViewMode('ios')} style={{display:'flex',alignItems:'center',gap:4}}>
+            {I.mobile({s:12,c:viewMode==='ios'?'#fff':'#aaa'})} iOS
+          </button>
+          <button className={`device-toggle-btn ${viewMode==='web'?'active':''}`} onClick={()=>setViewMode('web')} style={{display:'flex',alignItems:'center',gap:4}}>
+            {I.globe({s:12,c:viewMode==='web'?'#fff':'#aaa'})} Web
+          </button>
+        </div>
       </div>
-      <div className="nav-bar">
-        {screens.map(s=>(<button key={s.key} className={`nav-btn ${screen===s.key?'active':''}`} onClick={()=>setScreen(s.key)}>{s.label}</button>))}
-      </div>
-      {screen==='scenarios'&&<ScenariosScreen onNavigate={setScreen} industry={industry} scenarios={scenarios} setScenarios={setScenarios} onChangeIndustry={setIndustryId}/>}
-      {screen==='todo'&&<TodoScreen onNavigate={setScreen} industryId={industryId}/>}
-      {screen==='notif'&&<NotifScreen industryId={industryId}/>}
+      {viewMode==='ios'?(
+        <>
+          <div className="nav-bar">
+            {screens.map(s=>(<button key={s.key} className={`nav-btn ${screen===s.key?'active':''}`} onClick={()=>setScreen(s.key)}>{s.label}</button>))}
+          </div>
+          {screen==='scenarios'&&<ScenariosScreen onNavigate={setScreen} industry={industry} scenarios={scenarios} setScenarios={setScenarios} onChangeIndustry={setIndustryId}/>}
+          {screen==='todo'&&<TodoScreen onNavigate={setScreen} industryId={industryId}/>}
+          {screen==='notif'&&<NotifScreen industryId={industryId}/>}
+        </>
+      ):(
+        <>
+          <div className="nav-bar">
+            {screens.map(s=>(<button key={s.key} className={`nav-btn ${screen===s.key?'active':''}`} onClick={()=>setScreen(s.key)}>{s.label}</button>))}
+          </div>
+          {screen==='scenarios'&&<ScenariosScreen onNavigate={setScreen} industry={industry} scenarios={scenarios} setScenarios={setScenarios} onChangeIndustry={setIndustryId}/>}
+          {screen==='todo'&&<WebInboxScreen industryId={industryId} onNavigate={setScreen}/>}
+          {screen==='notif'&&<NotifScreen industryId={industryId}/>}
+        </>
+      )}
       <FeedbackChat/>
       <div style={{position:'fixed',bottom:8,left:12,fontSize:10,color:'var(--error)',maxWidth:220,lineHeight:1.3,zIndex:50}}>All health data in this prototype is illustrative and does not represent any real patients.</div>
     </>
