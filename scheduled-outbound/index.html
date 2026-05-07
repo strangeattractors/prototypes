@@ -213,16 +213,48 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .device-toggle-btn{padding:5px 18px;font-size:12px;font-weight:600;border:none;cursor:pointer;transition:all .15s;font-family:inherit;background:transparent;color:#aaa}
 .device-toggle-btn.active{background:var(--accent);color:#fff}
 
-/* ── Web layout ── */
-.web-frame{width:1100px;max-width:calc(100vw - 40px);min-height:720px;background:var(--bg);border-radius:12px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);display:flex;flex-direction:column}
-.web-topbar{padding:10px 20px;background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-.web-body{display:flex;flex:1;overflow:hidden}
-.web-sidebar{width:248px;background:var(--bg-primary);border-right:1px solid var(--border);overflow-y:auto;flex-shrink:0;padding-bottom:20px}
+/* ── Web layout (matches web.yousquared.ai) ── */
+.web-frame{width:1200px;max-width:calc(100vw - 40px);height:720px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08),0 1px 4px rgba(0,0,0,.04);display:flex}
+.web-sidebar{width:256px;display:flex;flex-direction:column;border-right:1px solid #e5e5e5;background:#fafafa;flex-shrink:0}
 .web-sidebar::-webkit-scrollbar{display:none}
+.web-sidebar-brand{display:flex;align-items:center;gap:12px;padding:16px}
+.web-sidebar-logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF8370,#e06a58);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+.web-sidebar-brand-text{font-size:18px;font-weight:500;color:#171717}
+.web-sidebar-switcher{display:flex;align-items:center;gap:8px;padding:4px 12px 12px;cursor:pointer}
+.web-sidebar-switcher:hover{opacity:.8}
+.web-switcher-avatar{width:28px;height:28px;border-radius:14px;background:#e5e5e5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#737373;flex-shrink:0}
+.web-switcher-name{font-size:14px;font-weight:500;color:#171717;flex:1}
+.web-sidebar-nav{flex:1;overflow-y:auto;padding:0 8px}
+.web-sidebar-nav::-webkit-scrollbar{display:none}
+.web-nav-item{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:6px;cursor:pointer;font-size:14px;color:#737373;transition:all .15s;position:relative}
+.web-nav-item:hover{background:#f0f0f0;color:#171717}
+.web-nav-item.active{background:#f0f0f0;font-weight:500;color:#171717}
+.web-nav-badge{font-size:10px;font-weight:700;min-width:18px;height:18px;line-height:18px;text-align:center;background:#FF8370;color:#fff;border-radius:9px;padding:0 5px;margin-left:auto}
+.web-nav-badge.muted{background:transparent;color:#737373;font-weight:500;font-size:12px}
+.web-nav-section{padding:14px 12px 6px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.8px;color:#a3a3a3}
+.web-nav-more{display:flex;align-items:center;gap:6px;padding:7px 12px;font-size:13px;color:#a3a3a3;cursor:pointer}
+.web-nav-more:hover{color:#171717}
+.web-sidebar-promo{margin:0 8px 12px;padding:12px;border-radius:8px;border:1px solid #e5e5e5;background:#fff;font-size:12px;color:#737373;line-height:1.4}
+.web-sidebar-promo a{display:inline-block;margin-top:6px;font-size:12px;font-weight:500;color:#FF8370;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.web-sidebar-footer{border-top:1px solid #e5e5e5;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.web-sidebar-footer span{font-size:14px;font-weight:500;color:#737373}
+.web-sidebar-footer button{background:none;border:none;font-size:14px;color:#a3a3a3;cursor:pointer;font-family:inherit}
+.web-sidebar-footer button:hover{color:#171717}
+.web-main{display:flex;flex:1;overflow:hidden}
+.web-list-col{width:384px;display:flex;flex-direction:column;flex-shrink:0}
+.web-list-header{padding:12px 16px;border-bottom:1px solid #e5e5e5}
+.web-search-input{display:flex;align-items:center;gap:8px;padding:6px 12px;background:#f5f5f5;border-radius:8px;border:1px solid #e5e5e5}
+.web-search-input input{border:none;background:transparent;outline:none;font-size:14px;font-family:inherit;color:#171717;flex:1}
+.web-search-input input::placeholder{color:#a3a3a3}
 .web-inbox-list{flex:1;overflow-y:auto}
 .web-inbox-list::-webkit-scrollbar{display:none}
-.web-thread-panel{width:420px;border-left:1px solid var(--border);overflow-y:auto;background:var(--bg);flex-shrink:0}
-.web-thread-panel::-webkit-scrollbar{display:none}
+.web-detail-col{flex:1;display:flex;flex-direction:column;overflow:hidden;border-left:1px solid #e5e5e5}
+.web-detail-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:12px;color:#a3a3a3}
+.web-detail-empty svg{opacity:.5}
+.web-detail-empty p{font-size:14px}
+.web-inbox-item{display:flex;width:100%;align-items:flex-start;gap:12px;padding:12px 16px;cursor:pointer;background:#fff;text-align:left;border:none;border-bottom:1px solid #f0f0f0;font-family:inherit;transition:background .1s}
+.web-inbox-item:hover{background:#fafafa}
+.web-inbox-item.selected{background:#f5f5f5}
 
 /* ── Filter sidebar / sheet ── */
 .filter-section-title{font-size:11px;font-weight:600;text-transform:uppercase;color:var(--tertiary-text);padding:14px 16px 6px;letter-spacing:.5px}
@@ -258,14 +290,10 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .filter-sheet-row:last-child{border-bottom:none}
 .filter-sheet-row:hover{background:var(--surface-dark)}
 
-/* Web filter pill (differs from iOS pill) */
-.web-filter-pill{padding:5px 14px;border-radius:var(--r-xxl);font-size:13px;font-weight:500;cursor:pointer;border:1.5px solid var(--border);transition:all .15s;font-family:inherit;background:var(--bg);color:var(--secondary-text);white-space:nowrap}
-.web-filter-pill:hover{border-color:var(--accent)}
-.web-filter-pill.active{background:var(--primary-text);color:var(--on-label);border-color:var(--primary-text)}
-
-/* Web more filters button */
-.web-more-filters{display:flex;align-items:center;gap:6px;padding:5px 14px;border-radius:var(--r-xxl);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:var(--bg);color:var(--secondary-text);font-family:inherit;transition:all .15s;white-space:nowrap}
-.web-more-filters:hover{border-color:var(--accent);color:var(--accent)}
+/* Web sidebar filter rows (compact) */
+.web-sidebar .filter-row{padding:5px 12px;gap:8}
+.web-sidebar .filter-row-check{width:16px;height:16px;border-radius:4px}
+.web-sidebar .subtag-chip{font-size:10px;padding:2px 7px}
 .web-more-filters.has-active{border-color:var(--accent);background:var(--accent-12);color:var(--accent)}
 
 /* Invite button */
@@ -311,6 +339,9 @@ const I={
   addUser:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>,
   globe:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>,
   mobile:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>,
+  idCard:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="9" cy="12" r="2"/><path d="M15 10h2M15 14h2"/><path d="M6 19c0-1.7 1.3-3 3-3s3 1.3 3 3"/></svg>,
+  building:({s=16,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22V12h6v10"/><path d="M8 6h.01M16 6h.01M12 6h.01M8 10h.01M16 10h.01M12 10h.01"/></svg>,
+  messageSquare:({s=20,c='currentColor'}={})=><svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>,
 };
 
 // ── Helpers ──
@@ -1940,7 +1971,6 @@ function WebInboxScreen({industryId,onNavigate}){
   const[showContacts,setShowContacts]=useState(false);
   const[removedContacts,setRemovedContacts]=useState([]);
   const[sentIds,setSentIds]=useState([]);
-  const[showMoreFilters,setShowMoreFilters]=useState(false);
 
   const industryTodos=TODOS.filter(t=>t.industryId===industryId);
   const cat=INDUSTRY_CATEGORY(industryId);
@@ -1954,88 +1984,83 @@ function WebInboxScreen({industryId,onNavigate}){
   const toggleLabel=id=>setActiveLabels(p=>p.includes(id)?p.filter(l=>l!==id):[...p,id]);
   const toggleSubtag=st=>setActiveSubtags(p=>p.includes(st)?p.filter(s=>s!==st):[...p,st]);
 
+  const tabs=[
+    {k:'inbox',l:'Inbox',badge:12,icon:true},
+    {k:'todo',l:'Suggested to-dos',badge:pending.length},
+    {k:'urgent',l:'Urgent',badge:4},
+    {k:'unread',l:'Unread',badge:13},
+    {k:'missed',l:'Missed',badge:13,muted:true}
+  ];
+
   return(
     <div className="web-frame">
-      {/* Top bar */}
-      <div className="web-topbar">
-        <span style={{fontSize:17,fontWeight:700,color:'var(--primary-text)',marginRight:4}}>Inbox</span>
-        <div className="search-bar" style={{flex:1,maxWidth:360,margin:0}}>
-          <span style={{display:'flex'}}>{I.search({s:15,c:'var(--tertiary-text)'})}</span>
-          <input placeholder="Search contacts..."/>
+      {/* ── Sidebar ── */}
+      <aside className="web-sidebar">
+        <div className="web-sidebar-brand">
+          <div className="web-sidebar-logo">Y²</div>
+          <span className="web-sidebar-brand-text">YouSquared</span>
         </div>
-        <div style={{flex:1}}/>
-        <button className="invite-btn">{I.addUser({s:14,c:'#fff'})} Invite</button>
-      </div>
+        <div className="web-sidebar-switcher">
+          <div className="web-switcher-avatar">A</div>
+          <span className="web-switcher-name">Alex Dalyac</span>
+          <span style={{display:'flex'}}>{I.chevronDown({s:12,c:'#a3a3a3'})}</span>
+        </div>
+        <nav className="web-sidebar-nav">
+          {tabs.map(tab=>(
+            <div key={tab.k} className={`web-nav-item ${filter===tab.k?'active':''}`} onClick={()=>{setFilter(tab.k);setOpenThread(null)}}>
+              {tab.icon&&<span style={{display:'flex'}}>{I.inbox({s:16,c:filter===tab.k?'#171717':'#737373'})}</span>}
+              <span>{tab.l}</span>
+              {tab.badge>0&&<span className={`web-nav-badge ${tab.muted?'muted':''}`}>{tab.badge}</span>}
+            </div>
+          ))}
+          <div className="web-nav-more">{I.chevronDown({s:12,c:'#a3a3a3'})} More</div>
 
-      {/* Filter pill row */}
-      <div style={{display:'flex',gap:8,padding:'10px 20px',borderBottom:'1px solid var(--border)',alignItems:'center'}}>
-        {[{k:'inbox',l:'Inbox',badge:12},{k:'todo',l:'To-Do',badge:pending.length},{k:'unread',l:'Unread',badge:3},{k:'missed',l:'Missed',badge:19},{k:'urgent',l:'Urgent',badge:4}].map(f=>(
-          <button key={f.k} className={`web-filter-pill ${filter===f.k?'active':''}`} onClick={()=>setFilter(f.k)} style={{position:'relative'}}>
-            {f.l}
-            {f.badge?<span style={{position:'absolute',top:-6,right:-4,fontSize:10,fontWeight:700,minWidth:16,height:16,lineHeight:'16px',textAlign:'center',background:'var(--accent)',color:'#fff',borderRadius:8,padding:'0 4px'}}>{f.badge}</span>:null}
-          </button>
-        ))}
-        <div style={{flex:1}}/>
-        <button className={`web-more-filters ${activeLabels.length?'has-active':''}`} onClick={()=>setShowMoreFilters(!showMoreFilters)}>
-          {I.sliders({s:14,c:activeLabels.length?'var(--accent)':'var(--secondary-text)'})}
-          <span>More Filters</span>
-          {activeLabels.length>0&&<span style={{background:'var(--accent)',color:'#fff',fontSize:10,fontWeight:700,padding:'1px 6px',borderRadius:8,marginLeft:2}}>{activeLabels.length}</span>}
-        </button>
-      </div>
-
-      {/* Body */}
-      <div className="web-body">
-        {/* Filter sidebar — always visible */}
-        <div className="web-sidebar">
-          <div className="filter-section-title">Contact Labels</div>
+          {/* Contact Labels */}
+          <div className="web-nav-section">Contact Labels</div>
           {labels.map(label=>{
             const count=counts[label.id]||0;
             const isActive=activeLabels.includes(label.id);
             const isExpanded=expandedLabel===label.id;
             return(
               <React.Fragment key={label.id}>
-                <div className="filter-row" onClick={()=>toggleLabel(label.id)}>
-                  <div className={`filter-row-check ${isActive?'checked':''}`}>
-                    {isActive&&<span style={{color:'#fff',fontSize:11,fontWeight:700}}>✓</span>}
+                <div className="filter-row" style={{padding:'5px 12px',gap:8}} onClick={()=>toggleLabel(label.id)}>
+                  <div className={`filter-row-check ${isActive?'checked':''}`} style={{width:16,height:16,borderRadius:4}}>
+                    {isActive&&<span style={{color:'#fff',fontSize:9,fontWeight:700}}>✓</span>}
                   </div>
-                  <span className="filter-row-label" style={{fontSize:14}}>{label.label}</span>
-                  <span className="filter-row-count">{count}</span>
+                  <span style={{flex:1,fontSize:13,color:isActive?'#171717':'#737373'}}>{label.label}</span>
+                  <span style={{fontSize:11,color:'#a3a3a3'}}>{count}</span>
                   {label.hasSubtags&&subtags.length>0&&(
-                    <span onClick={e=>{e.stopPropagation();setExpandedLabel(isExpanded?null:label.id);setShowContacts(false)}} className={`filter-row-expand ${isExpanded?'open':''}`}>
-                      {I.chevronDown({s:12,c:'var(--tertiary-text)'})}
+                    <span onClick={e=>{e.stopPropagation();setExpandedLabel(isExpanded?null:label.id);setShowContacts(false)}} className={`filter-row-expand ${isExpanded?'open':''}`} style={{padding:6,margin:-4}}>
+                      {I.chevronDown({s:10,c:'#a3a3a3'})}
                     </span>
                   )}
                 </div>
                 {label.hasSubtags&&isExpanded&&(
-                  <div>
-                    <div className="subtag-list" style={{paddingLeft:42}}>
+                  <div style={{paddingLeft:36}}>
+                    <div style={{display:'flex',flexWrap:'wrap',gap:4,padding:'2px 8px 8px 0'}}>
                       {subtags.map(st=>(
-                        <span key={st} className={`subtag-chip ${activeSubtags.includes(st)?'active':''}`} onClick={()=>toggleSubtag(st)}>
-                          {st} <span style={{opacity:.6,marginLeft:1}}>{stCounts[st]||0}</span>
+                        <span key={st} className={`subtag-chip ${activeSubtags.includes(st)?'active':''}`} onClick={()=>toggleSubtag(st)} style={{fontSize:10,padding:'2px 7px'}}>
+                          {st} <span style={{opacity:.6}}>{stCounts[st]||0}</span>
                         </span>
                       ))}
                     </div>
                     {contacts.length>0&&(
-                      <div style={{padding:'0 16px 6px 42px'}}>
-                        <div onClick={()=>setShowContacts(!showContacts)} style={{fontSize:11,color:'var(--accent)',fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',gap:3}}>
+                      <div style={{padding:'0 8px 4px 0'}}>
+                        <div onClick={()=>setShowContacts(!showContacts)} style={{fontSize:10,color:'#FF8370',fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',gap:3}}>
                           {showContacts?'Hide':'Show'} contacts ({visibleContacts.length})
-                          <span className={`filter-row-expand ${showContacts?'open':''}`}>{I.chevronDown({s:10,c:'var(--accent)'})}</span>
+                          <span className={`filter-row-expand ${showContacts?'open':''}`} style={{padding:3,margin:-2}}>{I.chevronDown({s:8,c:'#FF8370'})}</span>
                         </div>
                       </div>
                     )}
                     {showContacts&&(
-                      <div style={{paddingBottom:6}}>
+                      <div style={{paddingBottom:4}}>
                         {visibleContacts.map(c=>(
-                          <div key={c.name} className="filter-contact-row" style={{paddingLeft:42}}>
-                            <Avatar name={c.name} size={22}/>
-                            <span style={{flex:1,fontSize:13}}>{c.name}</span>
-                            {c.subtag&&<span style={{fontSize:9,color:'var(--tertiary-text)',background:'var(--surface-darken)',padding:'1px 5px',borderRadius:5}}>{c.subtag}</span>}
-                            <div className="filter-contact-swipe" onClick={e=>{e.stopPropagation();setRemovedContacts(p=>[...p,c.name])}}>Remove</div>
+                          <div key={c.name} style={{display:'flex',alignItems:'center',gap:6,padding:'3px 8px 3px 0',fontSize:12,color:'#737373'}}>
+                            <Avatar name={c.name} size={18}/>
+                            <span style={{flex:1}}>{c.name}</span>
+                            {c.subtag&&<span style={{fontSize:8,color:'#a3a3a3',background:'#f0f0f0',padding:'1px 4px',borderRadius:4}}>{c.subtag}</span>}
                           </div>
                         ))}
-                        <div className="add-contact-btn" style={{paddingLeft:42}}>
-                          {I.plus({s:12,c:'var(--accent)'})} Add contact
-                        </div>
                       </div>
                     )}
                   </div>
@@ -2043,122 +2068,147 @@ function WebInboxScreen({industryId,onNavigate}){
               </React.Fragment>
             );
           })}
-          <div style={{padding:'8px 16px 4px',display:'flex',alignItems:'center',gap:5,cursor:'pointer'}}>
-            {I.plus({s:15,c:'var(--accent)'})}
-            <span style={{fontSize:13,fontWeight:500,color:'var(--accent)'}}>Add Label</span>
+          <div style={{padding:'6px 12px',display:'flex',alignItems:'center',gap:6,cursor:'pointer'}}>
+            {I.plus({s:14,c:'#FF8370'})}
+            <span style={{fontSize:13,fontWeight:500,color:'#FF8370'}}>Add Label</span>
           </div>
 
-          <div className="filter-section-title" style={{marginTop:8}}>Type</div>
-          {['Renewal','Check-in','Follow-up','Inquiry'].map(type=>{
-            const typeCount=industryTodos.filter(t=>t.type===type.toLowerCase()||t.type===type.toLowerCase().replace('-','_')||(type==='Check-in'&&t.type==='check-in')||(type==='Follow-up'&&t.type==='follow-up')||(type==='Inquiry'&&t.type==='inquiry')).length;
-            return(
-              <div key={type} className="filter-row">
-                <div className="filter-row-check"/>
-                <span className="filter-row-label" style={{fontSize:14}}>{type}</span>
-                <span className="filter-row-count">{typeCount||'—'}</span>
-              </div>
-            );
-          })}
+          {/* AI Personalization */}
+          <div className="web-nav-section">AI Personalization</div>
+          <div className="web-nav-item" onClick={()=>onNavigate('scenarios')}>
+            <span style={{display:'flex'}}>{I.idCard({s:16,c:'#737373'})}</span>
+            <span>About You</span>
+          </div>
+          <div className="web-nav-item">
+            <span style={{display:'flex'}}>{I.building({s:16,c:'#737373'})}</span>
+            <span>Company Info</span>
+          </div>
+          <div className="web-nav-item" onClick={()=>onNavigate('scenarios')}>
+            <span style={{display:'flex'}}>{I.spark({s:16,c:'#737373'})}</span>
+            <span>Secretary Settings</span>
+          </div>
+        </nav>
 
-          {activeLabels.length>0&&(
-            <div style={{padding:'16px 16px 0'}}>
-              <button onClick={()=>{setActiveLabels([]);setActiveSubtags([])}} style={{background:'none',border:'none',color:'var(--accent)',fontSize:13,fontWeight:500,cursor:'pointer',fontFamily:'inherit'}}>Clear all filters</button>
-            </div>
-          )}
+        <div className="web-sidebar-promo">
+          More features available in iOS!
+          <a>Download the app</a>
         </div>
-
-        {/* Inbox list */}
-        <div className="web-inbox-list" style={{background:'var(--bg)'}}>
-          {filter==='todo'&&pending.map(todo=>{
-            const isUrgent=todo.due==='Today';
-            const isSelected=openThread&&openThread.id===todo.id;
-            return(
-              <div key={todo.id} onClick={()=>setOpenThread(todo)} style={{display:'flex',alignItems:'flex-start',padding:'12px 20px',cursor:'pointer',borderBottom:'.5px solid var(--border)',background:isSelected?'var(--accent-12)':'var(--bg)',transition:'background .15s'}}>
-                <div style={{width:40,height:40,borderRadius:20,background:'var(--surface-darken)',display:'flex',alignItems:'center',justifyContent:'center',marginRight:12,marginTop:2,flexShrink:0}}>
-                  {I.outbound({s:18,c:'var(--primary-text)'})}
-                </div>
-                <div style={{flex:1,minWidth:0}}>
-                  <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:3}}>
-                    <span style={{fontSize:15,fontWeight:700,color:'var(--primary-text)'}}>{todo.displayContact||todo.contact}</span>
-                    {isUrgent&&<span style={{display:'flex',color:'var(--error)'}}>{I.bell({s:12,c:'var(--error)'})}</span>}
-                    <span className="todo-badge" style={{fontSize:11}}>To-Do</span>
-                    <span style={{flex:1}}/>
-                    <span style={{fontSize:12,fontWeight:600,color:'var(--primary-text)'}}>{todo.due}</span>
-                  </div>
-                  <div style={{fontSize:13,color:'var(--secondary-text)',lineHeight:1.4,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{todo.summary}</div>
-                </div>
-              </div>
-            );
-          })}
-          {filter==='todo'&&pending.length===0&&(
-            <div style={{padding:'60px 24px',textAlign:'center',color:'var(--secondary-text)',fontSize:14}}>No To-Dos for this industry.</div>
-          )}
+        <div className="web-sidebar-footer">
+          <span>Alex</span>
+          <button>Sign out</button>
         </div>
+      </aside>
 
-        {/* Thread detail panel */}
-        {openThread&&(
-          <div className="web-thread-panel">
-            <div style={{display:'flex',alignItems:'center',padding:'12px 16px',gap:10,borderBottom:'.5px solid var(--border)',position:'sticky',top:0,background:'var(--bg)',zIndex:1}}>
-              <Avatar name={openThread.contact} size={36}/>
-              <div style={{flex:1}}>
-                <div style={{fontSize:16,fontWeight:600,color:'var(--primary-text)'}}>{openThread.displayContact||openThread.contact}</div>
-                <div style={{fontSize:12,color:'var(--secondary-text)'}}>{openThread.rel}</div>
-              </div>
-              <Tag text={openThread.rel}/>
-              <button onClick={()=>setOpenThread(null)} style={{background:'none',border:'none',fontSize:20,color:'var(--tertiary-text)',cursor:'pointer',padding:4}}>×</button>
+      {/* ── Main content ── */}
+      <div className="web-main">
+        {/* List column */}
+        <div className="web-list-col">
+          <div className="web-list-header">
+            <div className="web-search-input">
+              <span style={{display:'flex'}}>{I.search({s:16,c:'#a3a3a3'})}</span>
+              <input placeholder="Search Inbox..."/>
             </div>
-            <div style={{padding:'0 16px'}}>
-              <div style={{textAlign:'center',padding:'12px 0 10px'}}>
-                <span style={{fontSize:11,fontWeight:500,color:'var(--tertiary-text)',background:'var(--surface-darken)',padding:'3px 10px',borderRadius:10}}>Earlier</span>
-              </div>
-              {(openThread.earlierItems||[]).map((item,i)=>(
-                <div key={i} style={{marginBottom:10,...(item.direction==='out'?{marginLeft:24}:{marginRight:24})}}>
-                  <div style={{padding:'10px 12px',background:item.direction==='out'?'var(--surface-darken)':'var(--surface-dark)',borderRadius:'var(--r)',border:'.5px solid var(--border)'}}>
-                    <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:item.text?0:4}}>
-                      <span style={{display:'flex'}}>{item.type==='call'?I.callReceive({s:14,c:'var(--primary-text)'}):I.sms({s:14,c:'var(--primary-text)'})}</span>
-                      <span style={{fontSize:14,fontWeight:600,color:'var(--primary-text)'}}>{item.type==='call'?'Call':'Text'}</span>
-                      <span style={{fontSize:11,color:'var(--secondary-text)',marginLeft:'auto'}}>{item.time}</span>
+          </div>
+          <div className="web-inbox-list">
+            {filter==='todo'&&pending.map(todo=>{
+              const isUrgent=todo.due==='Today';
+              const isSelected=openThread&&openThread.id===todo.id;
+              return(
+                <button type="button" key={todo.id} onClick={()=>setOpenThread(todo)} className={`web-inbox-item ${isSelected?'selected':''}`}>
+                  <div style={{width:36,height:36,borderRadius:18,background:'#f5f5f5',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:2}}>
+                    {I.outbound({s:16,c:'#737373'})}
+                  </div>
+                  <div style={{flex:1,minWidth:0}}>
+                    <div style={{display:'flex',alignItems:'center',gap:6}}>
+                      <span style={{fontSize:14,fontWeight:600,color:'#171717'}}>{todo.displayContact||todo.contact}</span>
+                      {isUrgent&&<span style={{display:'flex'}}>{I.bell({s:12,c:'#ef4444'})}</span>}
+                      <span style={{fontSize:10,fontWeight:700,background:'#FF8370',color:'#fff',padding:'1px 6px',borderRadius:4,lineHeight:'16px'}}>To-Do</span>
+                      <span style={{marginLeft:'auto',flexShrink:0,fontSize:12,color:isUrgent?'#171717':'#737373',fontWeight:isUrgent?600:400}}>{todo.due}</span>
                     </div>
-                    {item.summary&&<div style={{fontSize:13,color:'var(--primary-text)',fontStyle:'italic',lineHeight:1.35}}>{item.summary}</div>}
-                    {item.text&&<div style={{fontSize:13,color:'var(--primary-text)',fontStyle:'italic',lineHeight:1.35,marginTop:3}}>{item.text}</div>}
+                    <p style={{fontSize:13,color:'#737373',lineHeight:1.4,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',marginTop:2,margin:0}}>{todo.summary}</p>
                   </div>
-                </div>
-              ))}
-              {openThread.serviceEvent&&(
-                <>
-                  <div style={{textAlign:'center',padding:'4px 0 10px'}}>
-                    <span style={{fontSize:11,fontWeight:500,color:'var(--tertiary-text)',background:'var(--surface-darken)',padding:'3px 10px',borderRadius:10}}>{openThread.serviceEvent.date}</span>
-                  </div>
-                  <div style={{marginBottom:10}}>
-                    <div style={{padding:'10px 12px',background:'var(--surface-dark)',borderRadius:'var(--r)',border:'.5px solid var(--border)'}}>
-                      <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:4}}>
-                        <span style={{display:'flex'}}>{I.calendar({s:14,c:'var(--primary-text)'})}</span>
-                        <span style={{fontSize:14,fontWeight:600,color:'var(--primary-text)'}}>Event</span>
-                      </div>
-                      <div style={{fontSize:13,fontWeight:600,color:'var(--primary-text)',lineHeight:1.35}}>{openThread.serviceEvent.title}</div>
-                      <div style={{fontSize:12,color:'var(--secondary-text)',lineHeight:1.35,marginTop:2}}>{openThread.serviceEvent.scheduled}</div>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-            {/* Draft bar */}
-            <div style={{padding:'10px 16px',borderTop:'.5px solid var(--border)',position:'sticky',bottom:0,background:'var(--bg)'}}>
-              <div style={{padding:'10px 12px',background:'var(--input-bg)',borderRadius:16,border:'.5px solid var(--input-stroke)'}}>
-                <div style={{display:'flex',alignItems:'center',gap:4,marginBottom:4}}>
-                  <span style={{display:'flex'}}>{openThread.sendAs==='call'?I.outbound({s:12,c:'var(--primary-text)'}):I.sms({s:12,c:'var(--primary-text)'})}</span>
-                  <span style={{fontSize:11,fontWeight:600,color:'var(--primary-text)'}}>{openThread.sendAs==='call'?'AI Call':'Text'}</span>
-                </div>
-                <div style={{fontSize:13,color:'var(--secondary-text)',lineHeight:1.5}}>{openThread.sendAs==='call'?openThread.callDraft:openThread.textDraft}</div>
-              </div>
-              <div style={{display:'flex',gap:8,marginTop:8}}>
-                <button className="btn-primary" style={{fontSize:14,height:40}} onClick={()=>{setSentIds(p=>[...p,openThread.id]);setOpenThread(null)}}>
-                  {openThread.sendAs==='call'?'Place AI Call':'Send Text'}
                 </button>
+              );
+            })}
+            {filter==='todo'&&pending.length===0&&(
+              <div style={{padding:'60px 24px',textAlign:'center',color:'#a3a3a3',fontSize:14}}>No to-dos for this industry.</div>
+            )}
+            {filter!=='todo'&&(
+              <div style={{padding:'60px 24px',textAlign:'center',color:'#a3a3a3',fontSize:14}}>Select "Suggested to-dos" to view outbound items.</div>
+            )}
+          </div>
+        </div>
+
+        {/* Detail column */}
+        <div className="web-detail-col">
+          {openThread?(
+            <div style={{display:'flex',flexDirection:'column',height:'100%'}}>
+              <div style={{display:'flex',alignItems:'center',padding:'12px 16px',gap:12,borderBottom:'1px solid #e5e5e5',flexShrink:0}}>
+                <Avatar name={openThread.contact} size={36}/>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:16,fontWeight:600,color:'#171717'}}>{openThread.displayContact||openThread.contact}</div>
+                  <div style={{fontSize:12,color:'#737373'}}>{openThread.rel}</div>
+                </div>
+                <Tag text={openThread.rel}/>
+                <button onClick={()=>setOpenThread(null)} style={{background:'none',border:'none',fontSize:20,color:'#a3a3a3',cursor:'pointer',padding:4}}>×</button>
+              </div>
+              <div style={{flex:1,overflowY:'auto',padding:'0 16px'}}>
+                <div style={{textAlign:'center',padding:'12px 0 10px'}}>
+                  <span style={{fontSize:11,fontWeight:500,color:'#a3a3a3',background:'#f5f5f5',padding:'3px 10px',borderRadius:10}}>Earlier</span>
+                </div>
+                {(openThread.earlierItems||[]).map((item,i)=>(
+                  <div key={i} style={{marginBottom:10,...(item.direction==='out'?{marginLeft:24}:{marginRight:24})}}>
+                    <div style={{padding:'10px 12px',background:'#f5f5f5',borderRadius:10,border:'1px solid #e5e5e5'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:item.text?0:4}}>
+                        <span style={{display:'flex'}}>{item.type==='call'?I.callReceive({s:14,c:'#171717'}):I.sms({s:14,c:'#171717'})}</span>
+                        <span style={{fontSize:14,fontWeight:600,color:'#171717'}}>{item.type==='call'?'Call':'Text'}</span>
+                        <span style={{fontSize:11,color:'#a3a3a3',marginLeft:'auto'}}>{item.time}</span>
+                      </div>
+                      {item.summary&&<div style={{fontSize:13,color:'#171717',fontStyle:'italic',lineHeight:1.35}}>{item.summary}</div>}
+                      {item.text&&<div style={{fontSize:13,color:'#171717',fontStyle:'italic',lineHeight:1.35,marginTop:3}}>{item.text}</div>}
+                    </div>
+                  </div>
+                ))}
+                {openThread.serviceEvent&&(
+                  <>
+                    <div style={{textAlign:'center',padding:'4px 0 10px'}}>
+                      <span style={{fontSize:11,fontWeight:500,color:'#a3a3a3',background:'#f5f5f5',padding:'3px 10px',borderRadius:10}}>{openThread.serviceEvent.date}</span>
+                    </div>
+                    <div style={{marginBottom:10}}>
+                      <div style={{padding:'10px 12px',background:'#f5f5f5',borderRadius:10,border:'1px solid #e5e5e5'}}>
+                        <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:4}}>
+                          <span style={{display:'flex'}}>{I.calendar({s:14,c:'#171717'})}</span>
+                          <span style={{fontSize:14,fontWeight:600,color:'#171717'}}>Event</span>
+                        </div>
+                        <div style={{fontSize:13,fontWeight:600,color:'#171717',lineHeight:1.35}}>{openThread.serviceEvent.title}</div>
+                        <div style={{fontSize:12,color:'#737373',lineHeight:1.35,marginTop:2}}>{openThread.serviceEvent.scheduled}</div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div style={{padding:'10px 16px',borderTop:'1px solid #e5e5e5',flexShrink:0}}>
+                <div style={{padding:'10px 12px',background:'#f5f5f5',borderRadius:12,border:'1px solid #e5e5e5'}}>
+                  <div style={{display:'flex',alignItems:'center',gap:4,marginBottom:4}}>
+                    <span style={{display:'flex'}}>{openThread.sendAs==='call'?I.outbound({s:12,c:'#171717'}):I.sms({s:12,c:'#171717'})}</span>
+                    <span style={{fontSize:11,fontWeight:600,color:'#171717'}}>{openThread.sendAs==='call'?'AI Call':'Text'}</span>
+                  </div>
+                  <div style={{fontSize:13,color:'#737373',lineHeight:1.5}}>{openThread.sendAs==='call'?openThread.callDraft:openThread.textDraft}</div>
+                </div>
+                <div style={{display:'flex',gap:8,marginTop:8}}>
+                  <button className="btn-primary" style={{fontSize:14,height:40}} onClick={()=>{setSentIds(p=>[...p,openThread.id]);setOpenThread(null)}}>
+                    {openThread.sendAs==='call'?'Place AI Call':'Send Text'}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          ):(
+            <div className="web-detail-empty">
+              {I.messageSquare({s:48,c:'#a3a3a3'})}
+              <p>Select a conversation to view details.</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
