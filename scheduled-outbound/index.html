@@ -476,6 +476,24 @@ const SCENARIO_EVENT_OPTIONS=['lead','inquiry','quote','purchase','renewal','can
 const SCENARIO_TIMING_OPTIONS=['instantly','in 1h','in 3h','in 6h','in 12h','next day','in 48h','in 2 days','in 3 days','in 5 days','in 1 week','in 2 weeks','in 1 month','in 3 months','in 6 months','in 90 days','in 12 months','overdue'];
 const SCENARIO_ACTION_OPTIONS=['text','call'];
 
+// Canonical scenario type taxonomy + chronological order in the To-Do list:
+// close (lead) → prep (pre-event) → adopt (post-first-event) → fit (mid-cycle) → renew (cyclical) → refer (handoff)
+const SCENARIO_TYPE_ORDER=['close','prep','adopt','fit','renew','refer','other'];
+
+// TODO id → scenario type. Drives the chronological sort of To-Do threads per industry.
+const TODO_TYPES={
+  1:'renew',2:'renew',3:'renew',4:'adopt',5:'adopt',6:'adopt',
+  7:'fit',9:'adopt',10:'renew',11:'adopt',12:'renew',
+  14:'prep',15:'renew',16:'renew',17:'adopt',18:'fit',19:'renew',
+  20:'prep',21:'fit',22:'refer',23:'adopt',24:'fit',25:'refer',
+  26:'prep',27:'adopt',28:'refer',29:'prep',30:'fit',31:'refer',
+  32:'prep',33:'refer',34:'prep',35:'fit',36:'refer',37:'prep',
+  38:'fit',39:'refer',40:'prep',41:'adopt',42:'fit',43:'refer',
+  44:'prep',45:'fit',
+  46:'close',47:'close',48:'close',49:'close',50:'close',51:'close',
+  52:'close',53:'close',54:'close',55:'close',
+};
+
 const AUDIENCE_MOCK={
   csvName:'safer_pharmacy_rx_history.csv',csvRows:2847,afterFilters:1923,afterNL:47,
   nlQuery:'Patients who had a GLP-1 prescription filled but haven\'t had one filled in the last 30 days',
@@ -684,6 +702,8 @@ const TODOS=[
   {id:52,industryId:'surgery',notifTitle:'Inquiry F/U attempt 2 of 3: Charles W.',contact:'Charles W.',rel:'Prospect',type:'follow-up',summary:'Surgical consult Apr 26 (hernia repair), hasn\'t scheduled: attempt 2 of 3 (Same day → +1d → +2d).',callDraft:'Reach Charles — saw Dr. Richardson Apr 26, recommended laparoscopic inguinal hernia repair (symptomatic for 6 months). He left without booking. Common blockers at this stage: time off work, fear, cost. He\'s on Aetna, the surgery is fully covered. Offer: 3 OR slots in next 4 weeks + the option to talk through fears with Dr. Richardson by phone.',textDraft:'Hi Charles, Dr. Richardson\'s office. Following up on yesterday\'s visit. Aetna will cover the procedure 100% after deductible. I have OR slots May 12, May 19, or May 27. Want me to hold one? Or happy to schedule a 10-min phone call with Dr. Richardson to talk through any concerns.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'Apr 26',summary:'Consult with Dr. Richardson. Symptomatic right inguinal hernia, 6-month duration. Lap repair recommended. Aetna PPO.'},{type:'sms',direction:'out',time:'Apr 26, 5:30p',text:'Thanks for coming in today, Charles. Whenever you\'re ready to book, we have a few OR slots over the next 4 weeks. Insurance ran clean.'}],serviceEvent:{title:'Surgical consult Apr 26 with Dr. Richardson — lap hernia repair recommended, not scheduled',scheduled:'Inquiry F/U attempt 2 of 3 (cadence: same day → +1d → +2d)',date:'Apr 26'}},
   {id:53,industryId:'residential',notifTitle:'Inquiry F/U attempt 3 of 3: Priscilla J.',contact:'Priscilla J.',rel:'Prospect',type:'follow-up',summary:'Showed 1245 Maple Apr 26, no offer yet: attempt 3 of 3 (Same day → +1d → +2d).',callDraft:'Call Priscilla — toured 1245 Maple on Apr 26 with strong positive reaction (loved the kitchen + yard) but didn\'t make an offer. Two other comparable homes she was considering went under contract this weekend, narrowing her options. Offer to write up the offer today and walk through pricing strategy.',textDraft:'Hi Priscilla, James from Acme Realty. Quick heads up — the two other homes you liked just went under contract this weekend. 1245 Maple is your strongest play and seller signaled willingness to negotiate. Want to draft an offer this afternoon? I can come to you.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'Apr 22',summary:'First call — looking for a 4BR in South Austin, $700-800k, 60-day close. Pre-approved with Wells Fargo.'},{type:'call',direction:'in',time:'Apr 26',summary:'Toured 1245 Maple. Loved kitchen + yard. Said she\'d "think about it." Did not make offer.'},{type:'sms',direction:'out',time:'Apr 26, 7:00p',text:'Such a fun showing today! Loved seeing your reaction to that kitchen. Let me know if any questions come up — happy to write up an offer whenever you\'re ready.'},{type:'sms',direction:'out',time:'Apr 27, 10:00a',text:'Quick FYI — saw you also toured 89 Pine. Heads up that one had 3 offers Friday. 1245 Maple is still wide open.'}],serviceEvent:{title:'Showed 1245 Maple Apr 26 — strong reaction, no offer',scheduled:'Inquiry F/U attempt 3 of 3 (cadence: same day → +1d → +2d)',date:'Apr 26'}},
   {id:54,industryId:'equipment_rental',notifTitle:'Inquiry F/U attempt 2 of 3: Hector V.',contact:'Hector V.',rel:'Prospect',type:'follow-up',summary:'Quote sent for skid steer Apr 27, hasn\'t confirmed: attempt 2 of 3 (Same day → +1d → +2d).',callDraft:'Call Hector — quoted on Apr 27 for a Bobcat S650 skid steer for 2-week rental at 422 Commerce. Hasn\'t confirmed; said he was checking with United Rentals. Offer to hold the quote price for 48h + throw in 4 free hours of operator time (worth $200) if booked today.',textDraft:'Hi Hector, John from All Access. Quick FYI — your Bobcat S650 quote ($1,400 for 2 wks) is good through tomorrow. Booking today gets you 4 free hours of operator time. Want me to lock it in? Reply YES and I\'ll send delivery options.',due:'Today',sendAs:'text',earlierItems:[{type:'call',direction:'in',time:'Apr 27, 9:14a',summary:'Inquiry — needs Bobcat skid steer for grading work at 422 Commerce, 2-week rental.'},{type:'sms',direction:'out',time:'Apr 27, 10:30a',text:'Quote sent: Bobcat S650 skid steer, $700/week, $1,400 for 2 weeks. Delivery + bucket included. Quote good for 5 days.'}],serviceEvent:{title:'Quote sent Apr 27 for Bobcat S650 — not confirmed',scheduled:'Inquiry F/U attempt 2 of 3 (cadence: same day → +1d → +2d)',date:'Apr 27'}},
+  // ── Cart Abandon variant of Close (Pharmacy) ──
+  {id:55,industryId:'pharmacy',notifTitle:'Cart abandon F/U attempt 2 of 3: Megan T.',contact:'Megan T.',rel:'Prospect',type:'follow-up',summary:'Wegovy cart abandoned at checkout yesterday: attempt 2 of 3 (Same day → +1d → +2d, cost-concern angle).',callDraft:'Call Megan — added Wegovy 0.25mg + delivery to cart yesterday at 10:18a but dropped off at checkout step 2 (insurance + shipping). Same-day text at 10:30a got no reply. Cost likely the blocker — $1,349 cash-pay tier on screen. Mention BCBS PPO covers Wegovy with prior auth (we handle it, 24-48h), Mounjaro Savings Card eligibility check brings copay to ~$25, and we can resume the cart at the saved price.',textDraft:'Hi Megan, Safer Pharmacy. Saw you were starting your Wegovy order yesterday — the cost line is usually what gives folks pause. Your BCBS PPO can bring it from $1,349 to ~$25-$75 with prior auth (we handle it). Reply HELP and I\'ll start the PA + resume your cart.',due:'Today',sendAs:'text',earlierItems:[{type:'sms',direction:'in',time:'Apr 28, 10:14a',text:'(Site event) Visited /products/wegovy. Read product page for 4m 22s.'},{type:'sms',direction:'in',time:'Apr 28, 10:18a',text:'(Site event) Added Wegovy 0.25mg (first month) + delivery to cart. Subtotal $1,349 cash / pending insurance.'},{type:'sms',direction:'in',time:'Apr 28, 10:21a',text:'(Site event) Reached checkout step 2 (insurance + shipping). Closed tab. Cart abandoned.'},{type:'sms',direction:'out',time:'Apr 28, 10:30a',text:'Hi Megan! Saw you were starting a Wegovy order — happy to help if any questions. Your BCBS PPO may cover most of the cost. Cart saved for 7 days.'}],serviceEvent:{title:'Cart abandoned Apr 28 — Wegovy 0.25mg, subtotal $1,349 (pending insurance)',scheduled:'Cart Abandon F/U attempt 2 of 3 (cadence: same day → +1d → +2d)',date:'Apr 28'}},
 ];
 
 // Transcript data for post-send simulation
@@ -742,6 +762,7 @@ const TRANSCRIPTS={
   52:{outcome:'booked',label:'Surgery scheduled on attempt 2',lines:[{w:'t',t:'Hi Charles, Dr. Richardson\'s office. Following up on yesterday\'s visit. Aetna will cover the procedure 100% after deductible. I have OR slots May 12, May 19, or May 27. Want me to hold one? Or happy to schedule a 10-min phone call with Dr. Richardson to talk through any concerns.'},{w:'s',t:'✓ Text delivered'},{w:'p',t:'I think May 19 works. Honestly nervous about the recovery — can I do a quick call with Dr. Richardson?'},{w:'a',t:'Of course. Dr. Richardson has 10-min slots tomorrow 11am or Wed 4pm by phone. Which works? I\'ll hold May 19 for you in the meantime.'},{w:'p',t:'Wed 4pm.'},{w:'a',t:'Booked the call Wed 4pm + holding May 19 OR slot. Most lap hernia patients are back to desk work in 5-7 days.'}]},
   53:{outcome:'booked',label:'Offer drafted on attempt 3',lines:[{w:'t',t:'Hi Priscilla, James from Acme Realty. Quick heads up — the two other homes you liked just went under contract this weekend. 1245 Maple is your strongest play and seller signaled willingness to negotiate. Want to draft an offer this afternoon? I can come to you.'},{w:'s',t:'✓ Text delivered'},{w:'p',t:'OK let\'s do it. Can you come at 5pm?'},{w:'a',t:'On my way at 5. I\'ll bring the comp analysis and we\'ll walk through pricing — I think we have room to come in slightly under list given days on market.'}]},
   54:{outcome:'booked',label:'Quote confirmed on attempt 2',lines:[{w:'t',t:'Hi Hector, John from All Access. Quick FYI — your Bobcat S650 quote ($1,400 for 2 wks) is good through tomorrow. Booking today gets you 4 free hours of operator time. Want me to lock it in? Reply YES and I\'ll send delivery options.'},{w:'s',t:'✓ Text delivered'},{w:'p',t:'YES. United was $1,550 with no operator time. Delivery Mon 7am to 422 Commerce.'},{w:'a',t:'Locked in. Bobcat S650 + 4 hrs of operator delivered Mon 7am to 422 Commerce. We\'ll text gate-code reminder Sunday and confirm operator on Monday. Thanks Hector!'}]},
+  55:{outcome:'booked',label:'Cart recovered, prior auth started',lines:[{w:'t',t:'Hi Megan, Safer Pharmacy. Saw you were starting your Wegovy order yesterday — the cost line is usually what gives folks pause. Your BCBS PPO can bring it from $1,349 to ~$25-$75 with prior auth (we handle it). Reply HELP and I\'ll start the PA + resume your cart.'},{w:'s',t:'✓ Text delivered'},{w:'p',t:'HELP. Yeah the price freaked me out. I just need the 0.25mg starter.'},{w:'a',t:'Totally normal reaction — the cash-pay number doesn\'t reflect what most insured patients pay. I\'m starting your prior auth with BCBS right now. Quick question: any history of pancreatitis, gallbladder issues, or thyroid cancer? (Standard BCBS questions.)'},{w:'p',t:'No to all.'},{w:'a',t:'Perfect. PA submitted. BCBS usually responds in 24-48h. Once approved + Savings Card applied, your first month should land near $25. I\'ll text the final number tomorrow with a one-tap link to resume your cart at the locked price.'},{w:'p',t:'You\'re a lifesaver. Thanks.'},{w:'a',t:'Welcome to Safer Pharmacy, Megan. Talk tomorrow.'}]},
 };
 
 // ── Shared Components ──
@@ -1602,7 +1623,12 @@ function TodoScreen({onNavigate,industryId}){
   const[activeLabels,setActiveLabels]=useState([]);
   const[activeSubtags,setActiveSubtags]=useState([]);
   // Filter TODOs to current industry — drives the inbox + the post-send simulation list.
-  const industryTodos=TODOS.filter(t=>t.industryId===industryId);
+  // Filter to active industry, then sort by canonical scenario chronology.
+  const industryTodos=TODOS.filter(t=>t.industryId===industryId).slice().sort((a,b)=>{
+    const ai=SCENARIO_TYPE_ORDER.indexOf(TODO_TYPES[a.id]||'other');
+    const bi=SCENARIO_TYPE_ORDER.indexOf(TODO_TYPES[b.id]||'other');
+    return (ai<0?999:ai)-(bi<0?999:bi);
+  });
   const simScrollRef=useRef(null);
   const pending=industryTodos.filter(t=>!sentIds.includes(t.id));
   const sent=industryTodos.filter(t=>sentIds.includes(t.id));
@@ -1972,7 +1998,12 @@ function WebInboxScreen({industryId,onNavigate}){
   const[removedContacts,setRemovedContacts]=useState([]);
   const[sentIds,setSentIds]=useState([]);
 
-  const industryTodos=TODOS.filter(t=>t.industryId===industryId);
+  // Filter to active industry, then sort by canonical scenario chronology.
+  const industryTodos=TODOS.filter(t=>t.industryId===industryId).slice().sort((a,b)=>{
+    const ai=SCENARIO_TYPE_ORDER.indexOf(TODO_TYPES[a.id]||'other');
+    const bi=SCENARIO_TYPE_ORDER.indexOf(TODO_TYPES[b.id]||'other');
+    return (ai<0?999:ai)-(bi<0?999:bi);
+  });
   const cat=INDUSTRY_CATEGORY(industryId);
   const labels=FILTER_LABELS[cat]||[];
   const subtags=CLIENT_SUBTAGS[industryId]||[];
