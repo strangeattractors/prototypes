@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>YouSquared — Scheduled Outbound & Contact Events</title>
+<title>YouSquared — Team Viral Self-Serve</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
@@ -221,6 +221,73 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 
 /* Confetti animation */
 @keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(40px) rotate(360deg);opacity:0}}
+
+/* ── Platform toggle ── */
+.platform-toggle{display:inline-flex;border-radius:8px;border:1.5px solid #555;overflow:hidden;margin-bottom:8px}
+.platform-btn{padding:6px 18px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;border:none;background:transparent;color:#aaa}
+.platform-btn.active{background:var(--accent);color:#fff}
+
+/* ══ WEB APP FRAME ══ */
+.web-frame{width:960px;height:640px;border-radius:12px;background:#f4f4f5;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);display:flex;flex-direction:column;flex-shrink:0}
+.web-titlebar{height:36px;background:#e4e4e7;display:flex;align-items:center;padding:0 12px;gap:8px;flex-shrink:0}
+.web-dot{width:12px;height:12px;border-radius:6px}
+.web-urlbar{flex:1;height:22px;background:#fff;border-radius:6px;margin:0 40px;display:flex;align-items:center;padding:0 10px;font-size:11px;color:#71717a}
+.web-body{flex:1;display:flex;overflow:hidden}
+
+/* Sidebar (matches real web app: w-64 border-r bg-muted/40) */
+.web-sidebar{width:220px;background:#fafafa;border-right:1px solid #e4e4e7;display:flex;flex-direction:column;padding:16px 12px;flex-shrink:0;overflow-y:auto}
+.web-sidebar::-webkit-scrollbar{display:none}
+.web-sidebar-logo{display:flex;align-items:center;gap:8px;padding:4px 8px;margin-bottom:20px}
+.web-sidebar-section{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:#a1a1aa;padding:0 8px;margin:16px 0 6px}
+.web-nav-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:6px;font-size:13px;color:#3f3f46;cursor:pointer;transition:background .15s;font-weight:400}
+.web-nav-item:hover{background:#f0f0f0}
+.web-nav-item.active{background:#f0f0f0;font-weight:500;color:#18181b}
+.web-nav-item .nav-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;color:#71717a}
+.web-nav-item.active .nav-icon{color:#18181b}
+
+/* Main content area */
+.web-main{flex:1;overflow-y:auto;background:#fafafa;padding:0}
+.web-main::-webkit-scrollbar{display:none}
+
+/* Settings page shell (matches bg-muted/40, p-6, max-w-6xl) */
+.web-page{padding:32px 40px;max-width:800px}
+.web-page-title{font-size:22px;font-weight:600;color:#18181b;margin-bottom:4px}
+.web-page-sub{font-size:14px;color:#71717a;margin-bottom:24px}
+
+/* Settings card (matches rounded-lg border bg-background p-8) */
+.web-card{background:#fff;border:1px solid #e4e4e7;border-radius:10px;padding:24px;margin-bottom:16px}
+.web-card-title{font-size:16px;font-weight:600;color:#18181b;margin-bottom:4px}
+.web-card-sub{font-size:13px;color:#71717a;margin-bottom:16px}
+
+/* Web buttons */
+.web-btn{padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:inherit;transition:all .15s}
+.web-btn-primary{background:#18181b;color:#fff}.web-btn-primary:hover{background:#27272a}
+.web-btn-accent{background:var(--accent);color:#fff}.web-btn-accent:hover{background:var(--accent-dark)}
+.web-btn-outline{background:#fff;color:#18181b;border:1px solid #e4e4e7}.web-btn-outline:hover{background:#f4f4f5}
+.web-btn-ghost{background:transparent;color:#71717a}.web-btn-ghost:hover{background:#f4f4f5;color:#18181b}
+
+/* Web input */
+.web-input{padding:8px 12px;border:1px solid #e4e4e7;border-radius:6px;font-size:13px;font-family:inherit;color:#18181b;outline:none;width:100%}
+.web-input:focus{border-color:#a1a1aa;box-shadow:0 0 0 2px rgba(0,0,0,.05)}
+.web-input::placeholder{color:#a1a1aa}
+
+/* Web table */
+.web-table{width:100%;border-collapse:collapse}
+.web-table th{text-align:left;font-size:12px;font-weight:500;color:#71717a;padding:8px 12px;border-bottom:1px solid #e4e4e7}
+.web-table td{font-size:13px;color:#18181b;padding:10px 12px;border-bottom:1px solid #f4f4f5}
+.web-table tr:last-child td{border-bottom:none}
+
+/* Web badge */
+.web-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:9999px;font-size:11px;font-weight:500}
+
+/* Web tabs */
+.web-tabs{display:flex;border-bottom:1px solid #e4e4e7;margin-bottom:20px}
+.web-tab{padding:8px 16px;font-size:13px;font-weight:500;color:#71717a;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.web-tab.active{color:#18181b;border-bottom-color:#18181b}
+.web-tab:hover{color:#18181b}
+
+/* Web hero banner */
+.web-hero-banner{position:relative;border-radius:10px;padding:28px 32px;overflow:hidden;cursor:pointer}
 </style>
 </head>
 <body>
@@ -1870,9 +1937,506 @@ function TodoAssignScreen({onNavigate}){
 }
 
 // ══════════════════════════════════════════════════════════
+// ── WEB APP SCREENS ──
+// ══════════════════════════════════════════════════════════
+
+function WebSidebar({active,onNav}){
+  return(
+    <div className="web-sidebar">
+      <div className="web-sidebar-logo">
+        <div style={{width:28,height:28,borderRadius:8,background:'var(--accent)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:700,color:'#fff'}}>Y2</div>
+        <span style={{fontSize:15,fontWeight:600,color:'#18181b'}}>YouSquared</span>
+      </div>
+      <div className="web-sidebar-section">Main</div>
+      <div className={`web-nav-item ${active==='inbox'?'active':''}`} onClick={()=>onNav('inbox')}>
+        <span className="nav-icon">{I.inbox({s:16})}</span>Inbox
+      </div>
+      <div className="web-sidebar-section">AI Settings</div>
+      <div className={`web-nav-item ${active==='about'?'active':''}`} onClick={()=>onNav('about')}>
+        <span className="nav-icon">{I.contacts({s:16})}</span>About You
+      </div>
+      <div className={`web-nav-item ${active==='company'?'active':''}`} onClick={()=>onNav('company')}>
+        <span className="nav-icon">{I.info({s:16})}</span>Company Info
+      </div>
+      <div className={`web-nav-item ${active==='secretary'?'active':''}`} onClick={()=>onNav('secretary')}>
+        <span className="nav-icon">{I.settings({s:16})}</span>Secretary Settings
+      </div>
+      <div className="web-sidebar-section">Team</div>
+      <div className={`web-nav-item ${active==='team'?'active':''}`} onClick={()=>onNav('team')} style={{color:active==='team'?'#18181b':'var(--accent)',fontWeight:active==='team'?500:500}}>
+        <span className="nav-icon" style={{color:'var(--accent)'}}>{I.users({s:16,c:'var(--accent)'})}</span>My Team
+      </div>
+      <div className={`web-nav-item ${active==='invite'?'active':''}`} onClick={()=>onNav('invite')}>
+        <span className="nav-icon">{I.userPlus({s:16})}</span>Invite Team
+      </div>
+      <div className="web-sidebar-section">Account</div>
+      <div className={`web-nav-item ${active==='plan'?'active':''}`} onClick={()=>onNav('plan')}>
+        <span className="nav-icon">{I.crown({s:16})}</span>My Plan
+      </div>
+      <div className={`web-nav-item ${active==='referrals'?'active':''}`} onClick={()=>onNav('referrals')}>
+        <span className="nav-icon">{I.gift({s:16})}</span>Referrals
+      </div>
+      <div style={{flex:1}}/>
+      <div style={{padding:'12px 8px',borderTop:'1px solid #e4e4e7',marginTop:12,display:'flex',alignItems:'center',gap:8}}>
+        <Avatar name="Alex Dalyac" size={28}/>
+        <div style={{fontSize:12,color:'#3f3f46',fontWeight:500}}>Alex D.</div>
+      </div>
+    </div>
+  );
+}
+
+function WebFrame({children,activeNav,onNav,url}){
+  return(
+    <div className="web-frame">
+      <div className="web-titlebar">
+        <div className="web-dot" style={{background:'#ff5f57'}}/>
+        <div className="web-dot" style={{background:'#febc2e'}}/>
+        <div className="web-dot" style={{background:'#28c840'}}/>
+        <div className="web-urlbar">{url||'app.yousquared.ai'}</div>
+      </div>
+      <div className="web-body">
+        <WebSidebar active={activeNav} onNav={onNav}/>
+        <div className="web-main">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+// ── Web: My Team page ──
+function WebTeamPage(){
+  const[tab,setTab]=useState('members');
+  return(
+    <div className="web-page">
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:4}}>
+        <div className="web-page-title">My Team</div>
+        <button className="web-btn web-btn-accent" style={{display:'flex',alignItems:'center',gap:6}}>
+          {I.userPlus({s:14,c:'#fff'})} Invite Members
+        </button>
+      </div>
+      <div className="web-page-sub">Manage your team members and settings</div>
+
+      {/* Team info banner */}
+      <div className="web-hero-banner" style={{marginBottom:20}}>
+        <div className="team-banner-bg"/>
+        <div className="team-banner-glow" style={{top:-60,right:-40}}/>
+        <div className="team-banner-content">
+          <div style={{display:'flex',alignItems:'center',gap:16}}>
+            <div style={{width:48,height:48,borderRadius:24,background:'rgba(255,131,112,.2)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              {I.users({s:24,c:'var(--accent)'})}
+            </div>
+            <div style={{flex:1}}>
+              <div style={{fontSize:18,fontWeight:700,color:'#fff'}}>Safer Pharmacy</div>
+              <div style={{fontSize:13,color:'rgba(255,255,255,.6)'}}>Team plan - member-funded - 3 seats</div>
+            </div>
+            <div style={{display:'flex',gap:-4}}>
+              {['Alex D.','Brooke L.','Jordan P.'].map((n,i)=>(
+                <div key={i} style={{width:32,height:32,borderRadius:16,border:'2px solid #2D2A26',display:'flex',alignItems:'center',justifyContent:'center',fontSize:11,fontWeight:600,color:'#fff',background:avatarColor(n),marginLeft:i>0?-8:0,position:'relative',zIndex:3-i}}>
+                  {initials(...n.split(' '))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="web-tabs">
+        <div className={`web-tab ${tab==='members'?'active':''}`} onClick={()=>setTab('members')}>Members (2)</div>
+        <div className={`web-tab ${tab==='pending'?'active':''}`} onClick={()=>setTab('pending')}>Pending (1)</div>
+        <div className={`web-tab ${tab==='settings'?'active':''}`} onClick={()=>setTab('settings')}>Settings</div>
+      </div>
+
+      {tab==='members'&&(
+        <div className="web-card" style={{padding:0}}>
+          <table className="web-table">
+            <thead><tr><th>Member</th><th>Role</th><th>Plan</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              {TEAM_MEMBERS.map((m,i)=>(
+                <tr key={i}>
+                  <td><div style={{display:'flex',alignItems:'center',gap:10}}><Avatar name={m.name} size={28}/><div><div style={{fontWeight:500}}>{m.name}</div><div style={{fontSize:12,color:'#71717a'}}>{m.email}</div></div></div></td>
+                  <td><span className="web-badge" style={{background:m.role==='Owner'?'var(--accent-12)':'#f4f4f5',color:m.role==='Owner'?'var(--accent)':'#71717a'}}>{m.role==='Owner'&&<span style={{marginRight:3,display:'flex'}}>{I.crown({s:10,c:'var(--accent)'})}</span>}{m.role}</span></td>
+                  <td><span style={{fontSize:13}}>Pro</span></td>
+                  <td><span className="web-badge" style={{background:'#dcfce7',color:'#16a34a'}}>Active</span></td>
+                  <td style={{textAlign:'right'}}><button className="web-btn web-btn-ghost" style={{fontSize:12}}>Manage</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {tab==='pending'&&(
+        <div className="web-card" style={{padding:0}}>
+          <table className="web-table">
+            <thead><tr><th>Invitee</th><th>Email</th><th>Sent</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              {PENDING_INVITES.map((m,i)=>(
+                <tr key={i}>
+                  <td><div style={{display:'flex',alignItems:'center',gap:10}}><Avatar name={m.name} size={28}/><span style={{fontWeight:500}}>{m.name}</span></div></td>
+                  <td style={{color:'#71717a'}}>{m.email}</td>
+                  <td style={{color:'#71717a'}}>2 days ago</td>
+                  <td><span className="web-badge" style={{background:'#fef3c7',color:'#d97706'}}>Pending</span></td>
+                  <td style={{textAlign:'right',display:'flex',gap:6,justifyContent:'flex-end'}}><button className="web-btn web-btn-outline" style={{fontSize:12}}>Resend</button><button className="web-btn web-btn-ghost" style={{fontSize:12,color:'var(--error)'}}>Revoke</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {tab==='settings'&&(
+        <>
+          <div className="web-card">
+            <div className="web-card-title">Team Permissions</div>
+            <div className="web-card-sub">Control what team members can do</div>
+            <div style={{display:'flex',flexDirection:'column',gap:16}}>
+              {[{label:'Members can invite new teammates',desc:'Allow any member to send team invitations',on:true},{label:'Share contacts across the team',desc:'Team members can see each other\'s contacts',on:false},{label:'Allow call transfers between members',desc:'Enable live call transfer to other team members',on:true}].map((s,i)=>(
+                <div key={i} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'8px 0',borderBottom:i<2?'1px solid #f4f4f5':'none'}}>
+                  <div><div style={{fontSize:14,fontWeight:500,color:'#18181b'}}>{s.label}</div><div style={{fontSize:12,color:'#71717a',marginTop:2}}>{s.desc}</div></div>
+                  <Toggle on={s.on} onToggle={()=>{}}/>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="web-card">
+            <div className="web-card-title">Billing</div>
+            <div className="web-card-sub">Each team member pays their own plan</div>
+            <div style={{padding:'12px 16px',background:'#f4f4f5',borderRadius:8,fontSize:13,color:'#71717a',lineHeight:1.5}}>
+              Team plans are member-funded. Each person chooses and pays for their own subscription. The team owner can manage seats and permissions but does not pay for members.
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+// ── Web: Invite Team page ──
+function WebInvitePage(){
+  const[copied,setCopied]=useState(false);
+  const[linkCopied,setLinkCopied]=useState(false);
+  const[emails,setEmails]=useState('');
+  const inviteCode='SAFER-TEAM-AX7K';
+  return(
+    <div className="web-page">
+      <div className="web-page-title">Invite Your Team</div>
+      <div className="web-page-sub">Each member gets their own AI secretary with their own plan</div>
+
+      <div style={{display:'flex',gap:16}}>
+        {/* Left column: invite by email */}
+        <div style={{flex:1}}>
+          <div className="web-card">
+            <div className="web-card-title">Invite by Email</div>
+            <div className="web-card-sub">Send invitations directly to your team</div>
+            <div style={{marginBottom:12}}>
+              <textarea className="web-input" placeholder="Enter email addresses, separated by commas..." rows={3} value={emails} onChange={e=>setEmails(e.target.value)} style={{resize:'none'}}/>
+            </div>
+            <div style={{display:'flex',gap:8}}>
+              <button className="web-btn web-btn-accent" style={{flex:1}}>Send Invites</button>
+            </div>
+          </div>
+
+          <div className="web-card">
+            <div className="web-card-title">Share Invite Link</div>
+            <div className="web-card-sub">Anyone with this link can join your team</div>
+            <div style={{display:'flex',gap:8,alignItems:'center'}}>
+              <div style={{flex:1,padding:'8px 12px',background:'#f4f4f5',borderRadius:6,fontSize:13,color:'#71717a',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>yousquared.ai/join/{inviteCode}</div>
+              <button onClick={()=>{setLinkCopied(true);setTimeout(()=>setLinkCopied(false),2000)}} className={`web-btn ${linkCopied?'web-btn-primary':'web-btn-outline'}`} style={{whiteSpace:'nowrap',display:'flex',alignItems:'center',gap:4}}>
+                {linkCopied?<>{I.checkmark({s:12,c:'#fff'})} Copied</>:<>{I.copy({s:12})} Copy Link</>}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Right column: invite code */}
+        <div style={{width:260}}>
+          <div className="web-card" style={{textAlign:'center'}}>
+            <div style={{fontSize:12,fontWeight:600,textTransform:'uppercase',letterSpacing:1,color:'#71717a',marginBottom:8}}>Team Invite Code</div>
+            <div style={{fontSize:24,fontWeight:700,letterSpacing:2,color:'#18181b',fontFamily:'monospace',marginBottom:12}}>{inviteCode}</div>
+            <button onClick={()=>{setCopied(true);setTimeout(()=>setCopied(false),2000)}} className={`web-btn ${copied?'web-btn-primary':'web-btn-outline'}`} style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
+              {copied?<>{I.checkmark({s:12,c:'#fff'})} Copied!</>:<>{I.copy({s:12})} Copy Code</>}
+            </button>
+          </div>
+
+          <div className="web-card" style={{background:'linear-gradient(135deg,#2D2A26,#3D3832)',border:'none'}}>
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:8}}>
+              <div style={{width:36,height:36,borderRadius:18,background:'rgba(255,131,112,.2)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                {I.gift({s:18,c:'var(--accent)'})}
+              </div>
+              <div style={{fontSize:14,fontWeight:600,color:'#fff'}}>Refer & Earn</div>
+            </div>
+            <div style={{fontSize:12,color:'rgba(255,255,255,.6)',lineHeight:1.5}}>Earn $25 for each friend who subscribes. Up to $100 per referral.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Web: Onboarding ──
+function WebOnboardingPage(){
+  const[planType,setPlanType]=useState(null);
+  const[step,setStep]=useState('type');
+  const[billing,setBilling]=useState('monthly');
+  const[selectedPlan,setSelectedPlan]=useState(null);
+
+  if(step==='plan'){
+    return(
+      <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:'100%',padding:'40px'}}>
+        <div style={{fontSize:11,fontWeight:600,textTransform:'uppercase',letterSpacing:1.5,color:'#a1a1aa',marginBottom:8}}>Step 2 of 4</div>
+        <div style={{width:280,height:3,borderRadius:2,background:'#e4e4e7',marginBottom:24}}><div style={{width:'50%',height:3,borderRadius:2,background:'var(--accent)'}}/></div>
+        <div style={{fontSize:24,fontWeight:700,color:'#18181b',marginBottom:4}}>Choose Your Plan</div>
+        <div style={{fontSize:14,color:'#71717a',marginBottom:20}}>Each team member picks their own plan</div>
+        <div style={{display:'inline-flex',borderRadius:8,border:'1px solid #e4e4e7',overflow:'hidden',marginBottom:24}}>
+          <div onClick={()=>setBilling('monthly')} style={{padding:'6px 20px',fontSize:13,fontWeight:600,background:billing==='monthly'?'#18181b':'transparent',color:billing==='monthly'?'#fff':'#71717a',cursor:'pointer'}}>Monthly</div>
+          <div onClick={()=>setBilling('yearly')} style={{padding:'6px 20px',fontSize:13,fontWeight:600,background:billing==='yearly'?'#18181b':'transparent',color:billing==='yearly'?'#fff':'#71717a',cursor:'pointer'}}>Yearly <span style={{color:'var(--accent)'}}>-20%</span></div>
+        </div>
+        <div style={{display:'flex',gap:16,width:'100%',maxWidth:660}}>
+          {[
+            {id:'free',name:'Free',price:'$0',features:['5 AI calls/month','Basic call handling']},
+            {id:'pro',name:'Pro',price:billing==='monthly'?'$29':'$23',features:['Unlimited AI calls','Custom scenarios','Team collaboration','Priority support'],badge:'Popular'},
+            {id:'elite',name:'Elite',price:billing==='monthly'?'$99':'$79',features:['Everything in Pro','Dedicated number','Advanced analytics','Call transfers']},
+          ].map(p=>(
+            <div key={p.id} onClick={()=>setSelectedPlan(p.id)} style={{flex:1,padding:20,borderRadius:10,border:selectedPlan===p.id?'2px solid var(--accent)':'2px solid #e4e4e7',background:selectedPlan===p.id?'rgba(255,131,112,.04)':'#fff',cursor:'pointer',position:'relative',transition:'all .15s'}}>
+              {p.badge&&<div style={{position:'absolute',top:-10,right:12,padding:'2px 10px',borderRadius:10,background:'var(--accent)',color:'#fff',fontSize:11,fontWeight:700}}>{p.badge}</div>}
+              <div style={{fontSize:18,fontWeight:700,color:'#18181b',marginBottom:2}}>{p.name}</div>
+              <div style={{marginBottom:12}}><span style={{fontSize:28,fontWeight:700,color:'#18181b'}}>{p.price}</span><span style={{fontSize:13,color:'#71717a'}}>/mo</span></div>
+              {p.features.map((f,i)=>(
+                <div key={i} style={{display:'flex',alignItems:'center',gap:6,fontSize:13,color:'#3f3f46',marginBottom:4}}>
+                  <span style={{color:'var(--green)',display:'flex'}}>{I.checkmark({s:12,c:'var(--green)'})}</span>{f}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <button className="web-btn web-btn-accent" style={{marginTop:24,padding:'10px 40px',fontSize:15}} onClick={()=>setStep('type')}>Continue</button>
+      </div>
+    );
+  }
+
+  return(
+    <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',height:'100%',padding:'40px'}}>
+      <div style={{width:40,height:40,borderRadius:10,background:'var(--accent)',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16,fontSize:16,fontWeight:700,color:'#fff'}}>Y2</div>
+      <div style={{fontSize:11,fontWeight:600,textTransform:'uppercase',letterSpacing:1.5,color:'#a1a1aa',marginBottom:8}}>Step 1 of 4</div>
+      <div style={{width:280,height:3,borderRadius:2,background:'#e4e4e7',marginBottom:24}}><div style={{width:'25%',height:3,borderRadius:2,background:'var(--accent)'}}/></div>
+      <div style={{fontSize:24,fontWeight:700,color:'#18181b',marginBottom:4}}>How will you use YouSquared?</div>
+      <div style={{fontSize:14,color:'#71717a',marginBottom:32}}>You can change this anytime</div>
+      <div style={{display:'flex',gap:16,width:'100%',maxWidth:520}}>
+        <div onClick={()=>setPlanType('individual')} style={{flex:1,padding:24,borderRadius:10,border:planType==='individual'?'2px solid var(--accent)':'2px solid #e4e4e7',background:planType==='individual'?'rgba(255,131,112,.04)':'#fff',cursor:'pointer',textAlign:'center',transition:'all .15s'}}>
+          <div style={{width:48,height:48,borderRadius:24,background:planType==='individual'?'var(--accent-12)':'#f4f4f5',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 12px'}}>
+            {I.contacts({s:22,c:planType==='individual'?'var(--accent)':'#71717a'})}
+          </div>
+          <div style={{fontSize:17,fontWeight:700,color:'#18181b',marginBottom:4}}>For Myself</div>
+          <div style={{fontSize:13,color:'#71717a',lineHeight:1.5}}>Personal AI secretary for your own calls</div>
+        </div>
+        <div onClick={()=>setPlanType('team')} style={{flex:1,padding:24,borderRadius:10,border:planType==='team'?'2px solid var(--accent)':'2px solid #e4e4e7',background:planType==='team'?'rgba(255,131,112,.04)':'#fff',cursor:'pointer',textAlign:'center',position:'relative',transition:'all .15s'}}>
+          <div style={{position:'absolute',top:-10,right:12,padding:'2px 10px',borderRadius:10,background:'var(--accent)',color:'#fff',fontSize:11,fontWeight:700}}>Recommended</div>
+          <div style={{width:48,height:48,borderRadius:24,background:planType==='team'?'var(--accent-12)':'#f4f4f5',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 12px'}}>
+            {I.users({s:22,c:planType==='team'?'var(--accent)':'#71717a'})}
+          </div>
+          <div style={{fontSize:17,fontWeight:700,color:'#18181b',marginBottom:4}}>For My Team</div>
+          <div style={{fontSize:13,color:'#71717a',lineHeight:1.5}}>Everyone gets their own AI secretary</div>
+          <div style={{display:'flex',gap:4,justifyContent:'center',flexWrap:'wrap',marginTop:8}}>
+            {['Share contacts','Assign to-dos','Transfers'].map(f=>(
+              <span key={f} style={{fontSize:10,fontWeight:600,padding:'2px 6px',borderRadius:4,background:'var(--accent-12)',color:'var(--accent)'}}>{f}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+      <button className="web-btn web-btn-accent" onClick={()=>setStep('plan')} style={{marginTop:24,padding:'10px 40px',fontSize:15,opacity:planType?1:.5}}>Continue</button>
+      <div style={{marginTop:12,fontSize:13,color:'#71717a'}}>Have a team invite code? <span style={{color:'var(--accent)',fontWeight:600,cursor:'pointer'}}>Enter code</span></div>
+    </div>
+  );
+}
+
+// ── Web: Referrals page ──
+function WebReferralsPage({onNav}){
+  const[copied,setCopied]=useState(false);
+  return(
+    <div className="web-page">
+      <div className="web-page-title">Referrals</div>
+      <div className="web-page-sub">Earn $25 for each friend who subscribes, up to $100 per referral</div>
+
+      <div style={{display:'flex',gap:16}}>
+        <div style={{flex:1}}>
+          {/* Referral code */}
+          <div className="web-card">
+            <div className="web-card-title">Your Referral Code</div>
+            <div style={{display:'flex',gap:8,alignItems:'center',marginTop:12}}>
+              <div style={{flex:1,padding:'10px 14px',background:'#f4f4f5',borderRadius:6,fontSize:20,fontWeight:700,letterSpacing:2,color:'#18181b',fontFamily:'monospace'}}>ALEX-Y2</div>
+              <button onClick={()=>{setCopied(true);setTimeout(()=>setCopied(false),2000)}} className={`web-btn ${copied?'web-btn-primary':'web-btn-outline'}`} style={{display:'flex',alignItems:'center',gap:4}}>
+                {copied?<>{I.checkmark({s:12,c:'#fff'})} Copied</>:<>{I.copy({s:12})} Copy</>}
+              </button>
+              <button className="web-btn web-btn-accent" style={{display:'flex',alignItems:'center',gap:4}}>{I.share({s:14,c:'#fff'})} Share</button>
+            </div>
+          </div>
+
+          {/* Invite Your Team CTA */}
+          <div onClick={()=>onNav&&onNav('invite')} className="web-hero-banner" style={{cursor:'pointer',marginBottom:16}}>
+            <div className="team-banner-bg"/>
+            <div className="team-banner-glow" style={{top:-40,right:-40}}/>
+            <div className="team-banner-content">
+              <div style={{display:'flex',alignItems:'center',gap:14}}>
+                <div style={{width:44,height:44,borderRadius:22,background:'rgba(255,131,112,.2)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                  {I.users({s:22,c:'var(--accent)'})}
+                </div>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:16,fontWeight:700,color:'#fff'}}>Invite Your Team</div>
+                  <div style={{fontSize:13,color:'rgba(255,255,255,.6)'}}>Everyone gets their own AI secretary. Share contacts and assign to-dos.</div>
+                </div>
+                <span style={{display:'flex',opacity:.5,transform:'rotate(180deg)'}}>{I.chevron({s:16,c:'#fff'})}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Referral list */}
+          <div className="web-card" style={{padding:0}}>
+            <div style={{padding:'16px 24px 8px',fontSize:14,fontWeight:600,color:'#18181b'}}>Your Referrals</div>
+            <table className="web-table">
+              <thead><tr><th>Name</th><th>Status</th><th>Months</th><th>Earned</th></tr></thead>
+              <tbody>
+                {[{name:'Sarah M.',status:'Active',months:'2/4',earned:'$50'},{name:'Jake R.',status:'Pending',months:'0/4',earned:'$0'}].map((r,i)=>(
+                  <tr key={i}>
+                    <td><div style={{display:'flex',alignItems:'center',gap:8}}><Avatar name={r.name} size={24}/><span style={{fontWeight:500}}>{r.name}</span></div></td>
+                    <td><span className="web-badge" style={{background:r.status==='Active'?'#dcfce7':'#fef3c7',color:r.status==='Active'?'#16a34a':'#d97706'}}>{r.status}</span></td>
+                    <td>{r.months}</td>
+                    <td style={{fontWeight:600}}>{r.earned}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Right: balance */}
+        <div style={{width:240}}>
+          <div className="web-card" style={{textAlign:'center'}}>
+            <div style={{fontSize:12,color:'#71717a',marginBottom:4}}>Available Balance</div>
+            <div style={{fontSize:32,fontWeight:700,color:'#18181b',marginBottom:12}}>$50.00</div>
+            <button className="web-btn web-btn-accent" style={{width:'100%'}}>Cash Out</button>
+            <div style={{marginTop:12,paddingTop:12,borderTop:'1px solid #e4e4e7',display:'flex',justifyContent:'space-between',fontSize:13}}>
+              <span style={{color:'#71717a'}}>Lifetime</span>
+              <span style={{fontWeight:600,color:'#18181b'}}>$75.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Web: Inbox with team features ──
+function WebInboxPage(){
+  const[showAssign,setShowAssign]=useState(false);
+  const[assigned,setAssigned]=useState(null);
+  return(
+    <div className="web-page" style={{maxWidth:900}}>
+      <div className="web-page-title">Inbox</div>
+      <div className="web-page-sub">Recent conversations and to-dos</div>
+
+      {/* Invite banner at top of inbox */}
+      <div onClick={()=>{}} className="web-hero-banner" style={{marginBottom:20}}>
+        <div className="team-banner-bg"/>
+        <div className="team-banner-glow" style={{top:-40,right:-40}}/>
+        <div className="team-banner-content">
+          <div style={{display:'flex',alignItems:'center',gap:14}}>
+            <div style={{width:40,height:40,borderRadius:20,background:'rgba(255,131,112,.2)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+              {I.users({s:20,c:'var(--accent)'})}
+            </div>
+            <div style={{flex:1}}>
+              <div style={{fontSize:15,fontWeight:700,color:'#fff'}}>Invite Your Team</div>
+              <div style={{fontSize:12,color:'rgba(255,255,255,.6)'}}>Everyone gets their own AI secretary. Share contacts and assign to-dos.</div>
+            </div>
+            <button className="web-btn web-btn-accent" style={{fontSize:12}}>Invite</button>
+          </div>
+        </div>
+      </div>
+
+      {/* Inbox items with assign */}
+      <div className="web-card" style={{padding:0}}>
+        {[
+          {contact:'Maria A.',rel:'Patient',summary:'Ozempic refill coming due: confirm delivery to Florida address.',due:'Apr 2',type:'renewal'},
+          {contact:'Sarah K.',rel:'Patient',summary:'Surveillance scan due: 6 months since last imaging.',due:'Today',type:'check-in'},
+          {contact:'Luis M.',rel:'Client',summary:'Scissor lifts rental ends in 2 days.',due:'Wed',type:'renewal'},
+        ].map((item,i)=>(
+          <div key={i} style={{display:'flex',alignItems:'flex-start',gap:14,padding:'14px 20px',borderBottom:i<2?'1px solid #f4f4f5':'none'}}>
+            <Avatar name={item.contact} size={36}/>
+            <div style={{flex:1}}>
+              <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:2}}>
+                <span style={{fontSize:14,fontWeight:600,color:'#18181b'}}>{item.contact}</span>
+                <span className="web-badge" style={{background:'#f4f4f5',color:'#71717a'}}>{item.rel}</span>
+                <span className="web-badge" style={{background:'var(--accent-12)',color:'var(--accent)'}}>To-Do</span>
+                <span style={{fontSize:12,color:'#a1a1aa',marginLeft:'auto'}}>{item.due}</span>
+              </div>
+              <div style={{fontSize:13,color:'#3f3f46',lineHeight:1.4}}>{item.summary}</div>
+            </div>
+            {/* Assign button */}
+            <div style={{display:'flex',gap:6,flexShrink:0,marginTop:2}}>
+              <button onClick={()=>{setShowAssign(showAssign===i?null:i);setAssigned(null)}} className="web-btn web-btn-outline" style={{fontSize:11,padding:'4px 10px',display:'flex',alignItems:'center',gap:4}}>
+                {I.assign({s:12})} Assign
+              </button>
+              <button className="web-btn web-btn-outline" style={{fontSize:11,padding:'4px 10px',display:'flex',alignItems:'center',gap:4}}>
+                {I.share({s:12})} Share
+              </button>
+            </div>
+            {/* Assign dropdown */}
+            {showAssign===i&&(
+              <div style={{position:'absolute',right:40,marginTop:32,background:'#fff',border:'1px solid #e4e4e7',borderRadius:8,boxShadow:'0 4px 16px rgba(0,0,0,.1)',zIndex:20,width:200,overflow:'hidden'}}>
+                <div style={{padding:'8px 12px',fontSize:11,fontWeight:600,color:'#a1a1aa',textTransform:'uppercase'}}>Assign to</div>
+                {TEAM_MEMBERS.map((m,j)=>(
+                  <div key={j} onClick={()=>{setAssigned(m.name);setShowAssign(null)}} style={{display:'flex',alignItems:'center',gap:8,padding:'8px 12px',cursor:'pointer',fontSize:13,color:'#18181b',borderTop:'1px solid #f4f4f5'}}>
+                    <Avatar name={m.name} size={22}/>{m.name}
+                  </div>
+                ))}
+                <div style={{display:'flex',alignItems:'center',gap:8,padding:'8px 12px',cursor:'pointer',fontSize:13,color:'var(--accent)',fontWeight:500,borderTop:'1px solid #e4e4e7'}}>
+                  {I.userPlus({s:14,c:'var(--accent)'})} Invite Teammate
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── Web App wrapper ──
+function WebApp(){
+  const[webPage,setWebPage]=useState('team');
+  const urlMap={inbox:'app.yousquared.ai/inbox',team:'app.yousquared.ai/team',invite:'app.yousquared.ai/team/invite',plan:'app.yousquared.ai/plan',referrals:'app.yousquared.ai/referrals',onboarding:'app.yousquared.ai/onboarding',about:'app.yousquared.ai/about-you',company:'app.yousquared.ai/company-info',secretary:'app.yousquared.ai/secretary-settings'};
+
+  if(webPage==='onboarding'){
+    return(
+      <div className="web-frame">
+        <div className="web-titlebar">
+          <div className="web-dot" style={{background:'#ff5f57'}}/><div className="web-dot" style={{background:'#febc2e'}}/><div className="web-dot" style={{background:'#28c840'}}/>
+          <div className="web-urlbar">app.yousquared.ai/onboarding</div>
+        </div>
+        <WebOnboardingPage/>
+      </div>
+    );
+  }
+
+  return(
+    <WebFrame activeNav={webPage} onNav={setWebPage} url={urlMap[webPage]||'app.yousquared.ai'}>
+      {webPage==='team'&&<WebTeamPage/>}
+      {webPage==='invite'&&<WebInvitePage/>}
+      {webPage==='referrals'&&<WebReferralsPage onNav={setWebPage}/>}
+      {webPage==='inbox'&&<WebInboxPage/>}
+      {(webPage==='about'||webPage==='company'||webPage==='secretary'||webPage==='plan')&&(
+        <div className="web-page">
+          <div className="web-page-title">{webPage==='about'?'About You':webPage==='company'?'Company Info':webPage==='secretary'?'Secretary Settings':'My Plan'}</div>
+          <div className="web-page-sub">This page already exists in the web app</div>
+          <div className="web-card" style={{display:'flex',alignItems:'center',justifyContent:'center',height:200,color:'#a1a1aa',fontSize:14}}>Existing page - not part of Team Viral Self-Serve prototype</div>
+        </div>
+      )}
+    </WebFrame>
+  );
+}
+
+// ══════════════════════════════════════════════════════════
 
 // ── App ──
 function App(){
+  const[platform,setPlatform]=useState('ios');
   const[screen,setScreen]=useState('profile');
   const existingScreens=[{key:'todo',label:'To-Do'},{key:'scenarios',label:'Secretary Settings'},{key:'notif',label:'Push Notifications'}];
   const teamScreens=[{key:'profile',label:'Profile'},{key:'teamInvite',label:'Invite Team'},{key:'teamManage',label:'My Team'},{key:'onboarding',label:'Onboarding'},{key:'contactShare',label:'Contact Share'},{key:'refer',label:'Referrals'},{key:'todoAssign',label:'Assign To-Do'}];
@@ -1882,22 +2446,32 @@ function App(){
         <div style={{fontSize:20,fontWeight:700,color:'#fff',letterSpacing:'-.5px'}}>YouSquared</div>
         <div style={{fontSize:12,color:'#888',marginTop:2}}>Team Viral Self-Serve</div>
       </div>
-      <div className="nav-bar">
-        {teamScreens.map(s=>(<button key={s.key} className={`nav-btn ${screen===s.key?'active':''}`} onClick={()=>setScreen(s.key)}>{s.label}</button>))}
+      {/* Platform toggle */}
+      <div style={{textAlign:'center',padding:'8px 0'}}>
+        <div className="platform-toggle">
+          <div className={`platform-btn ${platform==='ios'?'active':''}`} onClick={()=>setPlatform('ios')}>iOS</div>
+          <div className={`platform-btn ${platform==='web'?'active':''}`} onClick={()=>setPlatform('web')}>Web</div>
+        </div>
       </div>
-      <div style={{display:'flex',gap:4,justifyContent:'center',marginBottom:8}}>
-        {existingScreens.map(s=>(<button key={s.key} className={`nav-btn ${screen===s.key?'active':''}`} onClick={()=>setScreen(s.key)} style={{fontSize:11,padding:'4px 10px',opacity:.7}}>{s.label}</button>))}
-      </div>
-      {screen==='profile'&&<ProfileScreen onNavigate={setScreen}/>}
-      {screen==='teamInvite'&&<TeamInviteSheet onBack={()=>setScreen('profile')} onNavigate={setScreen}/>}
-      {screen==='teamManage'&&<TeamManageScreen onNavigate={setScreen}/>}
-      {screen==='onboarding'&&<OnboardingTeamScreen/>}
-      {screen==='contactShare'&&<ContactShareScreen onNavigate={setScreen}/>}
-      {screen==='refer'&&<ReferScreen onNavigate={setScreen}/>}
-      {screen==='todoAssign'&&<TodoAssignScreen onNavigate={setScreen}/>}
-      {screen==='scenarios'&&<ScenariosScreen onNavigate={setScreen}/>}
-      {screen==='todo'&&<TodoScreen onNavigate={setScreen}/>}
-      {screen==='notif'&&<NotifScreen/>}
+      {platform==='ios'&&(<>
+        <div className="nav-bar">
+          {teamScreens.map(s=>(<button key={s.key} className={`nav-btn ${screen===s.key?'active':''}`} onClick={()=>setScreen(s.key)}>{s.label}</button>))}
+        </div>
+        <div style={{display:'flex',gap:4,justifyContent:'center',marginBottom:8}}>
+          {existingScreens.map(s=>(<button key={s.key} className={`nav-btn ${screen===s.key?'active':''}`} onClick={()=>setScreen(s.key)} style={{fontSize:11,padding:'4px 10px',opacity:.7}}>{s.label}</button>))}
+        </div>
+        {screen==='profile'&&<ProfileScreen onNavigate={setScreen}/>}
+        {screen==='teamInvite'&&<TeamInviteSheet onBack={()=>setScreen('profile')} onNavigate={setScreen}/>}
+        {screen==='teamManage'&&<TeamManageScreen onNavigate={setScreen}/>}
+        {screen==='onboarding'&&<OnboardingTeamScreen/>}
+        {screen==='contactShare'&&<ContactShareScreen onNavigate={setScreen}/>}
+        {screen==='refer'&&<ReferScreen onNavigate={setScreen}/>}
+        {screen==='todoAssign'&&<TodoAssignScreen onNavigate={setScreen}/>}
+        {screen==='scenarios'&&<ScenariosScreen onNavigate={setScreen}/>}
+        {screen==='todo'&&<TodoScreen onNavigate={setScreen}/>}
+        {screen==='notif'&&<NotifScreen/>}
+      </>)}
+      {platform==='web'&&<WebApp/>}
       <FeedbackChat/>
       <div style={{position:'fixed',bottom:8,left:12,fontSize:10,color:'var(--error)',maxWidth:220,lineHeight:1.3,zIndex:50}}>All health data in this prototype is illustrative and does not represent any real patients.</div>
     </>
