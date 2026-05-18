@@ -1819,119 +1819,75 @@ function ReferScreen({onNavigate}){
 
 // ── Screen: To-Do Assigned to Colleague ──
 function TodoAssignScreen({onNavigate}){
-  const[showAssign,setShowAssign]=useState(false);
-  const[assigned,setAssigned]=useState(null);
-  const todoItem={contact:'Maria A.',rel:'Patient',summary:'Ozempic refill coming due: confirm delivery to her Florida address.',due:'Apr 2'};
+  const todos=[
+    {assignee:'Marcus',role:'Delivery Manager',onTeam:false,task:"Track down driver's location and get a real-time ETA for the delivery",color:'var(--green)'},
+    {assignee:'You',role:null,onTeam:true,task:'Call patient back with delivery status update and apology',color:'var(--accent)'},
+    {assignee:'Dave',role:'Pharmacist / Owner',onTeam:true,task:'Investigate recurring driver reliability issue - same driver failed last month',color:'#6D597A'},
+  ];
+  const[todoOpen,setTodoOpen]=useState(true);
 
   return(
     <div className="phone"><StatusBar/>
       <div style={{display:'flex',alignItems:'center',padding:'4px 16px 8px',gap:10,borderBottom:'.5px solid var(--border)'}}>
         <button className="back-btn" style={{padding:0}}>&#8249;</button>
-        <Avatar name="Maria Alvarez" size={36}/>
-        <div style={{flex:1}}>
-          <div style={{fontSize:17,fontWeight:600,color:'var(--primary-text)'}}>Maria A.</div>
-          <div style={{fontSize:12,color:'var(--secondary-text)'}}>Patient</div>
-        </div>
-        <Tag text="Patient"/>
+        <span style={{fontSize:17,fontWeight:600,color:'var(--primary-text)',flex:1,textAlign:'center'}}>Buxton (Patient)</span>
+        <span style={{width:24}}/>
       </div>
 
       <div className="screen-content" style={{padding:'0 16px'}}>
-        {/* Thread items */}
-        <div style={{textAlign:'center',padding:'16px 0 12px'}}>
-          <span style={{fontSize:12,fontWeight:500,color:'var(--tertiary-text)',background:'var(--surface-darken)',padding:'4px 12px',borderRadius:12}}>Mar 28</span>
-        </div>
-        <div style={{marginBottom:12,marginRight:32}}>
-          <div style={{padding:'12px 14px',background:'var(--surface-dark)',borderRadius:'var(--r-lg)',border:'.5px solid var(--border)'}}>
-            <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:6}}>
-              <span style={{display:'flex'}}>{I.callReceive({s:18})}</span>
-              <span style={{fontSize:17,fontWeight:600,color:'var(--primary-text)'}}>Call</span>
-              <span style={{fontSize:12,color:'var(--secondary-text)',marginLeft:'auto'}}>2:13p</span>
+        {/* Call card */}
+        <div style={{marginTop:16,marginBottom:16}}>
+          <div style={{padding:'14px 16px',background:'var(--surface-dark)',borderRadius:'var(--r-lg)',border:'.5px solid var(--border)'}}>
+            <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:4}}>
+              <span style={{display:'flex'}}>{I.callReceive({s:16,c:'var(--primary-text)'})}</span>
+              <span style={{fontSize:14,color:'var(--primary-text)'}}>Inbound call</span>
+              <span style={{fontSize:13,color:'var(--secondary-text)',marginLeft:'auto'}}>4:19 PM</span>
             </div>
-            <div style={{fontSize:15,color:'var(--primary-text)',fontStyle:'italic',lineHeight:1.4}}>Called about refill for Ozempic 1mg. Confirmed delivery to Florida address.</div>
-            {/* To-Do card with assign button */}
-            <div style={{marginTop:10}}>
-              <div className="nextsteps-card" style={{padding:10}}>
-                <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:6}}>
-                  <span style={{display:'flex'}}>{I.checkmark({s:14,c:'var(--primary-text)'})}</span>
-                  <span style={{fontSize:12,fontWeight:600,color:'var(--primary-text)',flex:1}}>To-Do</span>
-                  {/* Assign button */}
-                  <div onClick={()=>setShowAssign(true)} style={{display:'flex',alignItems:'center',gap:4,padding:'3px 8px',borderRadius:8,background:assigned?'var(--accent-12)':'var(--surface-darken)',cursor:'pointer',border:assigned?'1px solid var(--accent)':'.5px solid var(--border)'}}>
-                    {assigned?(
-                      <><Avatar name={assigned} size={16}/><span style={{fontSize:11,fontWeight:600,color:'var(--accent)'}}>{assigned.split(' ')[0]}</span></>
-                    ):(
-                      <><span style={{display:'flex'}}>{I.assign({s:12,c:'var(--secondary-text)'})}</span><span style={{fontSize:11,fontWeight:500,color:'var(--secondary-text)'}}>Assign</span></>
-                    )}
-                  </div>
-                </div>
-                <div style={{display:'flex',alignItems:'flex-start',gap:8,padding:'4px 0'}}>
-                  <div className="nextsteps-check" style={{width:18,height:18,borderRadius:4}}/>
-                  <span style={{fontSize:14,color:'var(--primary-text)',lineHeight:1.35}}>Send Ozempic refill reminder before Apr 2</span>
-                </div>
-              </div>
-            </div>
+            <div style={{fontSize:11,fontWeight:700,textTransform:'uppercase',color:'var(--accent)',letterSpacing:.5,marginBottom:6}}>Pharmacy</div>
+            <div style={{fontSize:15,color:'var(--primary-text)',lineHeight:1.5}}>Patient upset - medication delivery expected at noon, still not arrived at 4:30 PM. Same issue last month with same driver. Worried about weekend without meds.</div>
           </div>
         </div>
 
-        {/* Show assigned confirmation */}
-        {assigned&&(
-          <div style={{margin:'0 0 12px',padding:12,background:'#E8F5E9',borderRadius:'var(--r-lg)',display:'flex',alignItems:'center',gap:10}}>
-            <span style={{display:'flex'}}>{I.checkmark({s:16,c:'var(--green)'})}</span>
-            <div style={{flex:1}}>
-              <div style={{fontSize:14,fontWeight:500,color:'var(--primary-text)'}}>Assigned to {assigned}</div>
-              <div style={{fontSize:12,color:'var(--secondary-text)'}}>They'll see this in their To-Do tab</div>
-            </div>
+        {/* To-Do card — AI pre-assigned by role */}
+        <div style={{padding:'16px',background:'var(--bg)',border:'1px solid var(--border)',borderRadius:'var(--r-lg)'}}>
+          <div onClick={()=>setTodoOpen(!todoOpen)} style={{display:'flex',alignItems:'center',gap:8,cursor:'pointer',marginBottom:todoOpen?16:0}}>
+            <span style={{display:'flex'}}>{I.checkmark({s:16,c:'var(--primary-text)'})}</span>
+            <span style={{fontSize:16,fontWeight:600,color:'var(--primary-text)',flex:1}}>To-Do</span>
+            <span style={{display:'flex',transform:todoOpen?'rotate(0)':'rotate(180deg)',transition:'transform .2s'}}>{I.chevronDown({s:14,c:'var(--secondary-text)'})}</span>
           </div>
-        )}
+
+          {todoOpen&&todos.map((todo,i)=>(
+            <div key={i} style={{padding:'14px 0',borderTop:i>0?'.5px solid var(--border)':'none'}}>
+              {/* Assignee row */}
+              <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:8}}>
+                <Avatar name={todo.assignee} size={24}/>
+                <span style={{fontSize:13,fontWeight:600,color:'var(--primary-text)'}}>{todo.assignee}</span>
+                {todo.role&&<span style={{fontSize:12,color:'var(--secondary-text)'}}>{'· '+todo.role}</span>}
+                {!todo.onTeam&&(
+                  <span onClick={()=>onNavigate&&onNavigate('teamInvite')} style={{fontSize:13,fontWeight:600,color:'var(--accent)',cursor:'pointer',marginLeft:2}}>Invite</span>
+                )}
+              </div>
+              {/* Task + checkbox */}
+              <div style={{display:'flex',alignItems:'flex-start',gap:10,paddingLeft:32}}>
+                <div style={{fontSize:15,color:'var(--primary-text)',lineHeight:1.45,flex:1}}>{todo.task}</div>
+                <div style={{width:22,height:22,borderRadius:11,border:'2px solid var(--border)',flexShrink:0,marginTop:1}}/>
+              </div>
+              {/* Invite hint for non-team members */}
+              {!todo.onTeam&&(
+                <div style={{paddingLeft:32,marginTop:6}}>
+                  <div style={{fontSize:12,color:'var(--secondary-text)',fontStyle:'italic',lineHeight:1.4}}>
+                    {todo.assignee} will see this when they join your team. Free for 30 days.
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
 
         <div style={{height:20}}/>
       </div>
 
-      {/* Draft bar */}
-      <div style={{padding:'8px 16px 0',borderTop:'.5px solid var(--border)'}}>
-        <div style={{display:'flex',alignItems:'center',gap:8}}>
-          <div style={{flex:1,padding:'10px 14px',background:'var(--input-bg)',borderRadius:24,border:'.5px solid var(--input-stroke)',display:'flex',alignItems:'center',gap:8}}>
-            <span style={{fontSize:15,color:'var(--tertiary-text)',flex:1}}>Type a message…</span>
-          </div>
-          <div style={{width:36,height:36,borderRadius:18,background:'var(--surface-darken)',display:'flex',alignItems:'center',justifyContent:'center'}}>
-            {I.arrowUp({s:16,c:'var(--tertiary-text)'})}
-          </div>
-        </div>
-      </div>
-
       <FloatingTabBar active="inbox"/>
-
-      {/* Assign bottom sheet */}
-      {showAssign&&(
-        <div className="sheet-overlay" onClick={()=>setShowAssign(false)}>
-          <div className="sheet" onClick={e=>e.stopPropagation()} style={{maxHeight:'55%'}}>
-            <div className="sheet-handle"/>
-            <div style={{padding:'4px 16px 8px'}}>
-              <div style={{fontSize:17,fontWeight:600,color:'var(--primary-text)',marginBottom:4}}>Assign To-Do</div>
-              <div style={{fontSize:13,color:'var(--secondary-text)',marginBottom:16}}>Choose a team member to handle this task</div>
-
-              {/* Team members */}
-              {[...TEAM_MEMBERS,...PENDING_INVITES.filter(p=>p.status!=='pending')].map((m,i)=>(
-                <div key={i} onClick={()=>{setAssigned(m.name);setShowAssign(false)}} style={{display:'flex',alignItems:'center',gap:12,padding:'12px 0',borderBottom:'.5px solid var(--border)',cursor:'pointer'}}>
-                  <Avatar name={m.name} size={40}/>
-                  <div style={{flex:1}}>
-                    <div style={{fontSize:15,fontWeight:500,color:'var(--primary-text)'}}>{m.name}</div>
-                    <div style={{fontSize:13,color:'var(--secondary-text)'}}>{m.role||'Member'}</div>
-                  </div>
-                  {m.name===assigned&&<span style={{display:'flex'}}>{I.checkmark({s:16,c:'var(--accent)'})}</span>}
-                </div>
-              ))}
-
-              {/* Invite new member */}
-              <div onClick={()=>{setShowAssign(false);onNavigate&&onNavigate('teamInvite')}} style={{display:'flex',alignItems:'center',gap:12,padding:'14px 0',cursor:'pointer'}}>
-                <div style={{width:40,height:40,borderRadius:20,background:'var(--accent-12)',display:'flex',alignItems:'center',justifyContent:'center'}}>
-                  {I.userPlus({s:20,c:'var(--accent)'})}
-                </div>
-                <span style={{fontSize:15,fontWeight:600,color:'var(--accent)'}}>Invite a Teammate</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -2324,73 +2280,58 @@ function WebReferralsPage({onNav}){
 }
 
 // ── Web: Inbox with team features ──
-function WebInboxPage(){
-  const[showAssign,setShowAssign]=useState(false);
-  const[assigned,setAssigned]=useState(null);
+function WebInboxPage({onNav}){
+  const callData={
+    contact:'Buxton',rel:'Patient',time:'4:19 PM',industry:'Pharmacy',
+    summary:'Patient upset - medication delivery expected at noon, still not arrived at 4:30 PM. Same issue last month with same driver. Worried about weekend without meds.',
+  };
+  const todos=[
+    {assignee:'Marcus',role:'Delivery Manager',onTeam:false,task:"Track down driver's location and get a real-time ETA for the delivery"},
+    {assignee:'You',role:null,onTeam:true,task:'Call patient back with delivery status update and apology'},
+    {assignee:'Dave',role:'Pharmacist / Owner',onTeam:true,task:'Investigate recurring driver reliability issue - same driver failed last month'},
+  ];
   return(
     <div className="web-page" style={{maxWidth:900}}>
-      <div className="web-page-title">Inbox</div>
-      <div className="web-page-sub">Recent conversations and to-dos</div>
+      <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:4}}>
+        <span style={{display:'flex',cursor:'pointer',color:'#71717a'}}>{I.chevron({s:16})}</span>
+        <div className="web-page-title" style={{marginBottom:0}}>{callData.contact} ({callData.rel})</div>
+      </div>
+      <div className="web-page-sub">Contact thread</div>
 
-      {/* Invite banner at top of inbox */}
-      <div onClick={()=>{}} className="web-hero-banner" style={{marginBottom:20}}>
-        <div className="team-banner-bg"/>
-        <div className="team-banner-glow" style={{top:-40,right:-40}}/>
-        <div className="team-banner-content">
-          <div style={{display:'flex',alignItems:'center',gap:14}}>
-            <div style={{width:40,height:40,borderRadius:20,background:'rgba(255,131,112,.2)',display:'flex',alignItems:'center',justifyContent:'center'}}>
-              {I.users({s:20,c:'var(--accent)'})}
-            </div>
-            <div style={{flex:1}}>
-              <div style={{fontSize:15,fontWeight:700,color:'#fff'}}>Invite Your Team</div>
-              <div style={{fontSize:12,color:'rgba(255,255,255,.6)'}}>Everyone gets their own AI secretary. Share contacts and assign to-dos.</div>
-            </div>
-            <button className="web-btn web-btn-accent" style={{fontSize:12}}>Invite</button>
-          </div>
+      {/* Call card */}
+      <div className="web-card" style={{marginBottom:16}}>
+        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:6}}>
+          <span style={{display:'flex'}}>{I.callReceive({s:16})}</span>
+          <span style={{fontSize:13,color:'#3f3f46'}}>Inbound call</span>
+          <span style={{fontSize:13,color:'#a1a1aa',marginLeft:'auto'}}>{callData.time}</span>
         </div>
+        <div style={{fontSize:11,fontWeight:700,textTransform:'uppercase',color:'var(--accent)',letterSpacing:.5,marginBottom:6}}>{callData.industry}</div>
+        <div style={{fontSize:14,color:'#18181b',lineHeight:1.55}}>{callData.summary}</div>
       </div>
 
-      {/* Inbox items with assign */}
-      <div className="web-card" style={{padding:0}}>
-        {[
-          {contact:'Maria A.',rel:'Patient',summary:'Ozempic refill coming due: confirm delivery to Florida address.',due:'Apr 2',type:'renewal'},
-          {contact:'Sarah K.',rel:'Patient',summary:'Surveillance scan due: 6 months since last imaging.',due:'Today',type:'check-in'},
-          {contact:'Luis M.',rel:'Client',summary:'Scissor lifts rental ends in 2 days.',due:'Wed',type:'renewal'},
-        ].map((item,i)=>(
-          <div key={i} style={{display:'flex',alignItems:'flex-start',gap:14,padding:'14px 20px',borderBottom:i<2?'1px solid #f4f4f5':'none'}}>
-            <Avatar name={item.contact} size={36}/>
+      {/* To-Do card — AI pre-assigned by role */}
+      <div className="web-card">
+        <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:16}}>
+          <span style={{display:'flex'}}>{I.checkmark({s:16,c:'#18181b'})}</span>
+          <span style={{fontSize:16,fontWeight:600,color:'#18181b'}}>To-Do</span>
+        </div>
+        {todos.map((todo,i)=>(
+          <div key={i} style={{padding:'14px 0',borderTop:i>0?'1px solid #f4f4f5':'none',display:'flex',alignItems:'flex-start',gap:14}}>
+            <Avatar name={todo.assignee} size={32}/>
             <div style={{flex:1}}>
-              <div style={{display:'flex',alignItems:'center',gap:8,marginBottom:2}}>
-                <span style={{fontSize:14,fontWeight:600,color:'#18181b'}}>{item.contact}</span>
-                <span className="web-badge" style={{background:'#f4f4f5',color:'#71717a'}}>{item.rel}</span>
-                <span className="web-badge" style={{background:'var(--accent-12)',color:'var(--accent)'}}>To-Do</span>
-                <span style={{fontSize:12,color:'#a1a1aa',marginLeft:'auto'}}>{item.due}</span>
+              <div style={{display:'flex',alignItems:'center',gap:6,marginBottom:4}}>
+                <span style={{fontSize:13,fontWeight:600,color:'#18181b'}}>{todo.assignee}</span>
+                {todo.role&&<span style={{fontSize:12,color:'#71717a'}}>{'· '+todo.role}</span>}
+                {!todo.onTeam&&(
+                  <span onClick={()=>onNav&&onNav('invite')} style={{fontSize:12,fontWeight:600,color:'var(--accent)',cursor:'pointer'}}>Invite</span>
+                )}
               </div>
-              <div style={{fontSize:13,color:'#3f3f46',lineHeight:1.4}}>{item.summary}</div>
+              <div style={{fontSize:14,color:'#3f3f46',lineHeight:1.45}}>{todo.task}</div>
+              {!todo.onTeam&&(
+                <div style={{fontSize:12,color:'#a1a1aa',fontStyle:'italic',marginTop:4}}>{todo.assignee} will see this when they join your team. Free for 30 days.</div>
+              )}
             </div>
-            {/* Assign button */}
-            <div style={{display:'flex',gap:6,flexShrink:0,marginTop:2}}>
-              <button onClick={()=>{setShowAssign(showAssign===i?null:i);setAssigned(null)}} className="web-btn web-btn-outline" style={{fontSize:11,padding:'4px 10px',display:'flex',alignItems:'center',gap:4}}>
-                {I.assign({s:12})} Assign
-              </button>
-              <button className="web-btn web-btn-outline" style={{fontSize:11,padding:'4px 10px',display:'flex',alignItems:'center',gap:4}}>
-                {I.share({s:12})} Share
-              </button>
-            </div>
-            {/* Assign dropdown */}
-            {showAssign===i&&(
-              <div style={{position:'absolute',right:40,marginTop:32,background:'#fff',border:'1px solid #e4e4e7',borderRadius:8,boxShadow:'0 4px 16px rgba(0,0,0,.1)',zIndex:20,width:200,overflow:'hidden'}}>
-                <div style={{padding:'8px 12px',fontSize:11,fontWeight:600,color:'#a1a1aa',textTransform:'uppercase'}}>Assign to</div>
-                {TEAM_MEMBERS.map((m,j)=>(
-                  <div key={j} onClick={()=>{setAssigned(m.name);setShowAssign(null)}} style={{display:'flex',alignItems:'center',gap:8,padding:'8px 12px',cursor:'pointer',fontSize:13,color:'#18181b',borderTop:'1px solid #f4f4f5'}}>
-                    <Avatar name={m.name} size={22}/>{m.name}
-                  </div>
-                ))}
-                <div style={{display:'flex',alignItems:'center',gap:8,padding:'8px 12px',cursor:'pointer',fontSize:13,color:'var(--accent)',fontWeight:500,borderTop:'1px solid #e4e4e7'}}>
-                  {I.userPlus({s:14,c:'var(--accent)'})} Invite Teammate
-                </div>
-              </div>
-            )}
+            <div style={{width:22,height:22,borderRadius:11,border:'2px solid #e4e4e7',flexShrink:0,marginTop:4}}/>
           </div>
         ))}
       </div>
@@ -2420,7 +2361,7 @@ function WebApp(){
       {webPage==='team'&&<WebTeamPage/>}
       {webPage==='invite'&&<WebInvitePage/>}
       {webPage==='referrals'&&<WebReferralsPage onNav={setWebPage}/>}
-      {webPage==='inbox'&&<WebInboxPage/>}
+      {webPage==='inbox'&&<WebInboxPage onNav={setWebPage}/>}
       {(webPage==='about'||webPage==='company'||webPage==='secretary'||webPage==='plan')&&(
         <div className="web-page">
           <div className="web-page-title">{webPage==='about'?'About You':webPage==='company'?'Company Info':webPage==='secretary'?'Secretary Settings':'My Plan'}</div>
