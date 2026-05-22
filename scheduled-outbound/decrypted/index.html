@@ -23,6 +23,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 body.embed{background:transparent;overflow:hidden;margin:0;padding:0;min-height:auto}
 body.embed #root{width:1200px;height:720px;transform-origin:top center;margin:0 auto;gap:0}
 body.embed .view-toggle-strip,.embed .ios-frame-wrap{display:none!important}
+body.embed .web-sidebar-logo{background:#2D2A26;}
 
 /* ── Design tokens (from Theme.swift + Color+Ext.swift) ── */
 :root{
@@ -2110,7 +2111,9 @@ function TagManagementModal({tags,setTags,onClose}){
 // ── Web Inbox Screen (desktop CRM layout) ──
 function WebInboxScreen({industryId,onNavigate,tags,setTags,onManageTags}){
   const[filter,setFilter]=useState('todo');
-  const[openThread,setOpenThread]=useState(null);
+  // In embed mode, auto-open first pharmacy todo thread
+  const firstTodo=_EMBED?TODOS.filter(t=>t.industryId===industryId).sort((a,b)=>{const ai=SCENARIO_TYPE_ORDER.indexOf(TODO_TYPES[a.id]||'other');const bi=SCENARIO_TYPE_ORDER.indexOf(TODO_TYPES[b.id]||'other');return(ai<0?999:ai)-(bi<0?999:bi)})[0]||null:null;
+  const[openThread,setOpenThread]=useState(firstTodo);
   const[activeLabels,setActiveLabels]=useState([]);
   const[activeSubtags,setActiveSubtags]=useState([]);
   const[expandedLabel,setExpandedLabel]=useState(null);
@@ -2663,9 +2666,9 @@ function App(){
         </>
       ):(
         <>
-          <div className="nav-bar">
+          {!_EMBED&&<div className="nav-bar">
             {screens.map(s=>(<button key={s.key} className={`nav-btn ${screen===s.key?'active':''}`} onClick={()=>setScreen(s.key)}>{s.label}</button>))}
-          </div>
+          </div>}
           {screen==='scenarios'&&<WebSecretarySettingsScreen industryId={industryId} onNavigate={setScreen} onChangeIndustry={setIndustryId} industry={industry} scenarios={scenarios} setScenarios={setScenarios} tags={tags} setTags={setTags} onManageTags={()=>setShowTagsModal(true)}/>}
           {screen==='todo'&&<WebInboxScreen industryId={industryId} onNavigate={setScreen} tags={tags} setTags={setTags} onManageTags={()=>setShowTagsModal(true)}/>}
           {screen==='notif'&&<NotifScreen industryId={industryId}/>}
