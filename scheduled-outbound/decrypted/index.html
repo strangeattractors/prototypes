@@ -2269,32 +2269,38 @@ function WebInboxScreen({industryId,onNavigate,tags,setTags,onManageTags}){
             </div>
           </div>
           <div className="web-inbox-list">
-            {filter==='todo'&&pending.map(todo=>{
-              const isUrgent=todo.due==='Today';
-              const isSelected=openThread&&openThread.id===todo.id;
-              return(
-                <button type="button" key={todo.id} onClick={()=>setOpenThread(todo)} className={`web-inbox-item ${isSelected?'selected':''}`}>
-                  <div style={{width:36,height:36,borderRadius:18,background:'#f5f5f5',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:2}}>
-                    {I.outbound({s:16,c:'#737373'})}
-                  </div>
-                  <div style={{flex:1,minWidth:0}}>
-                    <div style={{display:'flex',alignItems:'center',gap:6}}>
-                      <span style={{fontSize:14,fontWeight:600,color:'#171717'}}>{todo.displayContact||todo.contact}</span>
-                      {isUrgent&&<span style={{display:'flex'}}>{I.bell({s:12,c:'#ef4444'})}</span>}
-                      <span style={{fontSize:10,fontWeight:700,background:'#FF8370',color:'#fff',padding:'1px 6px',borderRadius:4,lineHeight:'16px'}}>To-Do</span>
-                      <span style={{marginLeft:'auto',flexShrink:0,fontSize:12,color:isUrgent?'#171717':'#737373',fontWeight:isUrgent?600:400}}>{todo.due}</span>
+            {(()=>{
+              let items=[];
+              if(filter==='todo') items=pending;
+              else if(filter==='inbox') items=industryTodos;
+              else if(filter==='urgent') items=industryTodos.filter(t=>t.due==='Today');
+              else if(filter==='unread') items=industryTodos.slice(0,4);
+              else if(filter==='missed') items=industryTodos.filter(t=>(TODO_TYPES[t.id]||'')==='other').concat(industryTodos.filter(t=>t.due==='Today').slice(0,3));
+              else items=industryTodos;
+              if(items.length===0) return <div style={{padding:'60px 24px',textAlign:'center',color:'#a3a3a3',fontSize:14}}>{filter==='todo'?'No to-dos for this industry.':'No items.'}</div>;
+              return items.map(todo=>{
+                const isUrgent=todo.due==='Today';
+                const isSelected=openThread&&openThread.id===todo.id;
+                const isSent=sentIds.includes(todo.id);
+                return(
+                  <button type="button" key={todo.id} onClick={()=>setOpenThread(todo)} className={`web-inbox-item ${isSelected?'selected':''}`}>
+                    <div style={{width:36,height:36,borderRadius:18,background:'#f5f5f5',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,marginTop:2}}>
+                      {filter==='missed'?I.phone({s:16,c:'#ef4444'}):I.outbound({s:16,c:'#737373'})}
                     </div>
-                    <p style={{fontSize:13,color:'#737373',lineHeight:1.4,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',marginTop:2,margin:0}}>{todo.summary}</p>
-                  </div>
-                </button>
-              );
-            })}
-            {filter==='todo'&&pending.length===0&&(
-              <div style={{padding:'60px 24px',textAlign:'center',color:'#a3a3a3',fontSize:14}}>No to-dos for this industry.</div>
-            )}
-            {filter!=='todo'&&(
-              <div style={{padding:'60px 24px',textAlign:'center',color:'#a3a3a3',fontSize:14}}>Select "Suggested to-dos" to view outbound items.</div>
-            )}
+                    <div style={{flex:1,minWidth:0}}>
+                      <div style={{display:'flex',alignItems:'center',gap:6}}>
+                        <span style={{fontSize:14,fontWeight:600,color:'#171717'}}>{todo.displayContact||todo.contact}</span>
+                        {isUrgent&&<span style={{display:'flex'}}>{I.bell({s:12,c:'#ef4444'})}</span>}
+                        {filter==='todo'&&!isSent&&<span style={{fontSize:10,fontWeight:700,background:'#FF8370',color:'#fff',padding:'1px 6px',borderRadius:4,lineHeight:'16px'}}>To-Do</span>}
+                        {filter==='missed'&&<span style={{fontSize:10,fontWeight:700,background:'#ef4444',color:'#fff',padding:'1px 6px',borderRadius:4,lineHeight:'16px'}}>Missed</span>}
+                        <span style={{marginLeft:'auto',flexShrink:0,fontSize:12,color:isUrgent?'#171717':'#737373',fontWeight:isUrgent?600:400}}>{todo.due}</span>
+                      </div>
+                      <p style={{fontSize:13,color:'#737373',lineHeight:1.4,overflow:'hidden',display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',marginTop:2,margin:0}}>{todo.summary}</p>
+                    </div>
+                  </button>
+                );
+              });
+            })()}
           </div>
         </div>
 
@@ -2354,9 +2360,10 @@ function WebInboxScreen({industryId,onNavigate,tags,setTags,onManageTags}){
                   </div>
                   <div style={{fontSize:13,color:'#737373',lineHeight:1.5}}>{openThread.sendAs==='call'?openThread.callDraft:openThread.textDraft}</div>
                 </div>
-                <div style={{display:'flex',gap:8,marginTop:8}}>
-                  <button className="btn-primary" style={{fontSize:14,height:40}} onClick={()=>{setSentIds(p=>[...p,openThread.id]);setOpenThread(null)}}>
-                    {openThread.sendAs==='call'?'Place AI Call':'Send Text'}
+                <div style={{display:'flex',alignItems:'center',justifyContent:'flex-end',gap:8,marginTop:8}}>
+                  <span style={{fontSize:12,color:'#a3a3a3',fontWeight:500}}>{openThread.sendAs==='call'?'Place AI Call':'Send Text'}</span>
+                  <button onClick={()=>{setSentIds(p=>[...p,openThread.id]);setOpenThread(null)}} style={{width:36,height:36,borderRadius:10,background:'var(--accent)',border:'none',display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer',flexShrink:0}}>
+                    {I.arrowUp({s:16,c:'#fff'})}
                   </button>
                 </div>
               </div>
