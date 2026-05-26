@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Redirecting to yousquared.ai</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 2rem;
+    }
+    .wrap { max-width: 480px; }
+    h1 { font-size: 1.25rem; font-weight: 500; margin-bottom: 0.75rem; }
+    p { font-size: 0.95rem; color: #666; line-height: 1.5; }
+    a { color: #333; text-decoration: underline; }
+  </style>
+  <script>
+    (function () {
+      var path = window.location.pathname;
+      // Strip the GitHub Pages project prefix "/prototypes" if present
+      if (path.indexOf('/prototypes') === 0) {
+        path = path.substring('/prototypes'.length);
+      }
+      // Ensure path starts with /
+      if (path.charAt(0) !== '/') path = '/' + path;
+      var dest = 'https://yousquared.ai/prototypes' + path + window.location.search + window.location.hash;
+
+      // Set the link and redirect meta dynamically
+      document.addEventListener('DOMContentLoaded', function () {
+        var link = document.getElementById('dest-link');
+        link.href = dest;
+        link.textContent = dest.replace('https://', '');
+
+        // Also set the meta refresh
+        var meta = document.createElement('meta');
+        meta.httpEquiv = 'refresh';
+        meta.content = '3;url=' + dest;
+        document.head.appendChild(meta);
+      });
+
+      // JS redirect after 3s as backup
+      setTimeout(function () { window.location.replace(dest); }, 3000);
+    })();
+  </script>
+</head>
+<body>
+  <div class="wrap">
+    <h1>This page has moved to yousquared.ai</h1>
+    <p>Redirecting in 3 seconds&hellip;<br>
+    <a id="dest-link" href="https://yousquared.ai/prototypes/">yousquared.ai/prototypes/</a></p>
+  </div>
+</body>
+</html>
